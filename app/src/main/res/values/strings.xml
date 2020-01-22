@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Cryptographic Carnival</string>
+    <string name="menuTitle">Cryptographic Carnival</string>
+    <string name="Play">Play</string>
+    <string name="high_scores">High Scores</string>
+    <string name="creditsTitle">Credits</string>
+    <string name="version">V 1.0.0</string>
+    <string name="title">Cryptographic\nCarnival</string>
+    <string name="credits_text">Lead Programmer: Ethan Fisher\n\n\nMusic: Ethan Fisher\n\n\nGraphics: Ethan Fisher</string>
+    <string name="volume_on">Volume: On</string>
+    <string name="start_over">Start Over</string>
+    <string name="difficulty_normal">Difficulty: Normal</string>
+    <string name="credits">Credits</string>
+    <string name="save">save</string>
+    <string name="base_text">TEXT</string>
+    <string name="reset">Reset</string>
+    <string name="page_number">1 / 1</string>
+    <string name="levelTitle">Choose Level</string>
+    <string name="win">You Win!</string>
+    <string name="lose">You Lose&#8230;</string>
+    <string name="textPackTitle">Select Text Pack</string>
+    <string name="reset_answer">Reset Answer</string>
+    <string name="instructions">
+        In each level, you are given a text that has had each letter replaced with a different
+        letter. Your job is to find what each letter was in the original text. The letters with
+        dashes mean that the letter was not used in the text, and therefore you do not need
+        to find its replacement. Good luck!
+    </string>
+    <string name="video_ad">Video Ad</string>
+    <string name="no_money">Not Enough Coins</string>
+</resources>
