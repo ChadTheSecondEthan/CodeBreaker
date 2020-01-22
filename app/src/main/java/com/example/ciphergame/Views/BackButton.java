@@ -23,6 +23,7 @@ public class BackButton extends AppCompatButton {
             @Override
             public void onClick(View view) {
                 gsm.setState(gsm.getPrevState());
+//                (MediaPlayer.create()) TODO add button click noises
             }
         });
         ViewHelper.setGetBiggerTouchListener(this);
