@@ -11,8 +11,8 @@ public class Hints {
     private InLevelState inLevelState;
 
     public Hints(GameStateManager gsm) {
-        costs = new int[] { 50, 100, 150 };
-        names = new String[] { "Peek", "", "Reveal" };
+        costs = new int[] { 30, 50, 150 };
+        names = new String[] { "Peek", "Choose", "Reveal" };
 
         inLevelState = gsm.getInLevelState();
     }
@@ -27,15 +27,15 @@ public class Hints {
         switch (index) {
             case 0:
                 // peek randomly reveals one letter that is incorrect or hasn't been guessed
-                GameStateManager.getCurrencies().loseCoins(costs[index]);
                 inLevelState.peek();
                 break;
             case 1:
-                // TODO add hint 2
+                inLevelState.choose();
                 break;
             case 2:
                 // TODO add hint 3
                 break;
         }
+        GameStateManager.getCurrencies().loseCoins(costs[index]);
     }
 }

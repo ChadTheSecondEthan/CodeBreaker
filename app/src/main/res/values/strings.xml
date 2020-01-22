@@ -28,4 +28,5 @@
     </string>
     <string name="video_ad">Video Ad</string>
     <string name="no_money">Not Enough Coins</string>
+    <string name="pickLetter">Pick a letter on top to be solved</string>
 </resources>

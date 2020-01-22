@@ -144,22 +144,24 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     // TODO fix this
     private void resetAnswer() {
-        selectedLetter = -1;
+        if (selectedLetter != -1) {
+            letters[selectedLetter].setBackgroundResource(R.drawable.circle);
+            changeTextColor(-1);
+            selectedLetter = -1;
+        }
         curCipherText = hintCipherText;
         gsm.getDataEditor().putString("curCipherText", curCipherText).apply();
-        changeTextColor(-1);
-        resetText();
         resetCipherLetters();
     }
 
     private void resetCipherLetters() {
         String regularText = cipher.getRegularText(textPack, level).toUpperCase();
-        for (int i = 0; i < 26; i++) {
-            cipherLetters[i].setText(regularText.contains("" + (cipher.getCipherAlphabet()[i])) ? gsm.getData().getString("cipherLetter" + i, "") : "-");
-        }
+        char[] alphabet = cipher.getCipherAlphabet();
+        for (int i = 0; i < 26; i++)
+            cipherLetters[i].setText(regularText.contains("" + (alphabet[i])) ? gsm.getData().getString("cipherLetter" + i, "") : "-");
     }
 
-    // TODO fix this
+    // TODO make this faster
     private void resetText() {
         String regularText = cipher.getRegularText(textPack, level).toUpperCase();
         int color = getApp().getApplicationContext().getColor(R.color.opaqueBlack);
@@ -224,15 +226,12 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void removeLetter(int index) {
+        System.out.println("Hi");
         // deselects a given cipherLetter and assumes the cipherLetter has already been selected
-        curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, firstLetterOf(cipherLetters[index]) + "");
+        // TODO make this work
+        curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
         gsm.getDataEditor().putString("curCipherText", curCipherText).apply();
         text.setText(curCipherText);
-    }
-
-    private void normalizeText(int index) {
-        // makes text of the cipher letter of the index what it should be
-        curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
     }
 
     private char[] getCurAlphabet() {
@@ -263,13 +262,19 @@ public class InLevelState extends GameState implements View.OnClickListener {
         do randChoice = (int) (Math.random() * 25);
         while (!canCorrect[randChoice]);
 
-        System.out.println(randChoice);
-
         changeTextColor(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START);
         changeText(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START, randChoice);
         cipherLetters[randChoice].setText("" + cipherAlphabet[randChoice]);
         hintCipherText = hintCipherText.replace("" + cipherAlphabet[randChoice], WHITE + (char) (randChoice + Cipher.LOWER_CASE_START) + FONT);
         gsm.getDataEditor().putString("hintCipherText", hintCipherText).putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
+    }
+
+    public void choose() {
+        // TODO add this hint
+        gsm.setState(GameStateManager.INLEVELSTATE);
+        TextView chooseLetter = getView(R.id.chooseLetterText);
+        chooseLetter.setVisibility(View.VISIBLE);
+        // TODO if one on the top has already been used for another hint, it can't be picked, and the bottom letters can't be picked either
     }
 
     @Override
@@ -288,12 +293,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 selectedLetter = (selectedLetter == i) ? -1 : i;
                 changeTextColor(selectedLetter);
             }
-        // TODO add removable letters
         for (int i = 0; i < cipherLetters.length; i++)
             if (view.getId() == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-")) {
-                if (letterSelected() && !hintsContain(selectedLetter)) {
+                if (letterSelected() && !hintsContainedIn(i) && !isHint(selectedLetter)) {
                     if (isDifferentThanNormal(i))
-                        normalizeText(i);
+                        removeLetter(i);
                     changeText(selectedLetter, i);
                     letters[selectedLetter].setBackgroundResource(R.drawable.circle);
                     cipherLetters[i].setText("" + (char) (selectedLetter + Cipher.UPPER_CASE_START));
@@ -311,12 +315,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private boolean letterSelected() { return selectedLetter != -1; }
-    private boolean isDifferentThanNormal(int index) { return !cipherLetters[index].getText().equals("" + (char) (index + Cipher.LOWER_CASE_START)); }
+    private boolean isDifferentThanNormal(int index) { return !cipherLetters[index].getText().equals(""); }
     private char firstLetterOf(Button button) { return (button.getText().length() > 0) ? button.getText().charAt(0) : '!'; }
 
     private String withoutHtml(String s) { return s.replace(FONT, "").replace(RED, "").replace(WHITE, ""); }
     private boolean isRed(int letter) { return curCipherText.contains(RED + (char) letter); }
-    private boolean hintsContain(int letter) {
+    private boolean hintsContainedIn(int index) {
+        return !gsm.getData().getString("cipherLetter" + index, "").equals("");
+    }
+    private boolean isHint(int letter) {
         for (int i = 0; i < 26; i++)
             if (gsm.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
                 return true;
