@@ -152,6 +152,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         curCipherText = hintCipherText;
         gsm.getDataEditor().putString("curCipherText", curCipherText).apply();
         resetCipherLetters();
+        text.setText(Html.fromHtml(curCipherText, 1));
     }
 
     private void resetCipherLetters() {
@@ -226,12 +227,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void removeLetter(int index) {
-        System.out.println("Hi");
         // deselects a given cipherLetter and assumes the cipherLetter has already been selected
         // TODO make this work
         curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
         gsm.getDataEditor().putString("curCipherText", curCipherText).apply();
-        text.setText(curCipherText);
+        text.setText(Html.fromHtml(curCipherText, 1));
     }
 
     private char[] getCurAlphabet() {
@@ -275,6 +275,23 @@ public class InLevelState extends GameState implements View.OnClickListener {
         TextView chooseLetter = getView(R.id.chooseLetterText);
         chooseLetter.setVisibility(View.VISIBLE);
         // TODO if one on the top has already been used for another hint, it can't be picked, and the bottom letters can't be picked either
+        for (int i = 0; i < 26; i++) {
+            final int num = i;
+            letters[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    changeTextColor(num);
+                    changeText(num, cipher.getCipherAlphabet()[num] - Cipher.UPPER_CASE_START);
+                    cipherLetters[num].setText("" + cipher.getCipherAlphabet()[num]);
+//                    gsm.getDataEditor().putString("cipherLetter" + num, "" + cipher.getCipherAlphabet()[num]); TODO fix this section
+                    resetLetterClicks();
+                }
+            });
+        }
+    }
+
+    private void resetLetterClicks() {
+        for (Button button : letters) button.setOnClickListener(this);
     }
 
     @Override

@@ -40,9 +40,10 @@ public class GameStateManager {
         data = app.getApplicationContext().getSharedPreferences("data", 0);
         dataEditor = data.edit();
         dataEditor.apply();
-//        dataEditor.remove("cipherText").remove("curCipherText").remove("hintCipherText").apply();
-//        for (int i = 0; i < 26; i++)
-//            dataEditor.remove("cipherLetter" + i).apply();
+        // TODO when finished with the game, delete these bottom lines
+        dataEditor.remove("cipherText").remove("curCipherText").remove("hintCipherText").apply();
+        for (int i = 0; i < 26; i++)
+            dataEditor.remove("cipherLetter" + i).apply();
 
         this.app = app;
         mediaPlayer = mp;
