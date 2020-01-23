@@ -3,6 +3,10 @@ package com.example.ciphergame.GameState;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -247,6 +251,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
         return false;
     }
 
+    private void changeHint(int oldLetter, int newLetter) {
+        changeText(oldLetter, newLetter);
+        hintCipherText = hintCipherText.replace(WHITE, "@").replace(FONT, "#")
+                .replace("" + (char) (oldLetter + Cipher.UPPER_CASE_START),
+                WHITE + (char) (newLetter + Cipher.LOWER_CASE_START) + FONT)
+                .replace("@", WHITE).replace("#", FONT);
+        gsm.getDataEditor().putString("hintCipherText", hintCipherText).apply();
+    }
+
     public void peek() {
         char[] cipherAlphabet = cipher.getCipherAlphabet();
         char[] curCipherAlphabet = getCurAlphabet();
@@ -263,17 +276,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
         while (!canCorrect[randChoice]);
 
         changeTextColor(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START);
-        changeText(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START, randChoice);
         cipherLetters[randChoice].setText("" + cipherAlphabet[randChoice]);
-        hintCipherText = hintCipherText.replace("" + cipherAlphabet[randChoice], WHITE + (char) (randChoice + Cipher.LOWER_CASE_START) + FONT);
-        gsm.getDataEditor().putString("hintCipherText", hintCipherText).putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
+        changeHint(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START, randChoice);
+        gsm.getDataEditor().putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
     }
 
     public void choose() {
         // TODO add this hint
         gsm.setState(GameStateManager.INLEVELSTATE);
-        TextView chooseLetter = getView(R.id.chooseLetterText);
-        chooseLetter.setVisibility(View.VISIBLE);
+        (getView(R.id.chooseLetterText)).setVisibility(View.VISIBLE);
         // TODO if one on the top has already been used for another hint, it can't be picked, and the bottom letters can't be picked either
         for (int i = 0; i < 26; i++) {
             final int num = i;
@@ -281,10 +292,34 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 @Override
                 public void onClick(View view) {
                     changeTextColor(num);
-                    changeText(num, cipher.getCipherAlphabet()[num] - Cipher.UPPER_CASE_START);
-                    cipherLetters[num].setText("" + cipher.getCipherAlphabet()[num]);
-//                    gsm.getDataEditor().putString("cipherLetter" + num, "" + cipher.getCipherAlphabet()[num]); TODO fix this section
+                    char[] alphabet = cipher.getCipherAlphabet();
+                    for (int i = 0; i < 26; i++)
+                        if (alphabet[i] == (char) (num + Cipher.UPPER_CASE_START)) {
+                            cipherLetters[i].setText(alphabet[i] + "");
+                            changeHint(num, alphabet[i] - Cipher.UPPER_CASE_START);
+                            gsm.getDataEditor().putString("cipherLetter" + i, alphabet[i] + "").apply();
+                        }
                     resetLetterClicks();
+                    final TextView letterText = getView(R.id.chooseLetterText);
+                    AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+                    animation.setDuration(2000);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            letterText.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    letterText.startAnimation(animation);
                 }
             });
         }
