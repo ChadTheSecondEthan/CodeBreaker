@@ -152,7 +152,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             changeTextColor(-1);
             selectedLetter = -1;
         }
-        curCipherText = hintCipherText.replace(FONT + "FFFF", "FFFF");
+        curCipherText = hintCipherText;
         app.getDataEditor().putString("curCipherText", curCipherText).apply();
         resetCipherLetters();
         updateText();
@@ -232,9 +232,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private void removeLetter(int index) {
         // deselects a given cipherLetter and assumes the cipherLetter has already been selected
         // TODO make this work
-        curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
-        app.getDataEditor().putString("curCipherText", curCipherText).apply();
-        text.setText(Html.fromHtml(curCipherText, 1));
+        if (!isHint(index)) {
+            curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
+            app.getDataEditor().putString("curCipherText", curCipherText).apply();
+            text.setText(Html.fromHtml(curCipherText, 1));
+        }
     }
 
     private char[] getCurAlphabet() {
@@ -252,10 +254,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private void changeHint(int oldLetter, int newLetter) {
         changeText(oldLetter, newLetter);
-        hintCipherText = hintCipherText.replace(WHITE, "@").replace(FONT, "#")
-                .replace("" + (char) (oldLetter + Cipher.UPPER_CASE_START),
-                WHITE + (char) (newLetter + Cipher.LOWER_CASE_START) + FONT)
-                .replace("@", WHITE).replace("#", FONT);
+        hintCipherText = hintCipherText.replace(WHITE + (char) (oldLetter + Cipher.UPPER_CASE_START) + FONT, "" + (char) (oldLetter + Cipher.UPPER_CASE_START))
+                .replace("" + (char) (oldLetter + Cipher.UPPER_CASE_START), WHITE + (char) (newLetter + Cipher.LOWER_CASE_START) + FONT);
         app.getDataEditor().putString("hintCipherText", hintCipherText).apply();
     }
 
@@ -296,7 +296,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                         if (alphabet[i] == (char) (num + Cipher.UPPER_CASE_START)) {
                             cipherLetters[i].setText(alphabet[i] + "");
                             changeHint(num, i);
-                            app.getDataEditor().putString("cipherLetter" + i, (char) (i + Cipher.LOWER_CASE_START) + "").apply();
+                            app.getDataEditor().putString("cipherLetter" + i, (char) (num + Cipher.LOWER_CASE_START) + "").apply();
                         }
                     resetLetterClicks();
                     final TextView letterText = getView(R.id.chooseLetterText);
@@ -304,19 +304,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
                     animation.setDuration(1750);
                     animation.setAnimationListener(new Animation.AnimationListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
+                        public void onAnimationStart(Animation animation) {}
                         @Override
-                        public void onAnimationEnd(Animation animation) {
-                            letterText.setVisibility(View.INVISIBLE);
-                        }
-
+                        public void onAnimationEnd(Animation animation) { letterText.setVisibility(View.INVISIBLE); }
                         @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
+                        public void onAnimationRepeat(Animation animation) {}
                     });
                     letterText.startAnimation(animation);
                 }
