@@ -1,6 +1,5 @@
 package com.example.ciphergame;
 
-import com.example.ciphergame.GameState.GameStateManager;
 import com.example.ciphergame.GameState.InLevelState;
 
 public class Hints {
@@ -10,11 +9,11 @@ public class Hints {
 
     private InLevelState inLevelState;
 
-    public Hints(GameStateManager gsm) {
+    public Hints(MainActivity app) {
         costs = new int[] { 30, 50, 150 };
         names = new String[] { "Peek", "Choose", "Reveal" };
 
-        inLevelState = gsm.getInLevelState();
+        inLevelState = app.getInLevelState();
     }
 
     public int[] getCosts() { return costs; }
@@ -36,6 +35,6 @@ public class Hints {
                 // TODO add hint 3
                 break;
         }
-        GameStateManager.getCurrencies().loseCoins(costs[index]);
+        MainActivity.getCurrencies().loseCoins(costs[index]);
     }
 }

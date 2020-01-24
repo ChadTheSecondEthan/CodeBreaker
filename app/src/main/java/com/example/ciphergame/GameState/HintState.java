@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ciphergame.Hints;
+import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.R;
 import com.example.ciphergame.Views.ImageNumberView;
@@ -15,13 +16,13 @@ import com.example.ciphergame.Views.ViewHelper;
 
 public class HintState extends GameState {
 
-    HintState(GameStateManager gsm) { super(gsm); }
+    public HintState(MainActivity app) { super(app); }
 
     @SuppressLint("ClickableViewAccessibility")
     public void init() {
         setContentView(R.layout.hint_state);
 
-        ((BackButton) getView(R.id.back_button)).init(gsm);
+        ((BackButton) getView(R.id.back_button)).init(app);
         final ImageNumberView imageNumberView = getView(R.id.coinImageNumber);
         imageNumberView.init(R.drawable.coin, "coin");
 
@@ -41,7 +42,7 @@ public class HintState extends GameState {
         }
 
         Button[] answers = new Button[] { getView(R.id.answer1), getView(R.id.answer2), getView(R.id.answer3) };
-        final Hints hints = new Hints(gsm);
+        final Hints hints = new Hints(app);
         String[] costs = new String[] { "" + hints.getCost(0), "" + hints.getCost(1), "" + hints.getCost(2) };
         for (int i = 0; i < answers.length; i++) {
             final int num = i;
@@ -50,8 +51,8 @@ public class HintState extends GameState {
                 public void onClick(View view) {
                     if (currencies.getCoins() >= hints.getCost(num)) hints.buyHint(num);
                     else {
-                        gsm.setState(GameStateManager.CURRENCYSTATE);
-                        gsm.startNoMoneyAnimation();
+                        app.setState(MainActivity.CURRENCYSTATE);
+                        app.startNoMoneyAnimation();
                     }
                     imageNumberView.invalidate();
                 }

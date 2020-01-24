@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.ciphergame.GameState.GameStateManager;
+import com.example.ciphergame.MainActivity;
 
 public class ImageNumberView extends View {
 
@@ -36,9 +36,9 @@ public class ImageNumberView extends View {
     }
     private int getNumber() {
         if (variable.equals("coin"))
-            return GameStateManager.getCurrencies().getCoins();
+            return MainActivity.getCurrencies().getCoins();
         else if (variable.equals("lives"))
-            return GameStateManager.getCurrencies().getLives();
+            return MainActivity.getCurrencies().getLives();
         else return 1;
     }
 

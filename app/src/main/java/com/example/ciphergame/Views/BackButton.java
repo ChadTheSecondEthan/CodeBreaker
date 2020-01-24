@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.ciphergame.GameState.GameStateManager;
+import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -18,11 +18,11 @@ public class BackButton extends AppCompatButton {
     public BackButton(Context context, AttributeSet attrs) { super(context, attrs); }
     public BackButton(Context context, AttributeSet attrs, int something) { super(context, attrs, something); }
 
-    public void init(@NotNull final GameStateManager gsm) {
+    public void init(@NotNull final MainActivity app) {
         setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gsm.setState(gsm.getPrevState());
+                app.setState(app.getPrevState());
 //                (MediaPlayer.create()) TODO add button click noises
             }
         });

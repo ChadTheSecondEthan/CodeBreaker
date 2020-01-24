@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.ciphergame.GameState.GameStateManager;
+import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.R;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,22 +15,22 @@ public class VolumeButton extends AppCompatButton {
     public VolumeButton(Context context, AttributeSet attrs) { super(context, attrs); }
     public VolumeButton(Context context, AttributeSet attrs, int something) { super(context, attrs, something); }
 
-    public void init(final GameStateManager gsm, int area) {
+    public void init(final MainActivity app, int area) {
         ViewHelper.setGetBiggerTouchListener(this);
         ViewHelper.setWidthAsPercentOfScreen(this, 80 / 9.0);
         ViewHelper.makeSquareWithWidth(this);
-        setBackgroundResource((gsm.isVolumeOn()) ? R.drawable.volume_on_image : R.drawable.volume_off_image);
+        setBackgroundResource((app.isVolumeOn()) ? R.drawable.volume_on_image : R.drawable.volume_off_image);
         setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gsm.getMediaPlayer() != null) {
-                    if (gsm.isVolumeOn())
-                        gsm.getMediaPlayer().pause();
+                if (app.getMediaPlayer() != null) {
+                    if (app.isVolumeOn())
+                        app.getMediaPlayer().pause();
                     else
-                        gsm.getMediaPlayer().start();
+                        app.getMediaPlayer().start();
                 }
-                setBackgroundResource((gsm.isVolumeOn()) ? R.drawable.volume_off_image : R.drawable.volume_on_image);
-                gsm.setVolumeOn(!gsm.isVolumeOn());
+                setBackgroundResource((app.isVolumeOn()) ? R.drawable.volume_off_image : R.drawable.volume_on_image);
+                app.setVolumeOn(!app.isVolumeOn());
             }
         });
         if (area == ViewHelper.BOTTOM_LEFT)

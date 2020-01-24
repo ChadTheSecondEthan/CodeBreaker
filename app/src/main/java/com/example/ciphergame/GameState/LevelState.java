@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.R;
 import com.example.ciphergame.Views.Title;
@@ -20,8 +21,8 @@ public class LevelState extends GameState implements View.OnClickListener {
     private static final int BUTTONS_PER_PAGE = 20;
     private int page = 1;
 
-    LevelState(GameStateManager gsm) {
-        super(gsm);
+    public LevelState(MainActivity app) {
+        super(app);
     }
 
     public void init() {
@@ -55,13 +56,13 @@ public class LevelState extends GameState implements View.OnClickListener {
             ViewHelper.setGetBiggerTouchListener(button);
         }
 
-        ((BackButton) getView(R.id.back_button)).init(gsm);
+        ((BackButton) getView(R.id.back_button)).init(app);
         ((Title) getView(R.id.title)).init(R.string.levelTitle);
     }
 
     private void selectLevel(int level) {
-        gsm.getInLevelState().setLevelNumber(level);
-        gsm.setState(GameStateManager.INLEVELSTATE);
+        app.getInLevelState().setLevelNumber(level);
+        app.setState(MainActivity.INLEVELSTATE);
     }
 
     private void subtractPage() {

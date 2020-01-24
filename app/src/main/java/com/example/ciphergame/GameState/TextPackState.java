@@ -3,6 +3,7 @@ package com.example.ciphergame.GameState;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.Views.Title;
 import com.example.ciphergame.Views.ViewHelper;
@@ -16,17 +17,17 @@ public class TextPackState extends GameState {
         "Ancient Philosophy Texts", "Inspirational", "American History", "Religious Scriptures",
             "", "" };
 
-    TextPackState(GameStateManager gsm) { super(gsm); }
+    public TextPackState(MainActivity app) { super(app); }
 
     public void init() {
         setContentView(R.layout.text_pack_state);
 
-        ((BackButton) getView(R.id.back_button)).init(gsm);
-        ((Title) gsm.getView(R.id.title)).init(R.string.textPackTitle);
+        ((BackButton) getView(R.id.back_button)).init(app);
+        ((Title) app.getView(R.id.title)).init(R.string.textPackTitle);
 
         Button[] textPackButtons = new Button[] {
-                gsm.getView(R.id.button1), gsm.getView(R.id.button2), gsm.getView(R.id.button3),
-                gsm.getView(R.id.button4), gsm.getView(R.id.button5), gsm.getView(R.id.button6) };
+                app.getView(R.id.button1), app.getView(R.id.button2), app.getView(R.id.button3),
+                app.getView(R.id.button4), app.getView(R.id.button5), app.getView(R.id.button6) };
         for (int i = 0; i < textPackButtons.length; i++) {
             ViewHelper.setWidthAndHeightAsPercentOfScreen(textPackButtons[i], 200 / 3.0, 200 / 9.0);
             textPackButtons[i].setText(textPacks[i]);
@@ -36,8 +37,8 @@ public class TextPackState extends GameState {
             textPackButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    gsm.getInLevelState().setTextPack(num);
-                    gsm.setState(GameStateManager.LEVELSTATE);
+                    app.getInLevelState().setTextPack(num);
+                    app.setState(MainActivity.LEVELSTATE);
                 }
             });
         }

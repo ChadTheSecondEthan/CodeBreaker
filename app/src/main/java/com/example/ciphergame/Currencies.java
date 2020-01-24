@@ -1,33 +1,31 @@
 package com.example.ciphergame;
 
-import com.example.ciphergame.GameState.GameStateManager;
-
 import org.jetbrains.annotations.NotNull;
 
 public class Currencies {
 
-    private GameStateManager gsm;
+    private MainActivity app;
 
     private int coins;
     private int lives;
     private static final int MAX_LIVES = 10;
 
-    public Currencies(@NotNull GameStateManager gsm) {
-        this.gsm = gsm;
-        coins = gsm.getData().getInt("coins", 50);
-        lives = gsm.getData().getInt("lives", 5);
+    public Currencies(@NotNull MainActivity app) {
+        this.app = app;
+        coins = app.getData().getInt("coins", 50);
+        lives = app.getData().getInt("lives", 5);
     }
 
     public void addCoins(int num) {
         coins += num;
-        gsm.getDataEditor().putInt("coins", coins);
-        gsm.getDataEditor().apply();
+        app.getDataEditor().putInt("coins", coins);
+        app.getDataEditor().apply();
     }
     public void addLives(int num) {
         lives += num;
         if (lives > MAX_LIVES) lives = MAX_LIVES;
-        gsm.getDataEditor().putInt("lives", lives);
-        gsm.getDataEditor().apply();
+        app.getDataEditor().putInt("lives", lives);
+        app.getDataEditor().apply();
     }
     public void addLife() { addLives(1); }
     public void loseLife() { lives -= 1; }

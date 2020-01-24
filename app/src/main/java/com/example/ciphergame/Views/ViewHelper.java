@@ -25,13 +25,7 @@ public class ViewHelper {
     public static void setPaddingBottomAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, 0, 0, paddingPercent); }
     public static void setPaddingLeftAndRightAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, paddingPercent, 0, paddingPercent, 0); }
     public static void setPaddingTopAndBottomAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, paddingPercent, 0, paddingPercent); }
-//    private static void setPaddingAsPercentOfScreen(@NotNull View v, double leftPercent, double topPercent, double rightPercent, double bottomPercent) {
-//        int left = (leftPercent != 0) ? (int) (onePercentWidth * leftPercent) : v.getPaddingLeft();
-//        int top = (leftPercent != 0) ? (int) (onePercentWidth * topPercent) : v.getPaddingTop();
-//        int right = (leftPercent != 0) ? (int) (onePercentWidth * rightPercent) : v.getPaddingRight();
-//        int bottom = (leftPercent != 0) ? (int) (onePercentWidth * bottomPercent) : v.getPaddingBottom();
-//        v.setPadding(left, top, right, bottom);
-//    }
+
     private static void setPaddingAsPercentOfScreen(@NotNull View v, double leftPercent, double topPercent, double rightPercent, double bottomPercent) {
         int left = (int) (onePercentWidth * leftPercent);
         int top = (int) (onePercentWidth * topPercent);

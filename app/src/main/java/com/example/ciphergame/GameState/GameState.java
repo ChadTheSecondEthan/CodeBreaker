@@ -8,19 +8,18 @@ import com.example.ciphergame.MainActivity;
 
 public abstract class GameState {
 
-    protected GameStateManager gsm;
+    protected MainActivity app;
     static Currencies currencies;
 
-    public GameState(GameStateManager gsm) {
-        this.gsm = gsm;
-        currencies = GameStateManager.getCurrencies();
+    public GameState(MainActivity app) {
+        this.app = app;
+        currencies = MainActivity.getCurrencies();
     }
 
-    protected abstract void init();
+    public abstract void init();
 
-    void setContentView(int i) { gsm.getApp().setContentView(i); }
-    protected MainActivity getApp() { return gsm.getApp(); }
-    DisplayMetrics getDisplayMetrics() { return gsm.getDisplayMetrics(); }
-    protected <T extends View> T getView(int id) { return gsm.getView(id); }
+    void setContentView(int i) { app.setContentView(i); }
+    DisplayMetrics getDisplayMetrics() { return app.getResources().getDisplayMetrics(); }
+    <T extends View> T getView(int id) { return app.findViewById(id); }
 
 }
