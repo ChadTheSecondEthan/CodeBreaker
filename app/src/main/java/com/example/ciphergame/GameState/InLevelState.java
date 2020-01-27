@@ -169,18 +169,21 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private void resetText() {
         String regularText = cipher.getRegularText(textPack, level).toUpperCase();
         int color = app.getApplicationContext().getColor(R.color.opaqueBlack);
+        char[] alphabet = cipher.getCipherAlphabet();
+        // reset letters
         for (int i = 0; i < 26; i++) {
             letters[i].setOnClickListener(this);
             letters[i].setBackgroundResource(R.drawable.circle);
             letters[i].setText(cipherText.contains("" + (char) (i + Cipher.UPPER_CASE_START)) ? "" + (char) (i + Cipher.UPPER_CASE_START) : "-");
         }
+        // reset cipherLetters
         for (int i = 0; i < 26; i++) {
             cipherLetters[i].setOnClickListener(this);
             cipherLetters[i].setBackgroundResource(R.drawable.circle);
             cipherLetters[i].setTextColor(color);
-            if (regularText.contains("" + cipher.getCipherAlphabet()[i]))
+            if (regularText.contains("" + alphabet[i]))
                 for (int j = 0; j < cipherText.length(); j++)
-                    if (withoutHtml(curCipherText).charAt(j) == (char) (i + Cipher.LOWER_CASE_START)) {
+                    if (regularText.charAt(j) == (char) (i + Cipher.LOWER_CASE_START)) {
                         cipherLetters[i].setText("" + cipherText.charAt(j));
                         break;
                     }
@@ -198,32 +201,26 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private void changeTextColor(int letter) {
         // changes the selected letters to red
-        char realLetter = (char) (letter + Cipher.UPPER_CASE_START);
-        char curLetter = realLetter;
-        for (int i = 0; i < cipherText.length(); i++)
-            if (cipherText.charAt(i) == realLetter) {
-                curLetter = withoutHtml(curCipherText).charAt(i);
-                break;
-            }
-        if (letter != -1)
-            curCipherText = curCipherText.replace(WHITE + curLetter + FONT, "" + realLetter)
+        if (letter != -1) {
+            char realLetter = (char) (letter + Cipher.UPPER_CASE_START);
+            char curLetter = realLetter;
+            for (int i = 0; i < cipherText.length(); i++)
+                if (cipherText.charAt(i) == realLetter) {
+                    curLetter = withoutHtml(curCipherText).charAt(i);
+                    break;
+                }
+            text.setText(Html.fromHtml(curCipherText.replace(WHITE + curLetter + FONT, "" + realLetter)
                     .replace(WHITE, "@").replace(FONT, "*")
                     .replace("" + realLetter, RED + realLetter + FONT)
-                    .replace("@", WHITE).replace("*", FONT);
-        else {
-            String s = curCipherText;
-            for (int i = 0; i < cipherLetters.length; i++)
-                if (!cipherLetters[i].getText().equals("" + (char) (i + Cipher.LOWER_CASE_START)) && isRed(firstLetterOf(cipherLetters[i])))
-                    curCipherText = curCipherText.replace(RED + cipherLetters[i].getText(), WHITE + (char) (i + Cipher.LOWER_CASE_START));
-            if (s.equals(curCipherText))
-                curCipherText = curCipherText.replace(RED, "");
-        }
-        updateText();
+                    .replace("@", WHITE).replace("*", FONT), 1));
+        } else updateText();
     }
 
     private void changeText(int oldLetter, int newLetter) {
-        curCipherText = curCipherText.replace(RED + (char) (oldLetter + Cipher.UPPER_CASE_START),
-                WHITE + (char) (newLetter + Cipher.LOWER_CASE_START));
+        curCipherText = curCipherText.replace(WHITE, "*").replace(FONT, "@")
+                .replace("" + (char) (oldLetter + Cipher.UPPER_CASE_START),
+                WHITE + (char) (newLetter + Cipher.LOWER_CASE_START) + FONT)
+                .replace("@", FONT).replace("*",  WHITE);
         updateText();
         app.getDataEditor().putString("curCipherText", curCipherText).apply();
         checkAnswer();
@@ -232,10 +229,10 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private void removeLetter(int index) {
         // deselects a given cipherLetter and assumes the cipherLetter has already been selected
         // TODO make this work
-        if (!isHint(index)) {
+        if (isNotHint(index)) {
             curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
             app.getDataEditor().putString("curCipherText", curCipherText).apply();
-            text.setText(Html.fromHtml(curCipherText, 1));
+            updateText();
         }
     }
 
@@ -269,15 +266,17 @@ public class InLevelState extends GameState implements View.OnClickListener {
         canCorrect = new boolean[26];
         for (int i = 0; i < 26; i++)
             canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
+        // TODO fix this
 
         // pick a random letter to switch
         do randChoice = (int) (Math.random() * 25);
         while (!canCorrect[randChoice]);
 
-        changeTextColor(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START);
         cipherLetters[randChoice].setText("" + cipherAlphabet[randChoice]);
         changeHint(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START, randChoice);
         app.getDataEditor().putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
+        app.setState(MainActivity.INLEVELSTATE);
+        resetCipherLetters();
     }
 
     public void choose() {
@@ -290,7 +289,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             letters[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    changeTextColor(num);
+                    if (letters[num].getText().equals("-")) return;
                     char[] alphabet = cipher.getCipherAlphabet();
                     for (int i = 0; i < 26; i++)
                         if (alphabet[i] == (char) (num + Cipher.UPPER_CASE_START)) {
@@ -338,7 +337,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             }
         for (int i = 0; i < 26; i++)
             if (view.getId() == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-")) {
-                if (letterSelected() && !hintsContainedIn(i) && !isHint(selectedLetter)) {
+                if (letterSelected() && !hintsContainedIn(i) && isNotHint(selectedLetter)) {
                     if (isDifferentThanNormal(i))
                         removeLetter(i);
                     changeText(selectedLetter, i);
@@ -350,6 +349,9 @@ public class InLevelState extends GameState implements View.OnClickListener {
                             break;
                         }
                     selectedLetter = -1;
+                    for (int j = 0; j < 26; j++) {
+                        System.out.println(app.getData().getString("cipherLetter" + j, "_") + ", ");
+                    }
                 } else if (firstLetterOf(cipherLetters[i]) != '!' && app.getData().getString("cipherLetter" + i, "").equals("")) {
                     removeLetter(i);
                     cipherLetters[i].setText("");
@@ -366,11 +368,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private boolean hintsContainedIn(int index) {
         return !app.getData().getString("cipherLetter" + index, "").equals("");
     }
-    private boolean isHint(int letter) {
+    private boolean isNotHint(int letter) {
         for (int i = 0; i < 26; i++)
-            if (app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
-                return true;
-        return false;
+            if (app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.LOWER_CASE_START)) || app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
+                return false;
+        return true;
     }
     private void updateText() { text.setText(Html.fromHtml(curCipherText, 1)); }
 
