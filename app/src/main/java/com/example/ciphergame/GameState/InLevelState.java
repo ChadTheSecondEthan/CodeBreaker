@@ -239,7 +239,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private char[] getCurAlphabet() {
         char[] alphabet = new char[26];
         for (int i = 0; i < cipherLetters.length; i++)
-            alphabet[i] = Character.toLowerCase(firstLetterOf(cipherLetters[i]) == '!' ? (char) (i + Cipher.LOWER_CASE_START) : firstLetterOf(cipherLetters[i]));
+            alphabet[i] = Character.toUpperCase(firstLetterOf(cipherLetters[i]));
         return alphabet;
     }
     private boolean lettersContain(int letter) {
@@ -261,8 +261,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         char[] curCipherAlphabet = getCurAlphabet();
         boolean[] canCorrect;
         int randChoice;
-
-        // find which letters can be swapped
         canCorrect = new boolean[26];
         for (int i = 0; i < 26; i++)
             canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
@@ -364,7 +362,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private char firstLetterOf(Button button) { return (button.getText().length() > 0) ? button.getText().charAt(0) : '!'; }
 
     private String withoutHtml(String s) { return s.replace(FONT, "").replace(RED, "").replace(WHITE, ""); }
-    private boolean isRed(int letter) { return curCipherText.contains(RED + (char) letter); }
     private boolean hintsContainedIn(int index) {
         return !app.getData().getString("cipherLetter" + index, "").equals("");
     }

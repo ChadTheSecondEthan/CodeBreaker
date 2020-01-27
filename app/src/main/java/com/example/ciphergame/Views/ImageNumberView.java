@@ -27,11 +27,12 @@ public class ImageNumberView extends View {
         setPaintColor(Color.BLACK);
     }
 
-    public void setNumber(String variable) { this.variable = variable; }
     public void setPaintColor(int color) {
         paint = new Paint();
         paint.setColor(color);
         paint.setTextSize(50);
+        // TODO fix this
+//        paint.setTypeface(Typeface.createFromFile(getContext().getResources().getFont(R)))
         paint.setTypeface(Typeface.DEFAULT);
     }
     private int getNumber() {
