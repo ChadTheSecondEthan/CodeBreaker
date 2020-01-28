@@ -284,10 +284,12 @@ public class InLevelState extends GameState implements View.OnClickListener {
     public void choose() {
         // TODO add this hint
         app.setState(MainActivity.INLEVELSTATE);
+        resetCipherLetters();
         TextView chooseLetter = getView(R.id.chooseLetterText);
         chooseLetter.setText(R.string.pickLetter);
         chooseLetter.setVisibility(View.VISIBLE);
         // TODO if one on the top has already been used for another hint, it can't be picked, and the bottom letters can't be picked either
+        // TODO do that ^
         for (int i = 0; i < 26; i++) {
             final int num = i;
             letters[i].setOnClickListener(new View.OnClickListener() {
