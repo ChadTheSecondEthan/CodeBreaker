@@ -5,6 +5,8 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -94,6 +96,20 @@ public class ViewHelper {
                 return false;
             }
         };
+    }
+
+    public static AlphaAnimation fadeAnimation(final View v) {
+        AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+        animation.setDuration(1500);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) { v.setVisibility(View.INVISIBLE); }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+        return animation;
     }
 
     public static void setGetBiggerTouchListener(View v) {

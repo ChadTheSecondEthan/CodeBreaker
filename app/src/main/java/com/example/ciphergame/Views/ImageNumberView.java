@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.ciphergame.MainActivity;
+import com.example.ciphergame.R;
 
 public class ImageNumberView extends View {
 
@@ -31,8 +32,6 @@ public class ImageNumberView extends View {
         paint = new Paint();
         paint.setColor(color);
         paint.setTextSize(50);
-        // TODO fix this
-//        paint.setTypeface(Typeface.createFromFile(getContext().getResources().getFont(R)))
         paint.setTypeface(Typeface.DEFAULT);
     }
     private int getNumber() {

@@ -275,12 +275,18 @@ public class InLevelState extends GameState implements View.OnClickListener {
         app.getDataEditor().putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
         app.setState(MainActivity.INLEVELSTATE);
         resetCipherLetters();
+        final TextView lettersSwitched = getView(R.id.chooseLetterText);
+        lettersSwitched.setText(cipherAlphabet[randChoice] + " replaced with " + (char) (randChoice + Cipher.LOWER_CASE_START));
+        lettersSwitched.setVisibility(View.VISIBLE);
+        lettersSwitched.startAnimation(ViewHelper.fadeAnimation(lettersSwitched));
     }
 
     public void choose() {
         // TODO add this hint
         app.setState(MainActivity.INLEVELSTATE);
-        (getView(R.id.chooseLetterText)).setVisibility(View.VISIBLE);
+        TextView chooseLetter = getView(R.id.chooseLetterText);
+        chooseLetter.setText(R.string.pickLetter);
+        chooseLetter.setVisibility(View.VISIBLE);
         // TODO if one on the top has already been used for another hint, it can't be picked, and the bottom letters can't be picked either
         for (int i = 0; i < 26; i++) {
             final int num = i;
@@ -296,18 +302,10 @@ public class InLevelState extends GameState implements View.OnClickListener {
                             app.getDataEditor().putString("cipherLetter" + i, (char) (num + Cipher.LOWER_CASE_START) + "").apply();
                         }
                     resetLetterClicks();
-                    final TextView letterText = getView(R.id.chooseLetterText);
-                    AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
-                    animation.setDuration(1750);
-                    animation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {}
-                        @Override
-                        public void onAnimationEnd(Animation animation) { letterText.setVisibility(View.INVISIBLE); }
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {}
-                    });
-                    letterText.startAnimation(animation);
+                    final TextView chooseLetter = getView(R.id.chooseLetterText);
+                    chooseLetter.setText(R.string.pickLetter);
+                    chooseLetter.setVisibility(View.VISIBLE);
+                    chooseLetter.startAnimation(ViewHelper.fadeAnimation(chooseLetter));
                 }
             });
         }
