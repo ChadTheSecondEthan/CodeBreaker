@@ -34,11 +34,12 @@ public class ImageNumberView extends View {
         paint.setTextSize(50);
         paint.setTypeface(Typeface.DEFAULT);
     }
+
     private int getNumber() {
         if (variable.equals("coin"))
             return MainActivity.getCurrencies().getCoins();
-        else if (variable.equals("lives"))
-            return MainActivity.getCurrencies().getLives();
+//        else if (variable.equals("lives"))
+//            return MainActivity.getCurrencies().getLives();
         else return 1;
     }
 

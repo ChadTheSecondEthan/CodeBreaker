@@ -24,40 +24,21 @@ public class CurrencyState extends GameState {
         setContentView(R.layout.currency_state);
 
         ((BackButton) getView(R.id.back_button)).init(app);
-        final ImageNumberView imageNumberView = getView(R.id.livesNumber);
-        imageNumberView.init(R.drawable.heart, "lives");
 
+        ViewHelper.setMarginTopAsPercentOfScreen(getView(R.id.currency_button1), 12);
         for (Button button : new Button[] {
                 getView(R.id.currency_button1), getView(R.id.currency_button2),
                 getView(R.id.currency_button3), getView(R.id.currency_button4),
                 getView(R.id.currency_button5), getView(R.id.currency_button6) }) {
             ViewHelper.setMarginBottomAsPercentOfScreen(button, 12);
             ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 60, 25);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { imageNumberView.invalidate(); }
-            });
         }
-        ViewHelper.setHeightAsPercentOfScreen(getView(R.id.currencyScrollView), 85);
+        ViewHelper.setHeightAsPercentOfScreen(getView(R.id.currencyScrollView), 100);
     }
 
     public void startNoMoneyAnimation() {
-        final TextView textView = getView(R.id.no_money);
+        TextView textView = getView(R.id.no_money);
         textView.setVisibility(View.VISIBLE);
-        Animation animation = new AlphaAnimation(1.0f, 0.0f);
-        animation.setDuration(2000);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                textView.setVisibility(View.INVISIBLE);
-            }
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        textView.startAnimation(animation);
+        textView.startAnimation(ViewHelper.fadeAnimation(textView));
     }
 }
