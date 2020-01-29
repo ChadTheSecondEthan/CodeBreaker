@@ -191,9 +191,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void checkAnswer() {
-        if (withoutHtml(curCipherText).toLowerCase().equals(cipher.getRegularText(textPack, level))) {
+        if (withoutHtml(curCipherText).toLowerCase().equals(cipher.getRegularText(textPack, level).toLowerCase())) {
+            text.setTextColor(Color.WHITE);
             text.setText("You won");
             currencies.levelComplete();
+            app.removeTexts();
+            for (int i = 0; i < 26; i++) {
+                cipherLetters[i].setOnClickListener(null);
+                letters[i].setOnClickListener(null);
+            }
 //            level++;
 //            gsm.setState(GameStateManager.INLEVELSTATE);
         }
@@ -289,13 +295,12 @@ public class InLevelState extends GameState implements View.OnClickListener {
         chooseLetter.setText(R.string.pickLetter);
         chooseLetter.setVisibility(View.VISIBLE);
         // TODO if one on the top has already been used for another hint, it can't be picked, and the bottom letters can't be picked either
-        // TODO do that ^
         for (int i = 0; i < 26; i++) {
             final int num = i;
             letters[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (letters[num].getText().equals("-")) return;
+                    if (letters[num].getText().equals("-") || !isNotHint(num)) return;
                     char[] alphabet = cipher.getCipherAlphabet();
                     for (int i = 0; i < 26; i++)
                         if (alphabet[i] == (char) (num + Cipher.UPPER_CASE_START)) {
@@ -311,6 +316,16 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 }
             });
         }
+    }
+
+    public void reveal() {
+        app.setState(MainActivity.INLEVELSTATE);
+        char[] alphabet = cipher.getCipherAlphabet();
+        for (int i = 0; i < 26; i++) cipherLetters[i].setText("" + alphabet[i]);
+        curCipherText = cipher.getRegularText(textPack, level).toLowerCase();
+        text.setText(Html.fromHtml(WHITE + curCipherText + FONT, 1));
+        app.getDataEditor().putString("curCipherText", curCipherText);
+        checkAnswer();
     }
 
     private void resetLetterClicks() {

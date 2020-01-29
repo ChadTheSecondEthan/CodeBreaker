@@ -122,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
     public int getPrevState() { return prevState; }
     public InLevelState getInLevelState() { return inLevelState; }
     public <T extends View> T getView(int id) { return findViewById(id); }
+    public void removeTexts() {
+        for (int i = 0; i < 26; i++) dataEditor.remove("cipherLetter" + i).apply();
+        dataEditor.remove("curCipherText").remove("cipherText").remove("hintCipherText").apply();
+    }
 
     public boolean isVolumeOn() { return volumeOn; }
     public void setVolumeOn(boolean b) { volumeOn = b; }

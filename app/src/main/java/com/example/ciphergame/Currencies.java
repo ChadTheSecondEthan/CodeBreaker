@@ -9,7 +9,7 @@ public class Currencies {
     private int coins;
     private int lives;
     private static final int MAX_LIVES = 10;
-    private static final int STARTING_COINS = 80;
+    private static final int STARTING_COINS = 200;
     private static final int STARTING_LIVES = 5;
 
     Currencies(@NotNull MainActivity app) {
@@ -20,14 +20,12 @@ public class Currencies {
 
     public void addCoins(int num) {
         coins += num;
-        app.getDataEditor().putInt("coins", coins);
-        app.getDataEditor().apply();
+        app.getDataEditor().putInt("coins", coins).apply();
     }
     void addLives(int num) {
         lives += num;
         if (lives > MAX_LIVES) lives = MAX_LIVES;
-        app.getDataEditor().putInt("lives", lives);
-        app.getDataEditor().apply();
+        app.getDataEditor().putInt("lives", lives).apply();
     }
     public void addLife() { addLives(1); }
     public void loseLife() { lives -= 1; }

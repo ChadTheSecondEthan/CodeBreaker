@@ -16,23 +16,20 @@ public class Hints {
         inLevelState = app.getInLevelState();
     }
 
-    public int[] getCosts() { return costs; }
     public int getCost(int index) { return costs[index]; }
-    public String[] getNames() { return names; }
     public String getName(int index) { return names[index]; }
 
     public void buyHint(int index) {
         // assumes the user has enough money to buy the hint
         switch (index) {
             case 0:
-                // peek randomly reveals one letter that is incorrect or hasn't been guessed
                 inLevelState.peek();
                 break;
             case 1:
                 inLevelState.choose();
                 break;
             case 2:
-                // TODO add hint 3
+                inLevelState.reveal();
                 break;
         }
         MainActivity.getCurrencies().loseCoins(costs[index]);
