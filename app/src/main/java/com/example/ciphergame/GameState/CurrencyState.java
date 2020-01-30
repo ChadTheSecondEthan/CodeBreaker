@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.R;
-import com.example.ciphergame.Views.ImageNumberView;
 import com.example.ciphergame.Views.ViewHelper;
 
 public class CurrencyState extends GameState {
@@ -24,8 +23,6 @@ public class CurrencyState extends GameState {
         setContentView(R.layout.currency_state);
 
         ((BackButton) getView(R.id.back_button)).init(app);
-        final ImageNumberView imageNumberView = getView(R.id.livesNumber);
-        imageNumberView.init(R.drawable.heart, "lives");
 
         for (Button button : new Button[] {
                 getView(R.id.currency_button1), getView(R.id.currency_button2),
@@ -33,12 +30,9 @@ public class CurrencyState extends GameState {
                 getView(R.id.currency_button5), getView(R.id.currency_button6) }) {
             ViewHelper.setMarginBottomAsPercentOfScreen(button, 12);
             ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 60, 25);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { imageNumberView.invalidate(); }
-            });
+            ViewHelper.centerHorizontally(button);
         }
-        ViewHelper.setHeightAsPercentOfScreen(getView(R.id.currencyScrollView), 85);
+        ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 0);
     }
 
     public void startNoMoneyAnimation() {

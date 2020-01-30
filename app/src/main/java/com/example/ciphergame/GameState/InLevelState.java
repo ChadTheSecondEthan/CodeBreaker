@@ -82,6 +82,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
             button.setBackgroundColor(Color.TRANSPARENT);
             ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 30, 5);
         }
+        Button checkAnswer = getView(R.id.checkAnswer);
+        checkAnswer.setBackgroundColor(Color.TRANSPARENT);
+        checkAnswer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAnswer();
+            }
+        });
+        ViewHelper.setWidthAndHeightAsPercentOfScreen(checkAnswer, 90, 5);
 
         cipher = new Cipher(app.getApplicationContext());
         cipherText = withoutHtml(app.getData().getString("cipherText", cipher.getText(textPack, level)));
@@ -191,17 +200,20 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void checkAnswer() {
-        if (withoutHtml(curCipherText).toLowerCase().equals(cipher.getRegularText(textPack, level).toLowerCase())) {
-            text.setTextColor(Color.WHITE);
-            text.setText("You won");
+        if (withoutHtml(curCipherText).equals(cipher.getRegularText(textPack, level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
+            text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
             currencies.levelComplete();
             app.removeTexts();
             for (int i = 0; i < 26; i++) {
                 cipherLetters[i].setOnClickListener(null);
                 letters[i].setOnClickListener(null);
             }
-//            level++;
-//            gsm.setState(GameStateManager.INLEVELSTATE);
+            level++;
+            if (level == 100) app.setState(MainActivity.LEVELSTATE);
+        } else {
+            TextView wrong = getView(R.id.chooseLetterText);
+            wrong.setText("Wrong answer");
+            wrong.startAnimation(ViewHelper.fadeAnimation(wrong));
         }
     }
 
@@ -325,7 +337,10 @@ public class InLevelState extends GameState implements View.OnClickListener {
         curCipherText = cipher.getRegularText(textPack, level).toLowerCase();
         text.setText(Html.fromHtml(WHITE + curCipherText + FONT, 1));
         app.getDataEditor().putString("curCipherText", curCipherText);
-        checkAnswer();
+        for (int i = 0; i < 26; i++) {
+            letters[i].setOnClickListener(null);
+            cipherLetters[i].setOnClickListener(null);
+        }
     }
 
     private void resetLetterClicks() {

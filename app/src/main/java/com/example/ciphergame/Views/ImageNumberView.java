@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.ciphergame.MainActivity;
-import com.example.ciphergame.R;
 
 public class ImageNumberView extends View {
 
@@ -34,19 +33,18 @@ public class ImageNumberView extends View {
         paint.setTextSize(50);
         paint.setTypeface(Typeface.DEFAULT);
     }
+
     private int getNumber() {
         if (variable.equals("coin"))
             return MainActivity.getCurrencies().getCoins();
-        else if (variable.equals("lives"))
-            return MainActivity.getCurrencies().getLives();
         else return 1;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawText("" + getNumber(), ViewHelper.percentWidth(52), ViewHelper.percentHeight(9.5), paint);
+        canvas.drawText("" + getNumber(), ViewHelper.percentWidth(50), ViewHelper.percentHeight(9.5), paint);
         Drawable drawable = getContext().getDrawable(image);
-        drawable.setBounds((int) ViewHelper.percentWidth(40), (int) ViewHelper.percentHeight(2), (int) ViewHelper.percentWidth(50), (int) ViewHelper.percentHeight(12));
+        drawable.setBounds((int) ViewHelper.percentWidth(38), (int) ViewHelper.percentHeight(2), (int) ViewHelper.percentWidth(48), (int) ViewHelper.percentHeight(12));
         drawable.draw(canvas);
     }
 }
