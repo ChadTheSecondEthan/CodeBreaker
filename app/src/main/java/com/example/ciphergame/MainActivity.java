@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.ciphergame.GameState.*;
 import com.example.ciphergame.Views.ViewHelper;
@@ -27,13 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
     private int currentState;
     private int prevState = -1;
-    public static final int MENUSTATE = 0;
-    public static final int CREDITS = 1;
-    public static final int TEXTPACKSTATE = 2;
-    public static final int LEVELSTATE = 3;
-    public static final int INLEVELSTATE = 4;
-    public static final int HINTSTATE = 5;
-    public static final int CURRENCYSTATE = 6;
+    public static final int TEXTPACKSTATE = 0;
+    public static final int LEVELSTATE = 1;
+    public static final int INLEVELSTATE = 2;
+    public static final int HINTSTATE = 3;
+    public static final int CURRENCYSTATE = 4;
 
     private CurrencyState currencyState;
     private InLevelState inLevelState;
@@ -42,9 +44,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO remove menuState and CreditsState
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_state);
+        setContentView(R.layout.logo);
 
+        final ImageView logo = getView(R.id.logo);
+        ViewHelper.setScales(logo, 0.8f);
+        AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+        animation.setDuration(3000);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) { logo.setVisibility(View.INVISIBLE); }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+        logo.startAnimation(animation);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                init();
+            }
+        }, 3000);
+    }
+
+    private void init() {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
@@ -62,14 +91,12 @@ public class MainActivity extends AppCompatActivity {
         currencies = new Currencies(this);
         volumeOn = data.getBoolean("volume", true);
 
-        currentState = MENUSTATE;
+        currentState = TEXTPACKSTATE;
 
         currencyState = new CurrencyState(this);
         inLevelState = new InLevelState(this);
 
         gameStates = new ArrayList<>();
-        gameStates.add(new MenuState(this));
-        gameStates.add(new Credits(this));
         gameStates.add(new TextPackState(this));
         gameStates.add(new LevelState(this));
         gameStates.add(inLevelState);
@@ -77,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         gameStates.add(currencyState);
 //        musicFiles = new int[] {};
 
-        gameStates.get(MENUSTATE).init();
+        gameStates.get(TEXTPACKSTATE).init();
 //        addMusic();
     }
 
@@ -93,12 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setState(int state) {
         switch (state) {
-            case CREDITS:
-                prevState = MENUSTATE;
-                break;
-            case TEXTPACKSTATE:
-                prevState = MENUSTATE;
-                break;
             case LEVELSTATE:
                 prevState = TEXTPACKSTATE;
                 break;
@@ -123,6 +144,15 @@ public class MainActivity extends AppCompatActivity {
     public int getPrevState() { return prevState; }
     public InLevelState getInLevelState() { return inLevelState; }
     public <T extends View> T getView(int id) { return findViewById(id); }
+    public View[] getViews(int[] ids) {
+        View[] views = new View[ids.length];
+        for (int i = 0; i < ids.length; i++)
+            views[i] = findViewById(ids[i]);
+        return views;
+    }
+    public <T extends View> T[] getViews(String s, int[] ids) {
+        // TODO make it so they put in the class of views they want
+    }
     public void removeTexts() {
         for (int i = 0; i < 26; i++) dataEditor.remove("cipherLetter" + i).apply();
         dataEditor.remove("curCipherText").remove("cipherText").remove("hintCipherText").apply();
