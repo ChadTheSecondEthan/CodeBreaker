@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
         });
         ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
+        ViewHelper.setContext(getApplicationContext());
 
         data = getApplicationContext().getSharedPreferences("data", 0);
         dataEditor = data.edit();

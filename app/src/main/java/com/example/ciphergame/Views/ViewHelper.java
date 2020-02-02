@@ -1,6 +1,7 @@
 package com.example.ciphergame.Views;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,12 +13,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class ViewHelper {
 
+    public static final String RED = "<font color=#FF0000>";
+    public static final String ORANGE = "<font color=#FF7F00>";
+    public static final String YELLOW = "<font color=#FFFF00>";
+    public static final String GREEN = "<font color=#00FF00>";
+    public static final String CYAN = "<font color=#00FFFF>";
+    public static final String FONT = "</font>";
+
     public static final int TOP_RIGHT = 0;
     public static final int BOTTOM_RIGHT = 1;
     public static final int BOTTOM_LEFT = 2;
     public static final int TOP_LEFT = 3;
 
     private static DisplayMetrics displayMetrics;
+    private static Context context;
     private static double onePercentWidth;
     private static double onePercentHeight;
 
@@ -112,6 +121,15 @@ public class ViewHelper {
         return animation;
     }
 
+    public static String coloredText(String text, String color) {
+        return color + text + FONT;
+    }
+
+    public static String coloredText(int source, String color) {
+        String text = context.getString(source);
+        return color + text + FONT;
+    }
+
     public static void setGetBiggerTouchListener(View v) {
         setGetBiggerTouchListener(v, 1.25);
     }
@@ -124,6 +142,7 @@ public class ViewHelper {
         onePercentWidth = displayMetrics.widthPixels / 100.0;
         onePercentHeight = displayMetrics.heightPixels / 100.0;
     }
+    public static void setContext(Context c) { context = c; }
 
     public static int getWidth(View v) { return v.getLayoutParams().width; }
     public static int getHeight(View v) { return v.getLayoutParams().height; }

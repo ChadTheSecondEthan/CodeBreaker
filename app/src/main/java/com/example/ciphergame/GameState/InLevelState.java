@@ -186,6 +186,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             letters[i].setText(cipherText.contains("" + (char) (i + Cipher.UPPER_CASE_START)) ? "" + (char) (i + Cipher.UPPER_CASE_START) : "-");
         }
         // reset cipherLetters
+        System.out.println(regularText + "\n" + cipherText);
         for (int i = 0; i < 26; i++) {
             cipherLetters[i].setOnClickListener(this);
             cipherLetters[i].setBackgroundResource(R.drawable.circle);
@@ -241,7 +242,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 .replace("@", FONT).replace("*",  WHITE);
         updateText();
         app.getDataEditor().putString("curCipherText", curCipherText).apply();
-        checkAnswer();
     }
 
     private void removeLetter(int index) {
@@ -277,12 +277,20 @@ public class InLevelState extends GameState implements View.OnClickListener {
     public void peek() {
         char[] cipherAlphabet = cipher.getCipherAlphabet();
         char[] curCipherAlphabet = getCurAlphabet();
-        boolean[] canCorrect;
         int randChoice;
-        canCorrect = new boolean[26];
+        boolean[] canCorrect = new boolean[26];
+
         for (int i = 0; i < 26; i++)
-            canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
-        // TODO fix this
+            canCorrect[i] = cipherAlphabet[i] == '!';
+        boolean nonCorrectable = true;
+        for (int i = 0; i < 26; i++)
+            if (canCorrect[i]) {
+                nonCorrectable = false;
+                break;
+            }
+        if (nonCorrectable)
+            for (int i = 0; i < 26; i++)
+                canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
 
         // pick a random letter to switch
         do randChoice = (int) (Math.random() * 25);
