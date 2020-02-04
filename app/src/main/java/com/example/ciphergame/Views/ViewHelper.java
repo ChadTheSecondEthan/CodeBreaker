@@ -89,6 +89,7 @@ public class ViewHelper {
     private static void setWidth(@NotNull View v, int width) { v.getLayoutParams().width = width; }
     private static void setHeight(@NotNull View v, int height) { v.getLayoutParams().height = height; }
 
+    public static void setScales(View v, double scale) { setScales(v, scale, scale); }
     public static void setScales(View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y);}
     public static void resetScales(View v) { v.setScaleX(1); v.setScaleY(1); }
 
@@ -107,9 +108,10 @@ public class ViewHelper {
         };
     }
 
-    public static AlphaAnimation fadeAnimation(final View v) {
+    public static AlphaAnimation fadeAnimation(View v) { return fadeAnimation(v, 1500); }
+    public static AlphaAnimation fadeAnimation(final View v, long time) {
         AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
-        animation.setDuration(1500);
+        animation.setDuration(time);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
@@ -143,9 +145,6 @@ public class ViewHelper {
         onePercentHeight = displayMetrics.heightPixels / 100.0;
     }
     public static void setContext(Context c) { context = c; }
-
-    public static int getWidth(View v) { return v.getLayoutParams().width; }
-    public static int getHeight(View v) { return v.getLayoutParams().height; }
 
     public static float percentHeight(double percent) { return (float) (onePercentWidth * percent); }
     public static float percentWidth(double percent) { return (float) (onePercentWidth * percent); }

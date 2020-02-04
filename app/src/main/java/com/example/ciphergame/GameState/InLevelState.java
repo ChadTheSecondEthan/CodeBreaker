@@ -1,6 +1,7 @@
 package com.example.ciphergame.GameState;
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -79,18 +80,18 @@ public class InLevelState extends GameState implements View.OnClickListener {
             public void onClick(View view) { app.setState(MainActivity.CURRENCYSTATE); }
         });
         for (Button button : new Button[] { reset, hint, lives }) {
-            button.setBackgroundColor(Color.TRANSPARENT);
-            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 30, 5);
+//            button.setBackgroundColor(Color.TRANSPARENT);
+            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 30, 7);
         }
         Button checkAnswer = getView(R.id.checkAnswer);
-        checkAnswer.setBackgroundColor(Color.TRANSPARENT);
+//        checkAnswer.setBackgroundColor(Color.TRANSPARENT);
         checkAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkAnswer();
             }
         });
-        ViewHelper.setWidthAndHeightAsPercentOfScreen(checkAnswer, 90, 5);
+        ViewHelper.setWidthAndHeightAsPercentOfScreen(checkAnswer, 90, 7);
 
         cipher = new Cipher(app.getApplicationContext());
         cipherText = withoutHtml(app.getData().getString("cipherText", cipher.getText(textPack, level)));
@@ -101,21 +102,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewTop), 94);
         ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewBottom), 94);
 
-        // TODO make this more efficient
-        letters = new Button[] { getView(R.id.a), getView(R.id.b),
-                getView(R.id.c), getView(R.id.d), getView(R.id.e), getView(R.id.f),
-                getView(R.id.g), getView(R.id.h), getView(R.id.i), getView(R.id.j),
-                getView(R.id.k), getView(R.id.l), getView(R.id.m), getView(R.id.n),
-                getView(R.id.o), getView(R.id.p), getView(R.id.q), getView(R.id.r),
-                getView(R.id.s), getView(R.id.t), getView(R.id.u), getView(R.id.v),
-                getView(R.id.w), getView(R.id.x), getView(R.id.y), getView(R.id.z) };
-        cipherLetters = new Button[] { getView(R.id.a_text), getView(R.id.b_text),
-                getView(R.id.c_text), getView(R.id.d_text), getView(R.id.e_text), getView(R.id.f_text),
-                getView(R.id.g_text), getView(R.id.h_text), getView(R.id.i_text), getView(R.id.j_text),
-                getView(R.id.k_text), getView(R.id.l_text), getView(R.id.m_text), getView(R.id.n_text),
-                getView(R.id.o_text), getView(R.id.p_text), getView(R.id.q_text), getView(R.id.r_text),
-                getView(R.id.s_text), getView(R.id.t_text), getView(R.id.u_text), getView(R.id.v_text),
-                getView(R.id.w_text), getView(R.id.x_text), getView(R.id.y_text), getView(R.id.z_text) };
+        letters = app.getButtons(new int[] { R.id.a, R.id.b, R.id.c, R.id.d, R.id.e, R.id.f, R.id.g,
+                R.id.h, R.id.i, R.id.j, R.id.k, R.id.l, R.id.m, R.id.n, R.id.o, R.id.p, R.id.q, R.id.r,
+                R.id.s, R.id.t, R.id.u, R.id.v, R.id.w, R.id.x, R.id.y, R.id.z });
+        cipherLetters = app.getButtons(new int[] { R.id.a_text, R.id.b_text, R.id.c_text, 
+                R.id.d_text, R.id.e_text, R.id.f_text, R.id.g_text, R.id.h_text, R.id.i_text, 
+                R.id.j_text, R.id.k_text, R.id.l_text, R.id.m_text, R.id.n_text, R.id.o_text, 
+                R.id.p_text, R.id.q_text, R.id.r_text, R.id.s_text, R.id.t_text, R.id.u_text, 
+                R.id.v_text, R.id.w_text, R.id.x_text, R.id.y_text, R.id.z_text });
         for (Button button : letters) {
             ViewHelper.setPaddingBottomAsPercentOfScreen(button, 0.25);
             ViewHelper.setWidthAsPercentOfScreen(button, 10);
@@ -130,7 +124,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
         text = getView(R.id.in_level_text);
         updateText();
-        text.setTextSize((cipherText.length() >= 250) ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
+        text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
 
         Button instructions = getView(R.id.instructions);
         instructions.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +148,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         getView(R.id.instructions).setVisibility((instructionsOpen) ? View.INVISIBLE : View.VISIBLE);
     }
 
-    // TODO fix this
     private void resetAnswer() {
         if (selectedLetter != -1) {
             letters[selectedLetter].setBackgroundResource(R.drawable.circle);
@@ -186,7 +179,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
             letters[i].setText(cipherText.contains("" + (char) (i + Cipher.UPPER_CASE_START)) ? "" + (char) (i + Cipher.UPPER_CASE_START) : "-");
         }
         // reset cipherLetters
-        System.out.println(regularText + "\n" + cipherText);
         for (int i = 0; i < 26; i++) {
             cipherLetters[i].setOnClickListener(this);
             cipherLetters[i].setBackgroundResource(R.drawable.circle);
@@ -201,6 +193,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void checkAnswer() {
+//        selectedLetter = -1;
+        for (Button button : letters) button.setBackgroundResource(R.drawable.circle);
         if (withoutHtml(curCipherText).equals(cipher.getRegularText(textPack, level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
             currencies.levelComplete();
@@ -211,11 +205,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
             }
             level++;
             if (level == 100) app.setState(MainActivity.LEVELSTATE);
-        } else {
-            TextView wrong = getView(R.id.chooseLetterText);
-            wrong.setText("Wrong answer");
-            wrong.startAnimation(ViewHelper.fadeAnimation(wrong));
-        }
+        } else wrongAnswerAnimation();
+    }
+
+    private void wrongAnswerAnimation() {
+        // TODO finish this
     }
 
     private void changeTextColor(int letter) {
@@ -353,6 +347,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private void resetLetterClicks() {
         for (Button button : letters) button.setOnClickListener(this);
+        for (Button button : cipherLetters) button.setOnClickListener(this);
     }
 
     @Override
@@ -372,7 +367,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 changeTextColor(selectedLetter);
             }
         for (int i = 0; i < 26; i++)
-            if (view.getId() == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-")) {
+            if (view.getId() == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-"))
                 if (letterSelected() && !hintsContainedIn(i) && isNotHint(selectedLetter)) {
                     if (isDifferentThanNormal(i))
                         removeLetter(i);
@@ -392,7 +387,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
                     removeLetter(i);
                     cipherLetters[i].setText("");
                 }
-            }
     }
 
     private boolean letterSelected() { return selectedLetter != -1; }

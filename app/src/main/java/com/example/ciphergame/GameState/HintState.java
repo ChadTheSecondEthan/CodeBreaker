@@ -26,14 +26,13 @@ public class HintState extends GameState {
         final ImageNumberView imageNumberView = getView(R.id.coinImageNumber);
         imageNumberView.init(R.drawable.coin, "coin");
 
-        for (View view : new View[] { getView(R.id.hint1), getView(R.id.hint2), getView(R.id.hint3) }) {
+        for (View view : app.getViews(new int[] { R.id.hint1, R.id.hint2, R.id.hint3 })) {
             ViewHelper.setWidthAndHeightAsPercentOfScreen(view, 65, 25);
             ViewHelper.setHorizontalBias(view, 0.5);
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.hint2), 5);
 
-        final ImageView[] coinImages = new ImageView[] {
-                getView(R.id.hint_image1), getView(R.id.hint_image2), getView(R.id.hint_image3) };
+        ImageView[] coinImages = app.getImageViews(new int[] {R.id.hint_image1, R.id.hint_image2, R.id.hint_image3 });
         for (int i = 0; i < coinImages.length; i++) {
             ViewHelper.setWidthAsPercentOfScreen(coinImages[i], 8);
             ViewHelper.makeSquareWithWidth(coinImages[i]);
@@ -41,7 +40,7 @@ public class HintState extends GameState {
             ViewHelper.setMarginTopAsPercentOfScreen(coinImages[i], (i == 0) ? 42 : 41.5);
         }
 
-        Button[] answers = new Button[] { getView(R.id.answer1), getView(R.id.answer2), getView(R.id.answer3) };
+        Button[] answers = app.getButtons(new int[] { R.id.answer1, R.id.answer2, R.id.answer3 });
         final Hints hints = new Hints(app);
         String[] costs = new String[] { "" + hints.getCost(0), "" + hints.getCost(1), "" + hints.getCost(2) };
         for (int i = 0; i < answers.length; i++) {
@@ -50,26 +49,11 @@ public class HintState extends GameState {
                 @Override
                 public void onClick(View view) {
                     if (currencies.getCoins() >= hints.getCost(num)) hints.buyHint(num);
-                    else {
-                        app.setState(MainActivity.CURRENCYSTATE);
-                        app.startNoMoneyAnimation();
-                    }
+                    else app.setState(MainActivity.CURRENCYSTATE).startNoMoneyAnimation();
                     imageNumberView.invalidate();
                 }
             });
-            answers[i].setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        ViewHelper.setScales(view, 1.25, 1.25);
-                        ViewHelper.setScales(coinImages[num], 1.25, 1.25);
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        ViewHelper.resetScales(view);
-                        ViewHelper.resetScales(coinImages[num]);
-                    }
-                    return false;
-                }
-            });
+            ViewHelper.setGetBiggerTouchListener(answers[i], 1.25);
             ViewHelper.setWidthAndHeightAsPercentOfScreen(answers[i], 25, 10);
             answers[i].setText(costs[i]);
             ViewHelper.centerHorizontally(answers[i]);
@@ -77,8 +61,7 @@ public class HintState extends GameState {
             ViewHelper.setPaddingLeftAsPercentOfScreen(answers[i], 12 + (3 - answers[i].getText().length()));
         }
 
-        TextView[] hintTexts = new TextView[] {
-                getView(R.id.hint1_text), getView(R.id.hint2_text), getView(R.id.hint3_text) };
+        TextView[] hintTexts = app.getTextViews(new int[] { R.id.hint1_text, R.id.hint2_text, R.id.hint3_text });
         for (int i = 0; i < hintTexts.length; i++) {
             hintTexts[i].setText(hints.getName(i));
             ViewHelper.setWidthAndHeightAsPercentOfScreen(hintTexts[i], 30, 10);

@@ -1,6 +1,5 @@
 package com.example.ciphergame.GameState;
 
-import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.example.ciphergame.Currencies;
@@ -19,7 +18,6 @@ public abstract class GameState {
     public abstract void init();
 
     void setContentView(int i) { app.setContentView(i); }
-    DisplayMetrics getDisplayMetrics() { return app.getResources().getDisplayMetrics(); }
     <T extends View> T getView(int id) { return app.findViewById(id); }
 
 }

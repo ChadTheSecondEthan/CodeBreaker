@@ -12,7 +12,7 @@ import com.example.ciphergame.Views.ViewHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-public class LevelState extends GameState implements View.OnClickListener {
+public class LevelState extends GameState {
 
     private Button[] buttons;
     private TextView pageText;
@@ -32,15 +32,17 @@ public class LevelState extends GameState implements View.OnClickListener {
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build();
         adView.loadAd(adRequest);
 
-        buttons = new Button[] {
-                getView(R.id.level1), getView(R.id.level2), getView(R.id.level3), getView(R.id.level4),
-                getView(R.id.level5), getView(R.id.level6), getView(R.id.level7), getView(R.id.level8),
-                getView(R.id.level9), getView(R.id.level10), getView(R.id.level11), getView(R.id.level12),
-                getView(R.id.level13), getView(R.id.level14), getView(R.id.level15), getView(R.id.level16),
-                getView(R.id.level17), getView(R.id.level18), getView(R.id.level19), getView(R.id.level20) };
+        buttons = app.getButtons(new int[] { R.id.level1, R.id.level2, R.id.level3, R.id.level4,
+                R.id.level5, R.id.level6, R.id.level7, R.id.level8, R.id.level9, R.id.level10,
+                R.id.level11, R.id.level12, R.id.level13, R.id.level14, R.id.level15, R.id.level16,
+                R.id.level17, R.id.level18, R.id.level19, R.id.level20 });
         for (int i = 0; i < buttons.length; i++) {
+            final int num = i;
             buttons[i].setText("" + (i + 1));
-            buttons[i].setOnClickListener(this);
+            buttons[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
+            });
             ViewHelper.setGetBiggerTouchListener(buttons[i]);
             ViewHelper.setWidthAsPercentOfScreen(buttons[i], 20);
             ViewHelper.makeSquareWithWidth(buttons[i]);
@@ -49,12 +51,19 @@ public class LevelState extends GameState implements View.OnClickListener {
         pageText = getView(R.id.level_page_number);
         pageText.setText("1 / " + NUM_PAGES);
 
-        for (Button button : new Button[] { getView(R.id.level_left_button), getView(R.id.level_right_button) }) {
-            button.setOnClickListener(this);
+        for (Button button : app.getButtons(new int[] { R.id.level_left_button, R.id.level_right_button })) {
             ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 80 / 9.0);
             ViewHelper.makeSquareWithWidth(button);
             ViewHelper.setGetBiggerTouchListener(button);
         }
+        getView(R.id.level_left_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { subtractPage(); }
+        });
+        getView(R.id.level_right_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { addPage(); }
+        });
 
         ((BackButton) getView(R.id.back_button)).init(app);
         ((Title) getView(R.id.title)).init(R.string.levelTitle);
@@ -80,18 +89,5 @@ public class LevelState extends GameState implements View.OnClickListener {
                 buttons[i].setText("" + (i + ((page - 1) * BUTTONS_PER_PAGE) + 1));
             pageText.setText("" + page + " / " + NUM_PAGES);
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        for (int i = 0; i < buttons.length; i++)
-            if (view.getId() == buttons[i].getId()) {
-                selectLevel(i + ((page - 1) * BUTTONS_PER_PAGE));
-                return;
-            }
-        if (view.getId() == R.id.level_left_button)
-            subtractPage();
-        else if (view.getId() == R.id.level_right_button)
-            addPage();
     }
 }

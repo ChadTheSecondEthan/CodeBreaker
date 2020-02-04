@@ -10,25 +10,10 @@
     android:layout_height="match_parent"
     tools:context=".GameState.InLevelState">
 
-<!--    <TextView-->
-<!--        android:id="@+id/level_number"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/allerta"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textColor="#000"-->
-<!--        android:textSize="42sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.0" />-->
-
     <com.example.ciphergame.Views.VolumeButton
         android:id="@+id/volume_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -638,7 +623,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:layout_constraintHorizontal_bias="0.5"
-        ads:layout_constraintVertical_bias="0.8625"
+        ads:layout_constraintVertical_bias="0.8325"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -665,7 +650,7 @@
         android:layout_width="1dp"
         android:layout_height="1dp"
         ads:layout_constraintHorizontal_bias="0.5"
-        ads:layout_constraintVertical_bias="0.9"
+        ads:layout_constraintVertical_bias="0.905"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
