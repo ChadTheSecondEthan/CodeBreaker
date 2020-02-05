@@ -44,9 +44,7 @@ public class TextPackState extends GameState {
             final int num = i;
             textPackButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    app.setState(MainActivity.LEVELSTATE).getInLevelState().setTextPack(num);
-                }
+                public void onClick(View view) { app.setState(MainActivity.LEVELSTATE).getInLevelState().setTextPack(num); }
             });
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.button1), 25 / 3.0, 50 / 3.0);
