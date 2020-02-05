@@ -1,6 +1,7 @@
 package com.example.ciphergame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -44,30 +45,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO remove menuState and CreditsState
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.logo);
-        init();
-//
-//        final ImageView logo = getView(R.id.logo);
-//        logo.startAnimation(ViewHelper.fadeAnimation(logo, 3000));
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                init();
-//            }
-//        }, 3000);
-    }
+        setContentView(R.layout.text_pack_state);
 
-    private void init() {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
         });
-        ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
-        ViewHelper.setContext(getApplicationContext());
+        ViewHelper.setDisplayMetricsAndContext(getResources().getDisplayMetrics(), getApplicationContext());
+
+        final ImageView logo = getView(R.id.logo);
+        logo.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(90), (int) ViewHelper.percentHeight(266 / 4.0 * 0.9)));
+        ViewHelper.center(logo);
+        final long animationTime = 1250;
+        logo.startAnimation(ViewHelper.fadeInAnimation(logo, animationTime));
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                logo.startAnimation(ViewHelper.fadeOutAnimation(logo, animationTime));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        init();
+                    }
+                }, animationTime);
+            }
+        }, animationTime);
+    }
+
+    private void init() {
 
         data = getApplicationContext().getSharedPreferences("data", 0);
         dataEditor = data.edit();
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         gameStates.add(currencyState);
 //        musicFiles = new int[] {};
 
-        gameStates.get(TEXTPACKSTATE).init();
+        setState(TEXTPACKSTATE);
 //        addMusic();
     }
 

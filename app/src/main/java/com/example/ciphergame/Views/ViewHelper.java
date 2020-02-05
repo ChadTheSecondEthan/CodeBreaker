@@ -62,6 +62,7 @@ public class ViewHelper {
 
     public static void centerHorizontally(@NotNull View v) { setHorizontalBias(v, 0.5); }
     public static void centerVertically(@NotNull View v) { setVerticalBias(v, 0.5); }
+    public static void center(@NotNull View v) { setHorizontalBias(v, 0.5); setVerticalBias(v, 0.5);}
     public static void setHorizontalBias(@NotNull View v, double bias) {
         v.setX((float) ((displayMetrics.widthPixels - v.getLayoutParams().width) * bias));
     }
@@ -108,9 +109,24 @@ public class ViewHelper {
         };
     }
 
-    public static AlphaAnimation fadeAnimation(View v) { return fadeAnimation(v, 1500); }
-    public static AlphaAnimation fadeAnimation(final View v, long time) {
+    public static AlphaAnimation fadeOutAnimation(View v) { return fadeOutAnimation(v, 1500); }
+    public static AlphaAnimation fadeOutAnimation(final View v, long time) {
         AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
+        animation.setDuration(time);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationEnd(Animation animation) { v.setVisibility(View.INVISIBLE); }
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+        return animation;
+    }
+
+    public static AlphaAnimation fadeInAnimation(View v) { return fadeOutAnimation(v, 1500); }
+    public static AlphaAnimation fadeInAnimation(final View v, long time) {
+        AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setDuration(time);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -139,12 +155,12 @@ public class ViewHelper {
         v.setOnTouchListener(getBiggerTouchListener(scale));
     }
 
-    public static void setDisplayMetrics(DisplayMetrics dm) {
+    public static void setDisplayMetricsAndContext(DisplayMetrics dm, Context c) {
         displayMetrics = dm;
         onePercentWidth = displayMetrics.widthPixels / 100.0;
         onePercentHeight = displayMetrics.heightPixels / 100.0;
+        context = c;
     }
-    public static void setContext(Context c) { context = c; }
 
     public static float percentHeight(double percent) { return (float) (onePercentWidth * percent); }
     public static float percentWidth(double percent) { return (float) (onePercentWidth * percent); }

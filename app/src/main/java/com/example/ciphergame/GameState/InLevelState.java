@@ -16,10 +16,6 @@ import com.google.android.gms.ads.AdView;
 
 public class InLevelState extends GameState implements View.OnClickListener {
 
-    /*
-        TODO add currencies, like lives and coins, which can be used for hints or answers
-     */
-
     private static final String WHITE = "<font color=#FFFFFF>";
     private static final String RED = "<font color=#FF0000>";
     private static final String FONT = "</font>";
@@ -32,26 +28,19 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private int level;
     private int textPack;
     private Cipher cipher;
-    private String hintCipherText;
-    private String cipherText;
-    private String curCipherText;
+    private String hintCipherText; // contains the hints only
+    private String cipherText; // contains the original ciphered text
+    private String curCipherText; // contains the current text
 
     private boolean instructionsOpen;
 
-    public InLevelState(MainActivity app) {
-        super(app);
-    }
+    public InLevelState(MainActivity app) { super(app); }
 
     public void init() {
         setContentView(R.layout.in_level_state);
 
-        AdView adView = getView(R.id.in_level_ad);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build();
-        adView.loadAd(adRequest);
-
-        BackButton backButton = getView(R.id.back_button);
-        backButton.init(app);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        ((AdView) getView(R.id.in_level_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
+        ((BackButton) getView(R.id.back_button)).init(app).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (instructionsOpen) openInstructions();
@@ -258,7 +247,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 .replace("@", FONT).replace("*",  WHITE);
         updateText();
         app.getDataEditor().putString("curCipherText", curCipherText).apply();
-        System.out.println(withoutHtml(curCipherText));
     }
 
     private void removeLetter(int index) {
@@ -268,7 +256,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
             curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
             app.getDataEditor().putString("curCipherText", curCipherText).apply();
             updateText();
-            System.out.println(curCipherText);
         }
     }
 
@@ -350,7 +337,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         final TextView lettersSwitched = getView(R.id.chooseLetterText);
         lettersSwitched.setText(cipherAlphabet[randChoice] + " replaced with " + (char) (randChoice + Cipher.LOWER_CASE_START));
         lettersSwitched.setVisibility(View.VISIBLE);
-        lettersSwitched.startAnimation(ViewHelper.fadeAnimation(lettersSwitched));
+        lettersSwitched.startAnimation(ViewHelper.fadeOutAnimation(lettersSwitched));
     }
 
     public void choose() {
@@ -378,7 +365,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                     final TextView chooseLetter = getView(R.id.chooseLetterText);
                     chooseLetter.setText(R.string.pickLetter);
                     chooseLetter.setVisibility(View.VISIBLE);
-                    chooseLetter.startAnimation(ViewHelper.fadeAnimation(chooseLetter));
+                    chooseLetter.startAnimation(ViewHelper.fadeOutAnimation(chooseLetter));
                 }
             });
         }

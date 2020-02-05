@@ -35,7 +35,7 @@ public class VolumeButton extends AppCompatButton {
         });
         if (area == ViewHelper.BOTTOM_LEFT)
             ViewHelper.setMarginsAsPercentOfScreen(this, 1, 0 , 0, 1);
-        else if (area == ViewHelper.TOP_LEFT)
-            ViewHelper.setMarginsAsPercentOfScreen(this, 0, 1, 5, 0);
+        else if (area == ViewHelper.TOP_RIGHT)
+            ViewHelper.setMarginsAsPercentOfScreen(this, 0, 0.5, 1, 0);
     }
 }

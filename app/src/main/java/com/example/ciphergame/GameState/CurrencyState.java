@@ -1,8 +1,6 @@
 package com.example.ciphergame.GameState;
 
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,6 +35,6 @@ public class CurrencyState extends GameState {
     public void startNoMoneyAnimation() {
         final TextView textView = getView(R.id.no_money);
         textView.setVisibility(View.VISIBLE);
-        textView.startAnimation(ViewHelper.fadeAnimation(textView));
+        textView.startAnimation(ViewHelper.fadeOutAnimation(textView));
     }
 }

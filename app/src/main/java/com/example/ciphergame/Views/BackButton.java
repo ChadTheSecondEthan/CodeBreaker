@@ -18,7 +18,7 @@ public class BackButton extends AppCompatButton {
     public BackButton(Context context, AttributeSet attrs) { super(context, attrs); }
     public BackButton(Context context, AttributeSet attrs, int something) { super(context, attrs, something); }
 
-    public void init(@NotNull final MainActivity app) {
+    public BackButton init(@NotNull final MainActivity app) {
         setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,5 +32,6 @@ public class BackButton extends AppCompatButton {
         setBackgroundResource(R.drawable.back_button);
         ViewHelper.setWidthAsPercentOfScreen(this, 8);
         ViewHelper.makeSquareWithWidth(this);
+        return this;
     }
 }

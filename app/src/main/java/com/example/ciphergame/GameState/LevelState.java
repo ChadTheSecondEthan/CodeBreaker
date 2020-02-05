@@ -28,9 +28,9 @@ public class LevelState extends GameState {
     public void init() {
         setContentView(R.layout.level_state);
 
-        AdView adView = getView(R.id.level_state_ad);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build();
-        adView.loadAd(adRequest);
+        ((AdView) getView(R.id.level_state_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
+        ((BackButton) getView(R.id.back_button)).init(app);
+        ((Title) getView(R.id.title)).init(R.string.levelTitle);
 
         buttons = app.getButtons(new int[] { R.id.level1, R.id.level2, R.id.level3, R.id.level4,
                 R.id.level5, R.id.level6, R.id.level7, R.id.level8, R.id.level9, R.id.level10,
@@ -64,9 +64,6 @@ public class LevelState extends GameState {
             @Override
             public void onClick(View view) { addPage(); }
         });
-
-        ((BackButton) getView(R.id.back_button)).init(app);
-        ((Title) getView(R.id.title)).init(R.string.levelTitle);
     }
 
     private void selectLevel(int level) {

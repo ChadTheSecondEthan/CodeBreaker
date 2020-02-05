@@ -1,16 +1,17 @@
 package com.example.ciphergame.GameState;
 
-import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.example.ciphergame.MainActivity;
-import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.Views.Title;
 import com.example.ciphergame.Views.ViewHelper;
 import com.example.ciphergame.R;
 import com.example.ciphergame.Views.VolumeButton;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class TextPackState extends GameState {
 
@@ -24,6 +25,8 @@ public class TextPackState extends GameState {
 
     public void init() {
         setContentView(R.layout.text_pack_state);
+        getView(R.id.logo).setVisibility(View.INVISIBLE);
+        getView(R.id.version).setVisibility(View.VISIBLE);
 
         ViewHelper.setMarginsAsPercentOfScreen(getView(R.id.version), 0, 0, 2, 1);
 
@@ -32,8 +35,7 @@ public class TextPackState extends GameState {
         title.setTextSize(32);
         title.setWidth((int) ViewHelper.percentWidth(85));
 
-        VolumeButton volumeButton = getView(R.id.volume_button);
-        volumeButton.init(app, ViewHelper.BOTTOM_LEFT);
+        ((VolumeButton) getView(R.id.volume_button)).init(app, ViewHelper.BOTTOM_LEFT);
 
         Button[] textPackButtons = app.getButtons(new int[] { R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6 });
         for (int i = 0; i < textPackButtons.length; i++) {
