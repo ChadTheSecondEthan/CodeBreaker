@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.os.Handler;
 
@@ -101,14 +102,29 @@ public class InLevelState extends GameState implements View.OnClickListener {
             ViewHelper.setPaddingBottomAsPercentOfScreen(button, 0.25);
             ViewHelper.setWidthAsPercentOfScreen(button, 10);
             ViewHelper.makeSquareWithWidth(button);
+            ViewHelper.setMarginRightAsPercentOfScreen(button, 2.5);
         }
         for (Button button : cipherLetters) {
             ViewHelper.setPaddingBottomAsPercentOfScreen(button, 0.25);
             ViewHelper.setWidthAsPercentOfScreen(button, 10);
             ViewHelper.makeSquareWithWidth(button);
+            ViewHelper.setMarginRightAsPercentOfScreen(button, 2.5);
         }
-        resetText();
+        for (View view : app.getViews(new int[] { R.id.a_small_text, R.id.b_small_text,
+                R.id.c_small_text, R.id.d_small_text, R.id.e_small_text, R.id.f_small_text, R.id.g_small_text,
+                R.id.h_small_text, R.id.i_small_text, R.id.j_small_text, R.id.k_small_text, R.id.l_small_text,
+                R.id.m_small_text, R.id.n_small_text, R.id.o_small_text, R.id.p_small_text, R.id.q_small_text,
+                R.id.r_small_text, R.id.s_small_text, R.id.t_small_text, R.id.u_small_text, R.id.v_small_text,
+                R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text })) {
+            ViewHelper.setWidthAsPercentOfScreen(view, 10);
+            ViewHelper.makeSquareWithWidth(view);
+            ViewHelper.setMarginRightAsPercentOfScreen(view, 2.5);
+        }
+        ViewHelper.setMarginLeftAndRightAsPercentOfScreen(letters[0], 2.5);
+        ViewHelper.setMarginLeftAndRightAsPercentOfScreen(cipherLetters[0], 2.5);
+        ViewHelper.setMarginLeftAndRightAsPercentOfScreen(getView(R.id.a_small_text), 2.5);
 
+        resetText();
         text = getView(R.id.in_level_text);
         updateText();
         text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
@@ -312,8 +328,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         int randChoice;
         boolean[] canCorrect = new boolean[26];
 
-        for (int i = 0; i < 26; i++)
-            canCorrect[i] = cipherAlphabet[i] == '!';
+        for (int i = 0; i < 26; i++) canCorrect[i] = cipherAlphabet[i] == '!';
         boolean nonCorrectable = true;
         for (int i = 0; i < 26; i++)
             if (canCorrect[i]) {
@@ -333,10 +348,20 @@ public class InLevelState extends GameState implements View.OnClickListener {
         app.getDataEditor().putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
         app.setState(MainActivity.INLEVELSTATE);
         resetCipherLetters();
-        final TextView lettersSwitched = getView(R.id.chooseLetterText);
-        lettersSwitched.setText(cipherAlphabet[randChoice] + " replaced with " + (char) (randChoice + Cipher.LOWER_CASE_START));
-        lettersSwitched.setVisibility(View.VISIBLE);
-        lettersSwitched.startAnimation(ViewHelper.fadeOutAnimation(lettersSwitched));
+//        final TextView lettersSwitched = getView(R.id.chooseLetterText);
+//        lettersSwitched.setText(cipherAlphabet[randChoice] + " replaced with " + (char) (randChoice + Cipher.LOWER_CASE_START));
+//        lettersSwitched.setVisibility(View.VISIBLE);
+//        lettersSwitched.startAnimation(ViewHelper.fadeOutAnimation(lettersSwitched));
+
+        final HorizontalScrollView top = getView(R.id.scrollViewTop), bottom = getView(R.id.scrollViewBottom);
+        top.post(new Runnable() {
+            @Override
+            public void run() { top.smoothScrollTo((int) ViewHelper.percentWidth(12.5 * 18.5), 0); }
+        });
+        bottom.post(new Runnable() {
+            @Override
+            public void run() { bottom.smoothScrollTo((int) ViewHelper.percentWidth(12.5 * 26 + 2.5), 0); }
+        });
     }
 
     public void choose() {

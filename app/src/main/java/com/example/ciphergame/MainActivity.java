@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;

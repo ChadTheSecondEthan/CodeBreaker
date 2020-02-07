@@ -1,216 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/in_level_background"
-    android:layout_gravity="bottom"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@drawable/in_level_background"
     tools:context=".GameState.InLevelState">
 
-    <com.example.ciphergame.Views.VolumeButton
-        android:id="@+id/volume_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/checkAnswer"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        ads:layout_constraintHorizontal_bias="0.5"
+        ads:layout_constraintVertical_bias="0.905"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHorizontal_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/in_level_text"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:textAlignment="center"
-        android:textColor="#00FF00"
-        android:textSize="18sp"
+    <Button
+        android:id="@+id/instructions"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/instructions_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1125" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <HorizontalScrollView
         android:id="@+id/scrollViewTop"
         android:layout_width="1dp"
-        android:scrollbars="none"
         android:layout_height="wrap_content"
         android:fillViewport="true"
         android:orientation="horizontal"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.6"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/a"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/b"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/c"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/d"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/e"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/f"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/g"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/h"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/i"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/j"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/k"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/l"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/m"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/n"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/o"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/p"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/q"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/r"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/s"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/t"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/u"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/v"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/w"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/x"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/y"
                 android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="12dp" />
+                android:layout_height="36dp" />
 
             <Button
                 android:id="@+id/z"
-                android:layout_marginEnd="6dp"
                 android:layout_width="36dp"
-                android:layout_height="36dp" />
+                android:layout_height="36dp"
+                android:layout_marginEnd="6dp" />
 
         </LinearLayout>
 
@@ -221,181 +191,154 @@
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:fillViewport="true"
+        android:foregroundGravity="center"
         android:orientation="horizontal"
         android:scrollbars="none"
-        android:foregroundGravity="center"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.76"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76">
 
         <TableLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/a_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/b_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/c_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/d_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/e_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/f_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/g_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/h_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/i_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/j_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/k_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/l_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/m_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/n_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/o_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/p_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/q_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/r_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/s_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/t_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/u_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/v_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/w_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/x_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/y_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp" />
+                    android:layout_height="36dp" />
 
                 <Button
                     android:id="@+id/z_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="6dp" />
+                    android:layout_height="36dp" />
 
             </TableRow>
 
@@ -406,210 +349,183 @@
 
                 <TextView
                     android:id="@+id/a_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="a"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/b_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="b"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/c_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="c"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/d_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="d"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/e_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="e"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/f_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="f"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/g_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="g"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/h_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="h"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/i_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="i"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/j_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="j"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/k_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="k"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/l_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="l"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/m_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="m"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/n_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="n"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/o_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="o"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/p_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="p"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/q_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="q"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/r_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="r"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/s_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="s"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/t_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="t"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/u_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="u"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/v_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="v"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/w_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="w"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/x_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="x"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/y_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="y"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/z_small_text"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginEnd="6dp"
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
                     android:text="z"
                     android:textAlignment="center" />
 
@@ -627,7 +543,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/reset_answer"
@@ -645,59 +561,54 @@
             android:layout_height="1dp" />
     </TableRow>
 
-    <Button
-        android:id="@+id/checkAnswer"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        ads:layout_constraintHorizontal_bias="0.5"
-        ads:layout_constraintVertical_bias="0.905"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/in_level_ad"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/in_level_text"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        ads:adUnitId="ca-app-pub-6560766161336853/4611142123"
-        ads:adSize="BANNER"
-        app:layout_constraintVertical_bias="1.0"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:textColor="#00FF00"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1125" />
 
     <TextView
         android:id="@+id/instructions_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/allerta"
+        android:text="@string/instructions"
+        android:textAlignment="center"
         android:textColor="#000"
         android:textSize="28sp"
-        android:textAlignment="center"
-        android:fontFamily="@font/allerta"
-        android:background="#FFFFFF"
-        android:text="@string/instructions"
         android:visibility="invisible"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/instructions"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/instructions_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/chooseLetterText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/pickLetter"
+        android:textAlignment="center"
+        android:textColor="#FF0000"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
 
     <com.example.ciphergame.Views.BackButton
         android:id="@+id/back_button"
@@ -705,25 +616,33 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/chooseLetterText"
+    <com.example.ciphergame.Views.VolumeButton
+        android:id="@+id/volume_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/in_level_ad"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textColor="#FF0000"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:text="@string/pickLetter"
-        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6560766161336853/4611142123"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

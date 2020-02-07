@@ -11,13 +11,12 @@ import com.example.ciphergame.Views.Title;
 import com.example.ciphergame.Views.ViewHelper;
 import com.example.ciphergame.Views.VolumeButton;
 import com.example.ciphergame.R;
+
 public class TextPackState extends GameState {
 
     // TODO add the names of quote packs, both free and paid for ones
 
-    private String[] textPacks = new String[] {
-        "Pack 1", "Pack 2", "Pack 3", "Pack 4",
-            "Pack 5", "Pack 6" };
+    private String[] textPacks = new String[] {"Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6" };
 
     public TextPackState(MainActivity app) { super(app); }
 
@@ -46,7 +45,6 @@ public class TextPackState extends GameState {
             textPackButtons[i].setText(textPacks[i]);
             ViewHelper.setMarginBottomAsPercentOfScreen(textPackButtons[i], (i != textPackButtons.length - 1) ? marginBottom : marginTop);
             ViewHelper.centerHorizontally(textPackButtons[i]);
-            ViewHelper.setGetBiggerTouchListener(textPackButtons[i], 1.1);
             final int num = i;
             textPackButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
