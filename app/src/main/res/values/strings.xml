@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cryptographic Carnival</string>
+    <string name="app_name">The Codebuster</string>
     <string name="menuTitle">@string/app_name</string>
     <string name="Play">Play</string>
     <string name="high_scores">High Scores</string>

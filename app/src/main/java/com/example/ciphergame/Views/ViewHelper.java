@@ -123,19 +123,9 @@ public class ViewHelper {
         });
         return animation;
     }
-
-    public static AlphaAnimation fadeInAnimation(View v) { return fadeOutAnimation(v, 1500); }
-    public static AlphaAnimation fadeInAnimation(final View v, long time) {
+    public static AlphaAnimation fadeInAnimation(long time) {
         AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setDuration(time);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {}
-            @Override
-            public void onAnimationEnd(Animation animation) { v.setVisibility(View.INVISIBLE); }
-            @Override
-            public void onAnimationRepeat(Animation animation) {}
-        });
         return animation;
     }
 
