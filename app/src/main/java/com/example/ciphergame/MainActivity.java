@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
         ViewHelper.setDisplayMetricsAndContext(getResources().getDisplayMetrics(), getApplicationContext());
 
         final ImageView logo = getView(R.id.logo);
-        logo.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(90), (int) ViewHelper.percentHeight(266 / 4.0 * 0.9)));
+        logo.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(60), (int) ViewHelper.percentHeight(266 / 4.0 * 0.6)));
         ViewHelper.center(logo);
-        final long animationTime = 1250;
-        logo.startAnimation(ViewHelper.fadeInAnimation(logo, animationTime));
+        final long animationTime = 1400;
+        logo.startAnimation(ViewHelper.fadeInAnimation(animationTime));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, animationTime);
             }
-        }, animationTime);
+        }, animationTime + 1000);
     }
 
     private void init() {

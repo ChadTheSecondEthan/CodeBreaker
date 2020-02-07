@@ -26,10 +26,11 @@ public class CurrencyState extends GameState {
                 R.id.currency_button1, R.id.currency_button2, R.id.currency_button3,
                 R.id.currency_button4, R.id.currency_button5, R.id.currency_button6 })) {
             ViewHelper.setMarginBottomAsPercentOfScreen(button, 12);
-            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 60, 25);
+            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 60, 20);
             ViewHelper.centerHorizontally(button);
         }
-        ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 0);
+        ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.currency_button1), 6, 12);
+        ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 6);
     }
 
     public void startNoMoneyAnimation() {

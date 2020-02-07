@@ -122,7 +122,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         });
         ViewHelper.setGetBiggerTouchListener(instructions);
         ViewHelper.setMarginTopAsPercentOfScreen(instructions, 1);
-
         ViewHelper.setPaddingTopAsPercentOfScreen(getView(R.id.instructions_text), 20);
 
         instructionsOpen = false;

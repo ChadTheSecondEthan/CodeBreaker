@@ -35,14 +35,11 @@
             android:id="@+id/currency_button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="24dp"
-            android:paddingBottom="24dp"
             android:orientation="vertical" >
 
             <Button
                 android:id="@+id/currency_button1"
                 android:background="@drawable/black_background"
-                android:layout_marginBottom="24dp"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textColor="#000"
@@ -53,28 +50,24 @@
             <Button
                 android:id="@+id/currency_button2"
                 android:background="@drawable/black_background"
-                android:layout_marginBottom="24dp"
                 android:layout_width="1dp"
                 android:layout_height="1dp" />
 
             <Button
                 android:id="@+id/currency_button3"
                 android:background="@drawable/black_background"
-                android:layout_marginBottom="24dp"
                 android:layout_width="1dp"
                 android:layout_height="1dp" />
 
             <Button
                 android:id="@+id/currency_button4"
                 android:background="@drawable/black_background"
-                android:layout_marginBottom="24dp"
                 android:layout_width="1dp"
                 android:layout_height="1dp" />
 
             <Button
                 android:id="@+id/currency_button5"
                 android:background="@drawable/black_background"
-                android:layout_marginBottom="24dp"
                 android:layout_width="1dp"
                 android:layout_height="1dp" />
 
