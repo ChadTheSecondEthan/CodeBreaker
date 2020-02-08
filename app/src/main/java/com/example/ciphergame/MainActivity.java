@@ -7,10 +7,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private static Currencies currencies;
+    private static Cipher cipher;
     private boolean volumeOn;
 
     private int currentState;
@@ -74,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 }, animationTime);
             }
         }, animationTime + 1000);
+
+        cipher = new Cipher(getApplicationContext());
     }
 
     private void init() {
@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     public int getPrevState() { return prevState; }
     public InLevelState getInLevelState() { return inLevelState; }
     public <T extends View> T getView(int id) { return findViewById(id); }
+    public static Cipher getCipher() { return cipher; }
     public Button[] getButtons(int[] ids) {
         Button[] views = new Button[ids.length];
         for (int i = 0; i < ids.length; i++)
