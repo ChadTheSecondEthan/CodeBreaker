@@ -87,6 +87,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
         hintCipherText = app.getData().getString("hintCipherText", cipherText);
         curCipherText = app.getData().getString("curCipherText", cipherText);
 
+        resetText();
+        text = getView(R.id.in_level_text);
+        updateText();
+        text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
+
         ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewTop), 94);
         ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewBottom), 94);
 
@@ -124,11 +129,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(cipherLetters[0], 2.5);
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(getView(R.id.a_small_text), 2.5);
 
-        resetText();
-        text = getView(R.id.in_level_text);
-        updateText();
-        text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
-
         Button instructions = getView(R.id.instructions);
         instructions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +139,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setGetBiggerTouchListener(instructions);
         ViewHelper.setMarginTopAsPercentOfScreen(instructions, 1);
         ViewHelper.setPaddingTopAsPercentOfScreen(getView(R.id.instructions_text), 20);
+
+        if (app.getData().getBoolean("revealed", false)) resetReveal();
 
         instructionsOpen = false;
     }
@@ -151,6 +153,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void resetAnswer() {
+        if (app.getData().getBoolean("revealed", false)) resetReveal();
         if (selectedLetter != -1) {
             letters[selectedLetter].setBackgroundResource(R.drawable.circle);
             changeTextColor(-1);
@@ -184,14 +187,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
             cipherLetters[i].setOnClickListener(this);
             cipherLetters[i].setBackgroundResource(R.drawable.circle);
             cipherLetters[i].setTextColor(color);
-//            if (regularText.contains("" + alphabet[i]))
-//                for (int j = 0; j < cipherText.length(); j++)
-//                    if (regularText.charAt(j) == (char) (i + Cipher.LOWER_CASE_START)) {
-//                        cipherLetters[i].setText("" + cipherText.charAt(j));
-//                        break;
-//                    }
             if (!(regularText.contains("" + alphabet[i]) && hintCipherText.contains("" + alphabet[i]))) cipherLetters[i].setText("-");
         }
+    }
+
+    private void resetReveal() {
+        text.setText(Html.fromHtml(WHITE + cipher.getRegularText(textPack, level).toLowerCase() + FONT, 0));
+        char[] alphabet = cipher.getCipherAlphabet();
+        for (int i = 0; i < 26; i++) cipherLetters[i].setText("" + alphabet[i]);
     }
 
     private void checkAnswer() {
@@ -326,19 +329,30 @@ public class InLevelState extends GameState implements View.OnClickListener {
         int randChoice;
         boolean[] canCorrect = new boolean[26];
 
-        System.out.println();
-        for (char c : cipherAlphabet) System.out.print(c);
-
-        for (int i = 0; i < 26; i++) canCorrect[i] = cipherAlphabet[i] == '!';
-        boolean nonCorrectable = true;
-        for (int i = 0; i < 26; i++)
-            if (canCorrect[i]) {
-                nonCorrectable = false;
+        // TODO player can't peek if they have all letters selected and some are wrong
+        boolean canPeek = false;
+        for (Button letter : cipherLetters)
+            if (letter.getText().toString().equals("")) {
+                canPeek = true;
                 break;
             }
-        if (nonCorrectable)
-            for (int i = 0; i < 26; i++)
-                canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
+
+        if (!canPeek) {
+            app.setState(MainActivity.LEVELSTATE);
+            text.setText("Cannot peek. No avialable letters to switch.");
+            removeButtonListeners();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateText();
+                    addButtonListeners();
+                }
+            }, 1000);
+            return;
+        }
+
+        for (int i = 0; i < 26; i++)
+            canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
 
         // pick a random letter to switch
         do randChoice = (int) (Math.random() * 25);
@@ -353,8 +367,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         final double SCROLL_END = 232.75;
         final int choice = randChoice;
         final int letter = cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START;
-
-        // TODO keep testing this
 
         // top goes to cipheralphabet[randchoice]
         final HorizontalScrollView top = getView(R.id.scrollViewTop), bottom = getView(R.id.scrollViewBottom);
@@ -429,18 +441,27 @@ public class InLevelState extends GameState implements View.OnClickListener {
         char[] alphabet = cipher.getCipherAlphabet();
         curCipherText = cipher.getRegularText(textPack, level).toLowerCase();
         text.setText(Html.fromHtml(WHITE + curCipherText + FONT, 1));
-        app.getDataEditor().putString("curCipherText", curCipherText);
+        app.getDataEditor().putString("curCipherText", curCipherText)
+            .putString("hintCipherText", curCipherText).putBoolean("revealed", true).apply();
         for (int i = 0; i < 26; i++) {
             cipherLetters[i].setText("" + alphabet[i]);
             letters[i].setOnClickListener(null);
             cipherLetters[i].setOnClickListener(null);
         }
-        getView(R.id.back_button).setOnClickListener(null);
-        getView(R.id.instructions).setOnClickListener(null);
-        getView(R.id.volume_button).setOnClickListener(null);
-        getView(R.id.reset_answer).setOnClickListener(null);
-        getView(R.id.hint_button).setOnClickListener(null);
-        getView(R.id.lives_button).setOnClickListener(null);
+    }
+
+    private void removeButtonListeners() {
+        for (int i = 0; i < 26; i++) {
+            cipherLetters[i].setOnClickListener(null);
+            letters[i].setOnClickListener(null);
+        }
+    }
+
+    private void addButtonListeners() {
+        for (int i = 0; i < 26; i++) {
+            cipherLetters[i].setOnClickListener(this);
+            letters[i].setOnClickListener(this);
+        }
     }
 
     private boolean letterSelected() { return selectedLetter != -1; }
