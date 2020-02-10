@@ -123,6 +123,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(letters[0], 2.5);
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(cipherLetters[0], 2.5);
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(getView(R.id.a_small_text), 2.5);
+        resetCipherLetters();
 
         resetText();
         text = getView(R.id.in_level_text);
