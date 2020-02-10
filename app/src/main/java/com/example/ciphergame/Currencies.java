@@ -20,8 +20,4 @@ public class Currencies {
     }
     void loseCoins(int num) { coins -= num; }
     public int getCoins() { return coins; }
-
-    public void levelComplete() {
-        // TODO add what the player gains from completing the level
-    }
 }

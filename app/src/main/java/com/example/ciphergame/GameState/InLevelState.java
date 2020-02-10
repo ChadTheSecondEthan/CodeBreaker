@@ -141,6 +141,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setGetBiggerTouchListener(instructions);
         ViewHelper.setMarginTopAsPercentOfScreen(instructions, 1);
         ViewHelper.setPaddingTopAsPercentOfScreen(getView(R.id.instructions_text), 20);
+        resetCipherLetters();
 
         instructionsOpen = false;
     }
@@ -193,15 +194,21 @@ public class InLevelState extends GameState implements View.OnClickListener {
         selectedLetter = -1;
         for (Button button : letters) button.setBackgroundResource(R.drawable.circle);
         if (withoutHtml(curCipherText).equals(cipher.getRegularText(textPack, level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
-            text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
-            currencies.levelComplete();
-            app.removeTexts();
-            for (int i = 0; i < 26; i++) {
-                cipherLetters[i].setOnClickListener(null);
-                letters[i].setOnClickListener(null);
-            }
+            text.setText(Html.fromHtml(WHITE + "You won<br>Congratulations!" + FONT, 1));
+            MainActivity.getCurrencies().addCoins(20);
+            removeButtonListeners();
+            app.levelReset();
             level++;
-            if (level == 100) app.setState(MainActivity.LEVELSTATE);
+            if (level == 99) app.setState(MainActivity.LEVELSTATE);
+            else {
+                app.getDataEditor().putBoolean("levelComplete" + level, true).apply();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        app.setState(MainActivity.INLEVELSTATE);
+                    }
+                }, 1000);
+            }
         } else wrongAnswerAnimation();
     }
 
@@ -221,10 +228,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 }
             }
         }, 500);
-        for (int i = 0; i < 26; i++) {
-            letters[i].setOnClickListener(this);
-            cipherLetters[i].setOnClickListener(this);
-        }
+        addButtonListeners();
     }
 
     private void changeTextColor(int letter) {
