@@ -22,12 +22,14 @@ public class CurrencyState extends GameState {
 
         ((BackButton) getView(R.id.back_button)).init(app);
 
-        for (Button button : app.getButtons(new int [] {
+        Button[] buttons = app.getButtons(new int [] {
                 R.id.currency_button1, R.id.currency_button2, R.id.currency_button3,
-                R.id.currency_button4, R.id.currency_button5, R.id.currency_button6 })) {
-            ViewHelper.setMarginBottomAsPercentOfScreen(button, 12);
-            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 60, 20);
-            ViewHelper.centerHorizontally(button);
+                R.id.currency_button4, R.id.currency_button5, R.id.currency_button6 });
+        for (int i = 0; i < buttons.length; i++) {
+            ViewHelper.setMarginBottomAsPercentOfScreen(buttons[i], 12);
+            ViewHelper.setWidthAndHeightAsPercentOfScreen(buttons[i], 60, 20);
+            ViewHelper.centerHorizontally(buttons[i]);
+            buttons[i].setText("Thingy " + i);
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.currency_button1), 6, 12);
         ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 6);

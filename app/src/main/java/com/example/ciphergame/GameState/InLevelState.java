@@ -442,27 +442,22 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private boolean canUseHint() {
-        boolean canPeek = false;
         for (Button letter : cipherLetters)
-            if (letter.getText().toString().equals("")) {
-                canPeek = true;
-                break;
-            }
+            if (letter.getText().toString().equals(""))
+                return true;
 
-        if (!canPeek) {
-            app.setState(MainActivity.INLEVELSTATE);
-            String noUse = "Cannot use hint. No avialable letters to switch.";
-            text.setText(noUse);
-            removeButtonListeners();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    updateText();
-                    addButtonListeners();
-                }
-            }, 1000);
-        }
-        return canPeek;
+        app.setState(MainActivity.INLEVELSTATE);
+        String noUse = "<br><br>Cannot use hint. No avialable letters to switch.";
+        text.setText(Html.fromHtml(noUse, 0));
+        removeButtonListeners();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateText();
+                addButtonListeners();
+            }
+        }, 1000);
+        return false;
     }
 
     private boolean letterSelected() { return selectedLetter != -1; }

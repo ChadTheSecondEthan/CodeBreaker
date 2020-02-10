@@ -43,7 +43,6 @@
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textColor="#000"
-                android:text="@string/video_ad"
                 android:layout_width="1dp"
                 android:layout_height="1dp" />
 
