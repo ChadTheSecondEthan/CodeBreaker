@@ -87,11 +87,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         hintCipherText = app.getData().getString("hintCipherText", cipherText);
         curCipherText = app.getData().getString("curCipherText", cipherText);
 
-        resetText();
-        text = getView(R.id.in_level_text);
-        updateText();
-        text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
-
         ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewTop), 94);
         ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewBottom), 94);
 
@@ -129,6 +124,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(cipherLetters[0], 2.5);
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(getView(R.id.a_small_text), 2.5);
 
+        resetText();
+        text = getView(R.id.in_level_text);
+        updateText();
+        text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
+
         Button instructions = getView(R.id.instructions);
         instructions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,8 +139,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ViewHelper.setGetBiggerTouchListener(instructions);
         ViewHelper.setMarginTopAsPercentOfScreen(instructions, 1);
         ViewHelper.setPaddingTopAsPercentOfScreen(getView(R.id.instructions_text), 20);
-
-        if (app.getData().getBoolean("revealed", false)) resetReveal();
 
         instructionsOpen = false;
     }
@@ -153,10 +151,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void resetAnswer() {
-        if (app.getData().getBoolean("revealed", false)) resetReveal();
-        if (selectedLetter != -1) {
+        if (letterSelected()) {
             letters[selectedLetter].setBackgroundResource(R.drawable.circle);
-            changeTextColor(-1);
             selectedLetter = -1;
         }
         curCipherText = hintCipherText;
@@ -189,12 +185,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
             cipherLetters[i].setTextColor(color);
             if (!(regularText.contains("" + alphabet[i]) && hintCipherText.contains("" + alphabet[i]))) cipherLetters[i].setText("-");
         }
-    }
-
-    private void resetReveal() {
-        text.setText(Html.fromHtml(WHITE + cipher.getRegularText(textPack, level).toLowerCase() + FONT, 0));
-        char[] alphabet = cipher.getCipherAlphabet();
-        for (int i = 0; i < 26; i++) cipherLetters[i].setText("" + alphabet[i]);
     }
 
     private void checkAnswer() {
@@ -277,8 +267,10 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private void changeHint(int oldLetter, int newLetter) {
         changeText(oldLetter, newLetter);
-        hintCipherText = hintCipherText.replace(WHITE + (char) (oldLetter + Cipher.UPPER_CASE_START) + FONT, "" + (char) (oldLetter + Cipher.UPPER_CASE_START))
-                .replace("" + (char) (oldLetter + Cipher.UPPER_CASE_START), WHITE + (char) (newLetter + Cipher.LOWER_CASE_START) + FONT);
+        hintCipherText = hintCipherText.replace(WHITE, "*").replace(FONT, "@")
+                .replace("*" + (char) (oldLetter + Cipher.UPPER_CASE_START) + "@", "" + (char) (oldLetter + Cipher.UPPER_CASE_START))
+                .replace("" + (char) (oldLetter + Cipher.UPPER_CASE_START), "*" + (char) (newLetter + Cipher.LOWER_CASE_START) + "@")
+                .replace("*", WHITE).replace("@", FONT);
         app.getDataEditor().putString("hintCipherText", hintCipherText).apply();
     }
 
@@ -329,27 +321,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         int randChoice;
         boolean[] canCorrect = new boolean[26];
 
-        // TODO player can't peek if they have all letters selected and some are wrong
-        boolean canPeek = false;
-        for (Button letter : cipherLetters)
-            if (letter.getText().toString().equals("")) {
-                canPeek = true;
-                break;
-            }
-
-        if (!canPeek) {
-            app.setState(MainActivity.LEVELSTATE);
-            text.setText("Cannot peek. No avialable letters to switch.");
-            removeButtonListeners();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    updateText();
-                    addButtonListeners();
-                }
-            }, 1000);
-            return;
-        }
+        if (!canUseHint()) return;
 
         for (int i = 0; i < 26; i++)
             canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
@@ -406,6 +378,9 @@ public class InLevelState extends GameState implements View.OnClickListener {
     public void choose() {
         app.setState(MainActivity.INLEVELSTATE);
         resetCipherLetters();
+
+        if (!canUseHint()) return;
+
         TextView chooseLetter = getView(R.id.chooseLetterText);
         chooseLetter.setText(R.string.pickLetter);
         chooseLetter.setVisibility(View.VISIBLE);
@@ -437,17 +412,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     public void reveal() {
+        if (!canUseHint()) return;
+
         app.setState(MainActivity.INLEVELSTATE);
         char[] alphabet = cipher.getCipherAlphabet();
-        curCipherText = cipher.getRegularText(textPack, level).toLowerCase();
-        text.setText(Html.fromHtml(WHITE + curCipherText + FONT, 1));
-        app.getDataEditor().putString("curCipherText", curCipherText)
-            .putString("hintCipherText", curCipherText).putBoolean("revealed", true).apply();
         for (int i = 0; i < 26; i++) {
-            cipherLetters[i].setText("" + alphabet[i]);
-            letters[i].setOnClickListener(null);
-            cipherLetters[i].setOnClickListener(null);
+            changeHint(alphabet[i] - Cipher.UPPER_CASE_START, i);
+            app.getDataEditor().putString("cipherLetter" + i, "" + alphabet[i]).apply();
         }
+        resetCipherLetters();
     }
 
     private void removeButtonListeners() {
@@ -464,6 +437,29 @@ public class InLevelState extends GameState implements View.OnClickListener {
         }
     }
 
+    private boolean canUseHint() {
+        boolean canPeek = false;
+        for (Button letter : cipherLetters)
+            if (letter.getText().toString().equals("")) {
+                canPeek = true;
+                break;
+            }
+
+        if (!canPeek) {
+            app.setState(MainActivity.INLEVELSTATE);
+            text.setText("Cannot peek. No avialable letters to switch.");
+            removeButtonListeners();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    updateText();
+                    addButtonListeners();
+                }
+            }, 1000);
+        }
+        return canPeek;
+    }
+
     private boolean letterSelected() { return selectedLetter != -1; }
     private boolean isDifferentThanNormal(int index) { return !cipherLetters[index].getText().equals(""); }
     private char firstLetterOf(Button button) { return button.getText().length() > 0 ? button.getText().charAt(0) : '!'; }
@@ -478,7 +474,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 return false;
         return true;
     }
-    private void updateText() { text.setText(Html.fromHtml(curCipherText, 1)); }
+    private void updateText() { text.setText(Html.fromHtml(curCipherText, 0)); }
 
     void setLevelNumber(int number) { level = number; }
     void setTextPack(int textPack) { this.textPack = textPack; }
