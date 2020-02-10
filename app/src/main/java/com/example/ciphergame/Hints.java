@@ -9,6 +9,10 @@ public class Hints {
 
     private InLevelState inLevelState;
 
+    public static final int PEEK_COST = 30;
+    public static final int CHOOSE_COST = 50;
+    public static final int REVEAL_COST = 150;
+
     public Hints(MainActivity app) {
         costs = new int[] { 30, 50, 150 };
         names = new String[] { "Peek", "Choose", "Reveal" };
