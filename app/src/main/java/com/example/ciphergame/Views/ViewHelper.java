@@ -2,6 +2,7 @@ package com.example.ciphergame.Views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -129,13 +130,9 @@ public class ViewHelper {
         return animation;
     }
 
-    public static String coloredText(String text, String color) {
-        return color + text + FONT;
-    }
-
-    public static String coloredText(int source, String color) {
-        String text = context.getString(source);
-        return color + text + FONT;
+    public static String gradientText(String text, Color color, Color colorTwo) {
+        // TODO add this
+        return "none";
     }
 
     public static void setGetBiggerTouchListener(View v) {

@@ -1,6 +1,5 @@
 package com.example.ciphergame.GameState;
 
-import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.View;
@@ -19,8 +18,8 @@ import com.google.android.gms.ads.AdView;
 
 public class InLevelState extends GameState implements View.OnClickListener {
 
-    private static final String WHITE = "<font color=#FFFFFF>";
-    private static final String RED = "<font color=#FF0000>";
+    private static final String WHITE = "<font color=#0000FF>";
+    private static final String RED = "<font color=#CC0000>";
     private static final String FONT = "</font>";
 
     private TextView text;
