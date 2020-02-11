@@ -29,7 +29,7 @@ public class CurrencyState extends GameState {
             ViewHelper.setMarginBottomAsPercentOfScreen(buttons[i], 12);
             ViewHelper.setWidthAndHeightAsPercentOfScreen(buttons[i], 60, 20);
             ViewHelper.centerHorizontally(buttons[i]);
-            buttons[i].setText("Thingy " + i);
+            buttons[i].setText("Thingy " + (i + 1));
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.currency_button1), 6, 12);
         ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 6);

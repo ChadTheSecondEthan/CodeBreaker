@@ -1,5 +1,6 @@
 package com.example.ciphergame.GameState;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.View;
@@ -34,8 +35,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private String cipherText; // contains the original ciphered text
     private String curCipherText; // contains the current text
 
-    private boolean instructionsOpen;
-
     public InLevelState(MainActivity app) { super(app); }
 
     public void init() {
@@ -45,8 +44,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         ((BackButton) getView(R.id.back_button)).init(app).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (instructionsOpen) openInstructions();
-                else app.setState(app.getPrevState());
+                app.setState(app.getPrevState());
             }
         });
         ((VolumeButton) getView(R.id.volume_button)).init(app, ViewHelper.TOP_RIGHT);
@@ -131,26 +129,17 @@ public class InLevelState extends GameState implements View.OnClickListener {
         updateText();
         text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
 
-        Button instructions = getView(R.id.instructions);
-        instructions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInstructions();
-            }
-        });
-        ViewHelper.setGetBiggerTouchListener(instructions);
-        ViewHelper.setMarginTopAsPercentOfScreen(instructions, 1);
-        ViewHelper.setPaddingTopAsPercentOfScreen(getView(R.id.instructions_text), 20);
-        resetCipherLetters();
+        if (textPack == 0 && level == 0) startInstructionsTutorial();
 
-        instructionsOpen = false;
+        resetCipherLetters();
     }
 
-    private void openInstructions() {
-        instructionsOpen = !instructionsOpen;
-        getView(R.id.instructions_text).setVisibility((instructionsOpen) ? View.VISIBLE : View.INVISIBLE);
-        getView(R.id.volume_button).setVisibility((instructionsOpen) ? View.INVISIBLE : View.VISIBLE);
-        getView(R.id.instructions).setVisibility((instructionsOpen) ? View.INVISIBLE : View.VISIBLE);
+    private void startInstructionsTutorial() {
+        removeButtonListeners();
+
+        // TODO add a tutorial and take out instructions
+
+        addButtonListeners();
     }
 
     private void resetAnswer() {

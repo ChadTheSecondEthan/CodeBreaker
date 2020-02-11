@@ -1,7 +1,6 @@
 package com.example.ciphergame;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
@@ -14,9 +13,8 @@ class FileHelper {
     FileHelper(Context context) { this.context = context; }
 
     String getText(int textPack, int level) {
-        InputStream inputStream = context.getResources().openRawResource(
-                new int[] { R.raw.texts1, R.raw.texts2, R.raw.texts3, R.raw.texts4, R.raw.texts5 }[textPack]);
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+        BufferedReader br = new BufferedReader(new InputStreamReader(context.getResources().openRawResource(
+                new int[] { R.raw.texts1, R.raw.texts2, R.raw.texts3, R.raw.texts4, R.raw.texts5 }[textPack]), Charset.forName("UTF-8")));
         try {
             for (int i = 1; i < level + 1; i++) br.readLine();
             return br.readLine();
