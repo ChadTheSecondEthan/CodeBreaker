@@ -6,7 +6,7 @@ import android.content.Context;
 
 class FileHelper {
 
-    private Context context;
+    private final Context context;
 
     FileHelper(Context context) { this.context = context; }
 
@@ -43,10 +43,10 @@ class FileHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String string = "";
+        StringBuilder string = new StringBuilder();
         for (int i = offset + 1; i < end; i++)
-            string += chars[i];
-        return string;
+            string.append(chars[i]);
+        return string.toString();
     }
 
     private int findOffsetOfText(InputStream inputStream, int level) {

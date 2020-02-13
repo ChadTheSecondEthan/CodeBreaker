@@ -11,22 +11,16 @@ import android.view.animation.Animation;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"SuspiciousNameCombination", "SameParameterValue", "unused"})
 public class ViewHelper {
 
     public static final String RED = "<font color=#FF0000>";
-    public static final String ORANGE = "<font color=#FF7F00>";
-    public static final String YELLOW = "<font color=#FFFF00>";
-    public static final String GREEN = "<font color=#00FF00>";
-    public static final String CYAN = "<font color=#00FFFF>";
-    public static final String FONT = "</font>";
+    private static final String FONT = "</font>";
 
     public static final int TOP_RIGHT = 0;
-    public static final int BOTTOM_RIGHT = 1;
     public static final int BOTTOM_LEFT = 2;
-    public static final int TOP_LEFT = 3;
 
     private static DisplayMetrics displayMetrics;
-    private static Context context;
     private static double onePercentWidth;
     private static double onePercentHeight;
 
@@ -61,12 +55,11 @@ public class ViewHelper {
     }
 
     public static void centerHorizontally(@NotNull View v) { setHorizontalBias(v, 0.5); }
-    public static void centerVertically(@NotNull View v) { setVerticalBias(v, 0.5); }
     public static void center(@NotNull View v) { setHorizontalBias(v, 0.5); setVerticalBias(v, 0.5);}
     public static void setHorizontalBias(@NotNull View v, double bias) {
         v.setX((float) ((displayMetrics.widthPixels - v.getLayoutParams().width) * bias));
     }
-    public static void setVerticalBias(@NotNull View v, double bias) {
+    private static void setVerticalBias(@NotNull View v, double bias) {
         v.setY((float) ((displayMetrics.heightPixels - v.getLayoutParams().height) * bias));
     }
 
@@ -91,8 +84,8 @@ public class ViewHelper {
     private static void setHeight(@NotNull View v, int height) { v.getLayoutParams().height = height; }
 
     public static void setScales(View v, double scale) { setScales(v, scale, scale); }
-    public static void setScales(View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y);}
-    public static void resetScales(View v) { v.setScaleX(1); v.setScaleY(1); }
+    private static void setScales(View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y);}
+    private static void resetScales(View v) { v.setScaleX(1); v.setScaleY(1); }
 
     public static void moveUpAsPercentOfScreen(@NotNull View v, double percent) { v.setY(v.getY() - (float) (onePercentHeight * percent)); }
 
@@ -133,11 +126,6 @@ public class ViewHelper {
         return color + text + FONT;
     }
 
-    public static String coloredText(int source, String color) {
-        String text = context.getString(source);
-        return color + text + FONT;
-    }
-
     public static void setGetBiggerTouchListener(View v) {
         setGetBiggerTouchListener(v, 1.25);
     }
@@ -149,7 +137,6 @@ public class ViewHelper {
         displayMetrics = dm;
         onePercentWidth = displayMetrics.widthPixels / 100.0;
         onePercentHeight = displayMetrics.heightPixels / 100.0;
-        context = c;
     }
 
     public static float percentHeight(double percent) { return (float) (onePercentWidth * percent); }

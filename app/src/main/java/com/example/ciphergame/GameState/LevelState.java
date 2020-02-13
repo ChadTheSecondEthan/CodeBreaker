@@ -38,7 +38,8 @@ public class LevelState extends GameState {
                 R.id.level17, R.id.level18, R.id.level19, R.id.level20 });
         for (int i = 0; i < buttons.length; i++) {
             final int num = i;
-            buttons[i].setText("" + (i + 1));
+            String text = "" + (i + 1);
+            buttons[i].setText(text);
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
@@ -48,8 +49,9 @@ public class LevelState extends GameState {
             ViewHelper.makeSquareWithWidth(buttons[i]);
         }
 
+        String text = "1 / " + NUM_PAGES;
         pageText = getView(R.id.level_page_number);
-        pageText.setText("1 / " + NUM_PAGES);
+        pageText.setText(text);
 
         for (Button button : app.getButtons(new int[] { R.id.level_left_button, R.id.level_right_button })) {
             ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 80 / 9.0);
@@ -74,17 +76,21 @@ public class LevelState extends GameState {
     private void subtractPage() {
         if (page != 1) {
             page--;
-            for (int i = 0; i < buttons.length; i++)
-                buttons[i].setText("" + (i + ((page - 1) * BUTTONS_PER_PAGE) + 1));
-            pageText.setText("" + page + " / " + NUM_PAGES);
+            updatePages();
         }
     }
     private void addPage() {
         if (page != NUM_PAGES) {
             page++;
-            for (int i = 0; i < buttons.length; i++)
-                buttons[i].setText("" + (i + ((page - 1) * BUTTONS_PER_PAGE) + 1));
-            pageText.setText("" + page + " / " + NUM_PAGES);
+            updatePages();
         }
+    }
+    private void updatePages() {
+        for (int i = 0; i < buttons.length; i++) {
+            String text = "" + (i + ((page - 1) * BUTTONS_PER_PAGE) + 1);
+            buttons[i].setText(text);
+        }
+        String text = "" + page + " / " + NUM_PAGES;
+        pageText.setText(text);
     }
 }

@@ -57,7 +57,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/answer_button_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -94,7 +93,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/hint_image_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -109,19 +107,23 @@
             android:id="@+id/hint_image1"
             android:background="@drawable/coin"
             android:layout_width="1dp"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/hint_image2"
             android:background="@drawable/coin"
             android:layout_width="1dp"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            tools:ignore="ContentDescription"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/hint_image3"
             android:background="@drawable/coin"
             android:layout_width="1dp"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:contentDescription="TODO" />
     </LinearLayout>
 
     <LinearLayout

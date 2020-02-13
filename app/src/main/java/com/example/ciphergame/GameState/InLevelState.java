@@ -42,13 +42,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         setContentView(R.layout.in_level_state);
 
         ((AdView) getView(R.id.in_level_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
-        ((BackButton) getView(R.id.back_button)).init(app).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (instructionsOpen) openInstructions();
-                else app.setState(app.getPrevState());
-            }
-        });
+        ((BackButton) getView(R.id.back_button)).init(app);
         ((VolumeButton) getView(R.id.volume_button)).init(app, ViewHelper.TOP_RIGHT);
 
         Button reset = getView(R.id.reset_answer);
@@ -99,27 +93,28 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 R.id.j_text, R.id.k_text, R.id.l_text, R.id.m_text, R.id.n_text, R.id.o_text, 
                 R.id.p_text, R.id.q_text, R.id.r_text, R.id.s_text, R.id.t_text, R.id.u_text, 
                 R.id.v_text, R.id.w_text, R.id.x_text, R.id.y_text, R.id.z_text });
-        for (Button button : letters) {
-            ViewHelper.setPaddingBottomAsPercentOfScreen(button, 0.25);
-            ViewHelper.setWidthAsPercentOfScreen(button, 10);
-            ViewHelper.makeSquareWithWidth(button);
-            ViewHelper.setMarginRightAsPercentOfScreen(button, 2.5);
+        for (int i = 0; i < 26; i++) {
+            ViewHelper.setPaddingBottomAsPercentOfScreen(letters[i], 0.25);
+            ViewHelper.setWidthAsPercentOfScreen(letters[i], 10);
+            ViewHelper.makeSquareWithWidth(letters[i]);
+            ViewHelper.setMarginRightAsPercentOfScreen(letters[i], 2.5);
+            ViewHelper.setPaddingBottomAsPercentOfScreen(cipherLetters[i], 0.25);
+            ViewHelper.setWidthAsPercentOfScreen(cipherLetters[i], 10);
+            ViewHelper.makeSquareWithWidth(cipherLetters[i]);
+            ViewHelper.setMarginRightAsPercentOfScreen(cipherLetters[i], 2.5);
         }
-        for (Button button : cipherLetters) {
-            ViewHelper.setPaddingBottomAsPercentOfScreen(button, 0.25);
-            ViewHelper.setWidthAsPercentOfScreen(button, 10);
-            ViewHelper.makeSquareWithWidth(button);
-            ViewHelper.setMarginRightAsPercentOfScreen(button, 2.5);
-        }
-        for (View view : app.getViews(new int[] { R.id.a_small_text, R.id.b_small_text,
+        TextView[] smallTexts = app.getTextViews(new int[] { R.id.a_small_text, R.id.b_small_text,
                 R.id.c_small_text, R.id.d_small_text, R.id.e_small_text, R.id.f_small_text, R.id.g_small_text,
                 R.id.h_small_text, R.id.i_small_text, R.id.j_small_text, R.id.k_small_text, R.id.l_small_text,
                 R.id.m_small_text, R.id.n_small_text, R.id.o_small_text, R.id.p_small_text, R.id.q_small_text,
                 R.id.r_small_text, R.id.s_small_text, R.id.t_small_text, R.id.u_small_text, R.id.v_small_text,
-                R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text })) {
-            ViewHelper.setWidthAsPercentOfScreen(view, 10);
-            ViewHelper.makeSquareWithWidth(view);
-            ViewHelper.setMarginRightAsPercentOfScreen(view, 2.5);
+                R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text });
+        for (int i = 0; i < 26; i++) {
+            ViewHelper.setWidthAsPercentOfScreen(smallTexts[i], 10);
+            ViewHelper.makeSquareWithWidth(smallTexts[i]);
+            ViewHelper.setMarginRightAsPercentOfScreen(smallTexts[i], 2.5);
+            String text = "" + (char) (i + Cipher.LOWER_CASE_START);
+            smallTexts[i].setText(text);
         }
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(letters[0], 2.5);
         ViewHelper.setMarginLeftAndRightAsPercentOfScreen(cipherLetters[0], 2.5);
@@ -130,26 +125,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         text = getView(R.id.in_level_text);
         updateText();
         text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
-
-        Button instructions = getView(R.id.instructions);
-        instructions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openInstructions();
-            }
-        });
-        ViewHelper.setGetBiggerTouchListener(instructions);
-        ViewHelper.setMarginTopAsPercentOfScreen(instructions, 1);
-        ViewHelper.setPaddingTopAsPercentOfScreen(getView(R.id.instructions_text), 20);
-
-        instructionsOpen = false;
-    }
-
-    private void openInstructions() {
-        instructionsOpen = !instructionsOpen;
-        getView(R.id.instructions_text).setVisibility((instructionsOpen) ? View.VISIBLE : View.INVISIBLE);
-        getView(R.id.volume_button).setVisibility((instructionsOpen) ? View.INVISIBLE : View.VISIBLE);
-        getView(R.id.instructions).setVisibility((instructionsOpen) ? View.INVISIBLE : View.VISIBLE);
     }
 
     private void resetAnswer() {
@@ -194,7 +169,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         for (Button button : letters) button.setBackgroundResource(R.drawable.circle);
         if (withoutHtml(curCipherText).equals(cipher.getRegularText(textPack, level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
-            currencies.levelComplete();
             app.removeTexts();
             for (int i = 0; i < 26; i++) {
                 cipherLetters[i].setOnClickListener(null);
@@ -298,7 +272,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
                         removeLetter(i);
                     changeText(selectedLetter, i);
                     letters[selectedLetter].setBackgroundResource(R.drawable.circle);
-                    cipherLetters[i].setText("" + (char) (selectedLetter + Cipher.UPPER_CASE_START));
+                    String text = "" + (char) (selectedLetter + Cipher.UPPER_CASE_START);
+                    cipherLetters[i].setText(text);
                     for (int j = 0; j < cipherLetters.length; j++)
                         if (cipherLetters[j].getText().equals("" + (char) (selectedLetter + Cipher.UPPER_CASE_START)) && j != i) {
                             cipherLetters[j].setText("");
@@ -329,7 +304,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
         do randChoice = (int) (Math.random() * 25);
         while (!canCorrect[randChoice]);
 
-        cipherLetters[randChoice].setText("" + cipherAlphabet[randChoice]);
+        String text = "" + cipherAlphabet[randChoice];
+        cipherLetters[randChoice].setText(text);
         changeHint(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START, randChoice);
         app.getDataEditor().putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
         app.setState(MainActivity.INLEVELSTATE);
@@ -395,7 +371,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
                     char[] alphabet = cipher.getCipherAlphabet();
                     for (int i = 0; i < 26; i++)
                         if (alphabet[i] == (char) (num + Cipher.UPPER_CASE_START)) {
-                            cipherLetters[i].setText(alphabet[i] + "");
+                            String text = alphabet[i] + "";
+                            cipherLetters[i].setText(text);
                             changeHint(num, i);
                             app.getDataEditor().putString("cipherLetter" + i, (char) (num + Cipher.LOWER_CASE_START) + "").apply();
                         }
@@ -441,6 +418,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         }
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canUseHint() {
         for (Button letter : cipherLetters)
             if (letter.getText().toString().equals(""))

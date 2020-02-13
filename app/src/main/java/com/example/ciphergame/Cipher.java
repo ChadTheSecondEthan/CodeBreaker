@@ -7,24 +7,24 @@ public class Cipher {
     public static final int LOWER_CASE_START = 97;
     public static final int UPPER_CASE_START = 65;
 
-    private char[] cipherAlphabet;
-    private FileHelper fileHelper;
+    private final char[] cipherAlphabet;
+    private final FileHelper fileHelper;
 
-    public Cipher(Context context) {
+    Cipher(Context context) {
         fileHelper = new FileHelper(context);
         cipherAlphabet = randomAlphabet();
     }
 
     private String encipher(String plainText) {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (char c : plainText.toLowerCase().toCharArray()) {
             if (!Character.isLetter(c)) {
-                text += c;
+                text.append(c);
                 continue;
             }
-            text += cipherAlphabet[c - LOWER_CASE_START];
+            text.append(cipherAlphabet[c - LOWER_CASE_START]);
         }
-        return text.toUpperCase();
+        return text.toString().toUpperCase();
     }
 
     private char[] randomAlphabet() {

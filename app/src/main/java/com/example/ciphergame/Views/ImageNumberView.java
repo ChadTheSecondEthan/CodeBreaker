@@ -11,6 +11,9 @@ import android.view.View;
 
 import com.example.ciphergame.MainActivity;
 
+import java.util.Objects;
+
+@SuppressWarnings("SameParameterValue")
 public class ImageNumberView extends View {
 
     private String variable;
@@ -27,7 +30,7 @@ public class ImageNumberView extends View {
         setPaintColor(Color.BLACK);
     }
 
-    public void setPaintColor(int color) {
+    private void setPaintColor(int color) {
         paint = new Paint();
         paint.setColor(color);
         paint.setTextSize(50);
@@ -44,7 +47,7 @@ public class ImageNumberView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawText("" + getNumber(), ViewHelper.percentWidth(50), ViewHelper.percentHeight(9.5), paint);
         Drawable drawable = getContext().getDrawable(image);
-        drawable.setBounds((int) ViewHelper.percentWidth(38), (int) ViewHelper.percentHeight(2), (int) ViewHelper.percentWidth(48), (int) ViewHelper.percentHeight(12));
+        Objects.requireNonNull(drawable).setBounds((int) ViewHelper.percentWidth(38), (int) ViewHelper.percentHeight(2), (int) ViewHelper.percentWidth(48), (int) ViewHelper.percentHeight(12));
         drawable.draw(canvas);
     }
 }

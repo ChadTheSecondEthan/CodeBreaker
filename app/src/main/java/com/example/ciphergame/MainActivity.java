@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int currentState;
     private int prevState = 0;
-    public static final int TEXTPACKSTATE = 0;
+    private static final int TEXTPACKSTATE = 0;
     public static final int CREDITS = 1;
     public static final int LEVELSTATE = 2;
     public static final int INLEVELSTATE = 3;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
         ViewHelper.setDisplayMetricsAndContext(getResources().getDisplayMetrics(), getApplicationContext());
 
-        final ImageView logo = getView(R.id.logo);
+        final ImageView logo = findViewById(R.id.logo);
         logo.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(60), (int) ViewHelper.percentHeight(266 / 4.0 * 0.6)));
         ViewHelper.center(logo);
         final long animationTime = 1400;
@@ -119,8 +119,6 @@ public class MainActivity extends AppCompatActivity {
     public MainActivity setState(int state) {
         switch (state) {
             case CREDITS:
-                prevState = TEXTPACKSTATE;
-                break;
             case LEVELSTATE:
                 prevState = TEXTPACKSTATE;
                 break;
@@ -145,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
     public static Currencies getCurrencies() { return currencies; }
     public int getPrevState() { return prevState; }
     public InLevelState getInLevelState() { return inLevelState; }
-    public <T extends View> T getView(int id) { return findViewById(id); }
     public static Cipher getCipher() { return cipher; }
     public Button[] getButtons(int[] ids) {
         Button[] views = new Button[ids.length];

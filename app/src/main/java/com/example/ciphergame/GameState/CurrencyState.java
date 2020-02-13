@@ -13,9 +13,7 @@ public class CurrencyState extends GameState {
 
     // TODO add video ad
 
-    public CurrencyState(MainActivity app) {
-        super(app);
-    }
+    public CurrencyState(MainActivity app) { super(app); }
 
     public void init() {
         setContentView(R.layout.currency_state);
@@ -29,7 +27,8 @@ public class CurrencyState extends GameState {
             ViewHelper.setMarginBottomAsPercentOfScreen(buttons[i], 12);
             ViewHelper.setWidthAndHeightAsPercentOfScreen(buttons[i], 60, 20);
             ViewHelper.centerHorizontally(buttons[i]);
-            buttons[i].setText("Thingy " + i);
+            String text = "Thingy" + i;
+            buttons[i].setText(text);
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.currency_button1), 6, 12);
         ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 6);

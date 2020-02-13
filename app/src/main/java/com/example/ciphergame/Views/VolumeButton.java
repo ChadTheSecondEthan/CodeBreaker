@@ -15,7 +15,7 @@ public class VolumeButton extends AppCompatButton {
     public VolumeButton(Context context, AttributeSet attrs) { super(context, attrs); }
     public VolumeButton(Context context, AttributeSet attrs, int something) { super(context, attrs, something); }
 
-    public VolumeButton init(final MainActivity app, int area) {
+    public void init(final MainActivity app, int area) {
         ViewHelper.setGetBiggerTouchListener(this);
         ViewHelper.setWidthAsPercentOfScreen(this, 80 / 9.0);
         ViewHelper.makeSquareWithWidth(this);
@@ -37,6 +37,5 @@ public class VolumeButton extends AppCompatButton {
             ViewHelper.setMarginsAsPercentOfScreen(this, 1, 0 , 0, 1);
         else if (area == ViewHelper.TOP_RIGHT)
             ViewHelper.setMarginsAsPercentOfScreen(this, 0, 0.5, 1, 0);
-        return this;
     }
 }

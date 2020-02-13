@@ -7,10 +7,10 @@ import com.example.ciphergame.MainActivity;
 
 public abstract class GameState {
 
-    protected MainActivity app;
+    final MainActivity app;
     static Currencies currencies;
 
-    public GameState(MainActivity app) {
+    GameState(MainActivity app) {
         this.app = app;
         currencies = MainActivity.getCurrencies();
     }

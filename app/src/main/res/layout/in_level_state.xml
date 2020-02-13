@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
     android:background="@drawable/in_level_background"
-    tools:context=".GameState.InLevelState">
+    tools:context=".GameState.InLevelState"
+    tools:ignore="Overdraw">
 
     <Button
         android:id="@+id/checkAnswer"
@@ -19,18 +20,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/instructions"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/instructions_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 
     <HorizontalScrollView
         android:id="@+id/scrollViewTop"
@@ -238,7 +227,8 @@
                 <Button
                     android:id="@+id/f_text"
                     android:layout_width="36dp"
-                    android:layout_height="36dp" />
+                    android:layout_height="36dp"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/g_text"
@@ -351,182 +341,157 @@
                     android:id="@+id/a_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="a"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/b_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="b"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/c_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="c"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/d_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="d"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/e_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="e"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/f_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="f"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/g_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="g"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/h_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="h"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/i_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="i"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/j_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="j"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/k_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="k"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/l_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="l"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/m_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="m"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/n_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="n"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/o_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="o"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/p_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="p"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/q_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="q"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/r_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="r"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/s_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="s"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    tools:ignore="TooManyViews" />
 
                 <TextView
                     android:id="@+id/t_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="t"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/u_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="u"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/v_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="v"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/w_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="w"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/x_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="x"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/y_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="y"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/z_small_text"
                     android:layout_width="1dp"
                     android:layout_height="1dp"
-                    android:text="z"
                     android:textAlignment="center" />
 
             </TableRow>
@@ -575,24 +540,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1125" />
-
-    <TextView
-        android:id="@+id/instructions_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:fontFamily="@font/allerta"
-        android:text="@string/instructions"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="28sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
         android:id="@+id/chooseLetterText"

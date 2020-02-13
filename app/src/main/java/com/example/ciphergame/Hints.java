@@ -4,10 +4,10 @@ import com.example.ciphergame.GameState.InLevelState;
 
 public class Hints {
 
-    private int[] costs;
-    private String[] names;
+    private final int[] costs;
+    private final String[] names;
 
-    private InLevelState inLevelState;
+    private final InLevelState inLevelState;
 
     public static final int PEEK_COST = 30;
     public static final int CHOOSE_COST = 50;
