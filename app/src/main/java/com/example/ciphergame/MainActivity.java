@@ -77,11 +77,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-
         data = getApplicationContext().getSharedPreferences("data", 0);
         dataEditor = data.edit();
         // TODO when finished with the game, delete these bottom lines
-        dataEditor.remove("cipherText").remove("curCipherText").remove("hintCipherText").apply();
+        dataEditor.remove("cipherText").remove("curCipherText").remove("hintCipherText").remove("coins").apply();
         for (int i = 0; i < 26; i++)
             dataEditor.remove("cipherLetter" + i).apply();
 
@@ -100,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         gameStates.add(inLevelState);
         gameStates.add(new HintState(this));
         gameStates.add(currencyState);
+//        TODO add music
 //        musicFiles = new int[] {};
 
         setState(TEXTPACKSTATE);
@@ -137,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
         return this;
     }
 
+    public void levelReset() {
+        for (int i = 0; i < 26; i++) dataEditor.remove("cipherLetter" + i);
+        dataEditor.remove("cipherText").remove("curCipherText").remove("hintCipherText").apply();
+    }
+
     public SharedPreferences getData() { return data; }
     public SharedPreferences.Editor getDataEditor() { return dataEditor; }
     public MediaPlayer getMediaPlayer() { return mediaPlayer; }
@@ -144,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     public int getPrevState() { return prevState; }
     public InLevelState getInLevelState() { return inLevelState; }
     public static Cipher getCipher() { return cipher; }
+
     public Button[] getButtons(int[] ids) {
         Button[] views = new Button[ids.length];
         for (int i = 0; i < ids.length; i++)
@@ -168,16 +174,9 @@ public class MainActivity extends AppCompatActivity {
             views[i] = findViewById(ids[i]);
         return views;
     }
-    public void removeTexts() {
-        for (int i = 0; i < 26; i++) dataEditor.remove("cipherLetter" + i).apply();
-        dataEditor.remove("curCipherText").remove("cipherText").remove("hintCipherText").apply();
-    }
 
     public boolean isVolumeOn() { return volumeOn; }
     public void setVolumeOn(boolean b) { volumeOn = b; }
 
-    public void startNoMoneyAnimation() {
-        if (currentState == CURRENCYSTATE)
-            currencyState.startNoMoneyAnimation();
-    }
+    public void startNoMoneyAnimation() { if (currentState == CURRENCYSTATE) currencyState.startNoMoneyAnimation(); }
 }

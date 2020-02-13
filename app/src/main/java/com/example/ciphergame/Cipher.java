@@ -40,6 +40,6 @@ public class Cipher {
 
     private char[] getAlphabet() { return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray(); }
     public String getText(int textPack, int level) { return encipher(getRegularText(textPack, level)); }
-    public String getRegularText(int textPack, int level) { return fileHelper.getText(textPack, level).replace("\"", ""); }
+    public String getRegularText(int textPack, int level) { return fileHelper.getText(textPack, level); }
     public char[] getCipherAlphabet() { return cipherAlphabet; }
 }
