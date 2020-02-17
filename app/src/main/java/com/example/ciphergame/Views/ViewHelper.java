@@ -31,10 +31,10 @@ public class ViewHelper {
     public static void setPaddingTopAndBottom(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, paddingPercent, 0, paddingPercent); }
 
     private static void setPaddingAsPercentOfScreen(@NotNull View v, double leftPercent, double topPercent, double rightPercent, double bottomPercent) {
-        int left = (int) (onePercentWidth * leftPercent);
-        int top = (int) (onePercentWidth * topPercent);
-        int right = (int) (onePercentWidth * rightPercent);
-        int bottom = (int) (onePercentWidth * bottomPercent);
+        int left = leftPercent == 0 ? v.getPaddingLeft() : (int) (onePercentWidth * leftPercent);
+        int top = topPercent == 0 ? v.getPaddingTop() : (int) (onePercentHeight * topPercent);
+        int right = rightPercent == 0 ? v.getPaddingRight() : (int) (onePercentWidth * rightPercent);
+        int bottom = bottomPercent == 0 ? v.getPaddingBottom() : (int) (onePercentHeight * bottomPercent);
         v.setPadding(left, top, right, bottom);
     }
 
@@ -60,7 +60,7 @@ public class ViewHelper {
         start.setPadding(toMatch.getPaddingLeft(), toMatch.getPaddingTop(), toMatch.getPaddingRight(), toMatch.getPaddingLeft());
     }
 
-    public static void matchMargins(@NotNull View start, @NotNull View toMatch) {
+    private static void matchMargins(@NotNull View start, @NotNull View toMatch) {
         int left =  ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).leftMargin;
         int top = ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).topMargin;
         int right = ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).rightMargin;
@@ -68,16 +68,17 @@ public class ViewHelper {
         ((ViewGroup.MarginLayoutParams) start.getLayoutParams()).setMargins(left, top, right, bottom);
     }
 
-    public static void matchWidthAndHeight(View start, View toMatch) {
-        // TODO
+    public static void matchLayoutParams(View start, View toMatch) {
+        start.getLayoutParams().width = toMatch.getLayoutParams().width;
+        start.getLayoutParams().height = toMatch.getLayoutParams().height;
     }
 
     public static void centerHorizontally(@NotNull View v) { setHorizontalBias(v, 0.5); }
     public static void center(@NotNull View v) { setHorizontalBias(v, 0.5); setVerticalBias(v, 0.5);}
-    public static void setHorizontalBias(@NotNull View v, double bias) {
+    private static void setHorizontalBias(@NotNull View v, double bias) {
         v.setX((float) ((displayMetrics.widthPixels - v.getLayoutParams().width) * bias));
     }
-    public static void setVerticalBias(@NotNull View v, double bias) {
+    private static void setVerticalBias(@NotNull View v, double bias) {
         v.setY((float) ((displayMetrics.heightPixels - v.getLayoutParams().height) * bias));
     }
 
