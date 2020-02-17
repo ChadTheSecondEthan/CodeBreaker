@@ -20,9 +20,13 @@ public class Title extends AppCompatTextView {
         ViewHelper.setWidthAndHeightAsPercentOfScreen(this, 80, 20);
     }
 
-    public Title init(int title) {
+    public void init(int title) {
         init();
         setText(title);
-        return this;
+    }
+
+    public void init(String title) {
+        init();
+        setText(title);
     }
 }

@@ -9,10 +9,7 @@ import com.example.ciphergame.Views.BackButton;
 
 public class Credits extends GameState {
 
-    public Credits(MainActivity app) {
-        super(app);
-    }
-
+    public Credits(MainActivity app) { super(app); }
 
     public void init() {
         setContentView(R.layout.credits);

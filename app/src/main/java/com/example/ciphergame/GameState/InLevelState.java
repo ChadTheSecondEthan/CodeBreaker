@@ -56,11 +56,11 @@ public class InLevelState extends GameState implements View.OnClickListener {
         });
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { app.setState(MainActivity.HINTSTATE); }
+            public void onClick(View view) { app.setState(MainActivity.PURCHASE); }
         });
         lives.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { app.setState(MainActivity.CURRENCYSTATE); }
+            public void onClick(View view) { app.setState(MainActivity.PURCHASE); }
         });
         for (Button button : new Button[] { reset, hint, lives }) {
             button.setBackgroundColor(Color.TRANSPARENT);
@@ -149,15 +149,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
         String regularText = cipher.getRegularText(textPack, level).toUpperCase();
         int color = app.getApplicationContext().getColor(R.color.opaqueBlack);
         char[] alphabet = cipher.getCipherAlphabet();
+        addButtonListeners();
         // reset letters
         for (int i = 0; i < 26; i++) {
-            letters[i].setOnClickListener(this);
             letters[i].setBackgroundResource(R.drawable.circle);
             letters[i].setText(cipherText.contains("" + (char) (i + Cipher.UPPER_CASE_START)) ? "" + (char) (i + Cipher.UPPER_CASE_START) : "-");
         }
         // reset cipherLetters
         for (int i = 0; i < 26; i++) {
-            cipherLetters[i].setOnClickListener(this);
             cipherLetters[i].setBackgroundResource(R.drawable.circle);
             cipherLetters[i].setTextColor(color);
             if (!(regularText.contains("" + alphabet[i]) && hintCipherText.contains("" + alphabet[i]))) cipherLetters[i].setText("-");
@@ -169,13 +168,20 @@ public class InLevelState extends GameState implements View.OnClickListener {
         for (Button button : letters) button.setBackgroundResource(R.drawable.circle);
         if (withoutHtml(curCipherText).equals(cipher.getRegularText(textPack, level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
-            app.removeTexts();
-            for (int i = 0; i < 26; i++) {
-                cipherLetters[i].setOnClickListener(null);
-                letters[i].setOnClickListener(null);
-            }
+            app.levelReset();
             level++;
             if (level == 100) app.setState(MainActivity.LEVELSTATE);
+            else {
+                removeButtonListeners();
+                for (int i = 0; i < 26; i++) {
+                    letters[i].setBackgroundResource(R.drawable.green_circle);
+                    cipherLetters[i].setBackgroundResource(R.drawable.green_circle);
+                }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() { app.setState(MainActivity.INLEVELSTATE); }
+                }, 1000);
+            }
         } else wrongAnswerAnimation();
     }
 
@@ -183,9 +189,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
         for (int i = 0; i < 26; i++) {
             letters[i].setBackgroundResource(R.drawable.red_circle);
             cipherLetters[i].setBackgroundResource(R.drawable.red_circle);
-            letters[i].setOnClickListener(null);
-            cipherLetters[i].setOnClickListener(null);
         }
+        removeButtonListeners();
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -195,10 +200,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 }
             }
         }, 500);
-        for (int i = 0; i < 26; i++) {
-            letters[i].setOnClickListener(this);
-            cipherLetters[i].setOnClickListener(this);
-        }
+        addButtonListeners();
     }
 
     private void changeTextColor(int letter) {

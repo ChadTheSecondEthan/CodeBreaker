@@ -59,7 +59,7 @@ public class ViewHelper {
     public static void setHorizontalBias(@NotNull View v, double bias) {
         v.setX((float) ((displayMetrics.widthPixels - v.getLayoutParams().width) * bias));
     }
-    private static void setVerticalBias(@NotNull View v, double bias) {
+    public static void setVerticalBias(@NotNull View v, double bias) {
         v.setY((float) ((displayMetrics.heightPixels - v.getLayoutParams().height) * bias));
     }
 

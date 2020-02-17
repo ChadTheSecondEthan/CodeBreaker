@@ -6,4 +6,6 @@
     <string name="textPackTitle">Select Text Pack</string>
     <string name="no_money">Not Enough Coins</string>
     <string name="pickLetter">Pick a letter on top to be solved</string>
+    <string name="play">Play</string>
+    <string name="buy">Buy</string>
 </resources>

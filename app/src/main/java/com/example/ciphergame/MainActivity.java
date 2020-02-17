@@ -32,14 +32,17 @@ public class MainActivity extends AppCompatActivity {
 
     private int currentState;
     private int prevState = 0;
-    private static final int TEXTPACKSTATE = 0;
-    public static final int CREDITS = 1;
-    public static final int LEVELSTATE = 2;
-    public static final int INLEVELSTATE = 3;
-    public static final int HINTSTATE = 4;
-    public static final int CURRENCYSTATE = 5;
+    public static final int MENU = 0;
+    public static final int TEXTPACKSTATE = 1;
+    public static final int CREDITS = 2;
+    public static final int LEVELSTATE = 3;
+    public static final int INLEVELSTATE = 4;
+    public static final int PURCHASE = 5;
+//    public static final int HINTSTATE = 5;
+//    public static final int CURRENCYSTATE = 6;
 
-    private CurrencyState currencyState;
+//    private CurrencyState currencyState;
+    private Purchase purchase;
     private InLevelState inLevelState;
     private ArrayList<GameState> gameStates;
 //    int[] musicFiles;
@@ -47,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.text_pack_state);
+        setContentView(R.layout.menu_state);
+        findViewById(R.id.background).setBackgroundColor(getResources().getColor(R.color.loadingScreen, null));
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -87,22 +91,24 @@ public class MainActivity extends AppCompatActivity {
         currencies = new Currencies(this);
         volumeOn = data.getBoolean("volume", true);
 
-        currentState = TEXTPACKSTATE;
-
-        currencyState = new CurrencyState(this);
+//        currencyState = new CurrencyState(this);
+        purchase = new Purchase(this);
         inLevelState = new InLevelState(this);
 
         gameStates = new ArrayList<>();
+        gameStates.add(new Menu(this));
         gameStates.add(new TextPackState(this));
         gameStates.add(new Credits(this));
         gameStates.add(new LevelState(this));
         gameStates.add(inLevelState);
-        gameStates.add(new HintState(this));
-        gameStates.add(currencyState);
+        gameStates.add(new Purchase(this));
+//        gameStates.add(new HintState(this));
+//        gameStates.add(currencyState);
 //        TODO add music
 //        musicFiles = new int[] {};
 
-        setState(TEXTPACKSTATE);
+        currentState = MENU;
+        gameStates.get(currentState).init();
 //        addMusic();
     }
 
@@ -118,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
 
     public MainActivity setState(int state) {
         switch (state) {
+            case MENU:
+            case PURCHASE:
+                prevState = currentState;
+                break;
             case CREDITS:
             case LEVELSTATE:
                 prevState = TEXTPACKSTATE;
@@ -125,12 +135,8 @@ public class MainActivity extends AppCompatActivity {
             case INLEVELSTATE:
                 prevState = LEVELSTATE;
                 break;
-            case HINTSTATE:
-                prevState = currentState;
-                break;
-            case CURRENCYSTATE:
-                prevState = INLEVELSTATE;
-                break;
+            case TEXTPACKSTATE:
+                prevState = MENU;
         }
         currentState = state;
         gameStates.get(currentState).init();
@@ -178,5 +184,5 @@ public class MainActivity extends AppCompatActivity {
     public boolean isVolumeOn() { return volumeOn; }
     public void setVolumeOn(boolean b) { volumeOn = b; }
 
-    public void startNoMoneyAnimation() { if (currentState == CURRENCYSTATE) currencyState.startNoMoneyAnimation(); }
+    public void startNoMoneyAnimation() { if (currentState == PURCHASE) purchase.startNoMoneyAnimation(); }
 }

@@ -1,6 +1,5 @@
 package com.example.ciphergame.GameState;
 
-import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,20 +7,33 @@ import android.widget.TextView;
 
 import com.example.ciphergame.Hints;
 import com.example.ciphergame.MainActivity;
-import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.R;
+import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.Views.ImageNumberView;
 import com.example.ciphergame.Views.ViewHelper;
 
-public class HintState extends GameState {
+public class Purchase extends GameState {
 
-    public HintState(MainActivity app) { super(app); }
+    public Purchase(MainActivity app) { super(app); }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void init() {
-        setContentView(R.layout.hint_state);
+        setContentView(R.layout.purchase);
 
         ((BackButton) getView(R.id.back_button)).init(app);
+
+        Button[] buttons = app.getButtons(new int [] {
+                R.id.currency_button1, R.id.currency_button2, R.id.currency_button3,
+                R.id.currency_button4, R.id.currency_button5, R.id.currency_button6 });
+        for (int i = 0; i < buttons.length; i++) {
+            ViewHelper.setMarginBottomAsPercentOfScreen(buttons[i], 12);
+            ViewHelper.setWidthAndHeightAsPercentOfScreen(buttons[i], 60, 20);
+            ViewHelper.centerHorizontally(buttons[i]);
+            String text = "Thingy" + i;
+            buttons[i].setText(text);
+        }
+        ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.currency_button1), 6, 12);
+        ViewHelper.setMarginBottomAsPercentOfScreen(getView(R.id.currency_button6), 6);
+
         final ImageNumberView imageNumberView = getView(R.id.coinImageNumber);
         imageNumberView.init(R.drawable.coin, "coin");
 
@@ -31,12 +43,12 @@ public class HintState extends GameState {
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.hint2), 5);
 
-        ImageView[] coinImages = app.getImageViews(new int[] {R.id.hint_image1, R.id.hint_image2, R.id.hint_image3 });
+        ImageView[] coinImages = app.getImageViews(new int[] { R.id.hint_image1, R.id.hint_image2, R.id.hint_image3 });
         for (int i = 0; i < coinImages.length; i++) {
             ViewHelper.setWidthAsPercentOfScreen(coinImages[i], 8);
             ViewHelper.makeSquareWithWidth(coinImages[i]);
             ViewHelper.setHorizontalBias(coinImages[i], 0.43);
-            ViewHelper.setMarginTopAsPercentOfScreen(coinImages[i], (i == 0) ? 42 : 41.5);
+//            ViewHelper.setMarginTopAsPercentOfScreen(coinImages[i], (i == 0) ? 42 : 41.5);
         }
 
         Button[] answers = app.getButtons(new int[] { R.id.answer1, R.id.answer2, R.id.answer3 });
@@ -48,7 +60,7 @@ public class HintState extends GameState {
                 @Override
                 public void onClick(View view) {
                     if (currencies.getCoins() >= hints.getCost(num)) hints.buyHint(num);
-                    else app.setState(MainActivity.CURRENCYSTATE).startNoMoneyAnimation();
+                    else startNoMoneyAnimation();
                     imageNumberView.invalidate();
                 }
             });
@@ -67,5 +79,11 @@ public class HintState extends GameState {
             ViewHelper.setMarginTopAsPercentOfScreen(hintTexts[i], (i == 0) ? 27 : 31.5);
             ViewHelper.centerHorizontally(hintTexts[i]);
         }
+    }
+
+    public void startNoMoneyAnimation() {
+        final TextView textView = getView(R.id.no_money);
+        textView.setVisibility(View.VISIBLE);
+        textView.startAnimation(ViewHelper.fadeOutAnimation(textView));
     }
 }

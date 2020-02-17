@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.ciphergame.MainActivity;
+import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.Views.Title;
 import com.example.ciphergame.Views.ViewHelper;
-import com.example.ciphergame.Views.VolumeButton;
 import com.example.ciphergame.R;
 
 public class TextPackState extends GameState {
@@ -22,20 +22,17 @@ public class TextPackState extends GameState {
 
     public void init() {
         setContentView(R.layout.text_pack_state);
-        getView(R.id.logo).setVisibility(View.INVISIBLE);
-        getView(R.id.version).setVisibility(View.VISIBLE);
-
-        ViewHelper.setMarginsAsPercentOfScreen(getView(R.id.version), 0, 0, 2, 1);
 
         Title title = getView(R.id.title);
-        title.init(R.string.textPackTitle).setTextSize(20);
+        title.init(R.string.textPackTitle);
+        title.setTextSize(20);
         ViewHelper.setWidthAsPercentOfScreen(title, 100);
 
         SpannableString string = new SpannableString(Html.fromHtml("The Codebuster<br>Select Text Pack", 0));
         string.setSpan(new RelativeSizeSpan(1.6f), 0, 14, 0);
         title.setText(string);
 
-        ((VolumeButton) getView(R.id.volume_button)).init(app, ViewHelper.BOTTOM_LEFT);
+        ((BackButton) getView(R.id.back_button)).init(app);
 
         double marginTop = 6.25;
         double marginBottom = marginTop * 266 / 400.0;
@@ -53,13 +50,5 @@ public class TextPackState extends GameState {
         }
         ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.button1), marginTop, marginBottom);
         ViewHelper.setHeightAsPercentOfScreen(getView(R.id.textPackView), 77.5);
-
-        final Button creditsButton = getView(R.id.creditsButton);
-        ViewHelper.setWidthAndHeightAsPercentOfScreen(creditsButton, 22.5, 7);
-        creditsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { app.setState(MainActivity.CREDITS); }
-        });
-        ViewHelper.setGetBiggerTouchListener(creditsButton);
     }
 }
