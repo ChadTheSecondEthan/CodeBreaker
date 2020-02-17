@@ -8,7 +8,7 @@
 
     <View
         android:id="@+id/background"
-        android:background="@drawable/menu_screen"
+        android:background="@color/loadingScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

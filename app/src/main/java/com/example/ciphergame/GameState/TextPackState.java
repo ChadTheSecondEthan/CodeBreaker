@@ -1,8 +1,5 @@
 package com.example.ciphergame.GameState;
 
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,12 +22,10 @@ public class TextPackState extends GameState {
 
         Title title = getView(R.id.title);
         title.init(R.string.textPackTitle);
-        title.setTextSize(20);
+        title.setTextSize(32);
         ViewHelper.setWidthAsPercentOfScreen(title, 100);
-
-        SpannableString string = new SpannableString(Html.fromHtml("The Codebuster<br>Select Text Pack", 0));
-        string.setSpan(new RelativeSizeSpan(1.6f), 0, 14, 0);
-        title.setText(string);
+        String text = "Select Text Pack";
+        title.setText(text);
 
         ((BackButton) getView(R.id.back_button)).init(app);
 
@@ -40,7 +35,7 @@ public class TextPackState extends GameState {
         for (int i = 0; i < textPackButtons.length; i++) {
             ViewHelper.setWidthAndHeightAsPercentOfScreen(textPackButtons[i], 200 / 3.0, 200 / 9.0);
             textPackButtons[i].setText(textPacks[i]);
-            ViewHelper.setMarginBottomAsPercentOfScreen(textPackButtons[i], (i != textPackButtons.length - 1) ? marginBottom : marginTop);
+            ViewHelper.setMarginBottom(textPackButtons[i], (i != textPackButtons.length - 1) ? marginBottom : marginTop);
             ViewHelper.centerHorizontally(textPackButtons[i]);
             final int num = i;
             textPackButtons[i].setOnClickListener(new View.OnClickListener() {
@@ -48,7 +43,7 @@ public class TextPackState extends GameState {
                 public void onClick(View view) { app.setState(MainActivity.LEVELSTATE).getInLevelState().setTextPack(num); }
             });
         }
-        ViewHelper.setMarginTopAndBottomAsPercentOfScreen(getView(R.id.button1), marginTop, marginBottom);
+        ViewHelper.setMarginTopAndBottom(getView(R.id.button1), marginTop, marginBottom);
         ViewHelper.setHeightAsPercentOfScreen(getView(R.id.textPackView), 77.5);
     }
 }

@@ -5,62 +5,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scrollbars="none"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" >-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical" >-->
 
-            <Button
-                android:id="@+id/currency_button1"
-                android:background="@drawable/black_background"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textColor="#000"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+<!--            <Button-->
+<!--                android:id="@+id/currency_button1"-->
+<!--                android:background="@drawable/black_background"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textSize="24sp"-->
+<!--                android:textColor="#000"-->
+<!--                android:layout_width="1dp"-->
+<!--                android:layout_height="1dp" />-->
 
-            <Button
-                android:id="@+id/currency_button2"
-                android:background="@drawable/black_background"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+<!--            <Button-->
+<!--                android:id="@+id/currency_button2"-->
+<!--                android:background="@drawable/black_background"-->
+<!--                android:layout_width="1dp"-->
+<!--                android:layout_height="1dp" />-->
 
-            <Button
-                android:id="@+id/currency_button3"
-                android:background="@drawable/black_background"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+<!--            <Button-->
+<!--                android:id="@+id/currency_button3"-->
+<!--                android:background="@drawable/black_background"-->
+<!--                android:layout_width="1dp"-->
+<!--                android:layout_height="1dp" />-->
 
-            <Button
-                android:id="@+id/currency_button4"
-                android:background="@drawable/black_background"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+<!--            <Button-->
+<!--                android:id="@+id/currency_button4"-->
+<!--                android:background="@drawable/black_background"-->
+<!--                android:layout_width="1dp"-->
+<!--                android:layout_height="1dp" />-->
 
-            <Button
-                android:id="@+id/currency_button5"
-                android:background="@drawable/black_background"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
+<!--            <Button-->
+<!--                android:id="@+id/currency_button5"-->
+<!--                android:background="@drawable/black_background"-->
+<!--                android:layout_width="1dp"-->
+<!--                android:layout_height="1dp" />-->
 
-            <Button
-                android:id="@+id/currency_button6"
-                android:background="@drawable/black_background"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
-        </LinearLayout>
-    </ScrollView>
+<!--            <Button-->
+<!--                android:id="@+id/currency_button6"-->
+<!--                android:background="@drawable/black_background"-->
+<!--                android:layout_width="1dp"-->
+<!--                android:layout_height="1dp" />-->
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
 
     <TextView
         android:id="@+id/no_money"
@@ -101,35 +101,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <Button
-            android:id="@+id/hint1"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-
-        <Button
-            android:id="@+id/hint2"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-
-        <Button
-            android:id="@+id/hint3"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -165,7 +138,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintBottom_toBottomOf="parent"

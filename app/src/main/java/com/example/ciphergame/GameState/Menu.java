@@ -18,7 +18,7 @@ public class Menu extends GameState {
 
         getView(R.id.logo).setVisibility(View.INVISIBLE);
         getView(R.id.version).setVisibility(View.VISIBLE);
-        ViewHelper.setMarginsAsPercentOfScreen(getView(R.id.version), 0, 0, 2, 1);
+        ViewHelper.setMargins(getView(R.id.version), 0, 0, 2, 1);
 
         ((VolumeButton) getView(R.id.volume_button)).init(app, ViewHelper.BOTTOM_LEFT);
 

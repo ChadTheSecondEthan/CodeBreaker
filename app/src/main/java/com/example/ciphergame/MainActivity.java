@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
         });
-        ViewHelper.setDisplayMetricsAndContext(getResources().getDisplayMetrics(), getApplicationContext());
+        ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
 
         final ImageView logo = findViewById(R.id.logo);
         logo.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(60), (int) ViewHelper.percentHeight(266 / 4.0 * 0.6)));

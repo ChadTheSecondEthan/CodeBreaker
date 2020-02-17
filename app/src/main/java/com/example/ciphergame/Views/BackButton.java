@@ -28,7 +28,7 @@ public class BackButton extends AppCompatButton {
         });
         ViewHelper.setGetBiggerTouchListener(this);
         setBackgroundColor(Color.TRANSPARENT);
-        ViewHelper.setMarginsAsPercentOfScreen(this, 1, 1, 0, 0);
+        ViewHelper.setMargins(this, 1, 1, 0, 0);
         setBackgroundResource(R.drawable.back_button);
         ViewHelper.setWidthAsPercentOfScreen(this, 8);
         ViewHelper.makeSquareWithWidth(this);

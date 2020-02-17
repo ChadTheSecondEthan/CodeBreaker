@@ -1,7 +1,6 @@
 package com.example.ciphergame.Views;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,12 +23,12 @@ public class ViewHelper {
     private static double onePercentWidth;
     private static double onePercentHeight;
 
-    public static void setPaddingLeftAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, paddingPercent, 0, 0, 0); }
-    public static void setPaddingTopAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, paddingPercent, 0, 0); }
-    public static void setPaddingRightAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, 0, paddingPercent, 0); }
-    public static void setPaddingBottomAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, 0, 0, paddingPercent); }
-    public static void setPaddingLeftAndRightAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, paddingPercent, 0, paddingPercent, 0); }
-    public static void setPaddingTopAndBottomAsPercentOfScreen(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, paddingPercent, 0, paddingPercent); }
+    public static void setPaddingLeft(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, paddingPercent, 0, 0, 0); }
+    public static void setPaddingTop(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, paddingPercent, 0, 0); }
+    public static void setPaddingRight(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, 0, paddingPercent, 0); }
+    public static void setPaddingBottom(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, 0, 0, paddingPercent); }
+    public static void setPaddingLeftAndRight(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, paddingPercent, 0, paddingPercent, 0); }
+    public static void setPaddingTopAndBottom(View v, double paddingPercent) { setPaddingAsPercentOfScreen(v, 0, paddingPercent, 0, paddingPercent); }
 
     private static void setPaddingAsPercentOfScreen(@NotNull View v, double leftPercent, double topPercent, double rightPercent, double bottomPercent) {
         int left = (int) (onePercentWidth * leftPercent);
@@ -39,19 +38,38 @@ public class ViewHelper {
         v.setPadding(left, top, right, bottom);
     }
 
-    public static void setMarginLeftAsPercentOfScreen(View v, double marginPercent) { setMarginsAsPercentOfScreen(v, marginPercent, 0, 0, 0); }
-    public static void setMarginTopAsPercentOfScreen(View v, double marginPercent) { setMarginsAsPercentOfScreen(v, 0, marginPercent, 0, 0); }
-    public static void setMarginRightAsPercentOfScreen(View v, double marginPercent) { setMarginsAsPercentOfScreen(v, 0, 0, marginPercent, 0); }
-    public static void setMarginBottomAsPercentOfScreen(View v, double marginPercent) { setMarginsAsPercentOfScreen(v, 0, 0, 0, marginPercent); }
-    public static void setMarginTopAndBottomAsPercentOfScreen(View v, double marginTop, double marginBottom) { setMarginsAsPercentOfScreen(v, 0, marginTop, 0, marginBottom); }
-    public static void setMarginTopAndBottomAsPercentOfScreen(View v, double marginPercent) { setMarginsAsPercentOfScreen(v, 0, marginPercent, 0, marginPercent); }
-    public static void setMarginLeftAndRightAsPercentOfScreen(View v, double marginPercent) { setMarginsAsPercentOfScreen(v, marginPercent, 0, marginPercent, 0); }
-    public static void setMarginsAsPercentOfScreen(@NotNull View v, double leftPercent, double topPercent, double rightPercent, double bottomPercent) {
-        int left = (int) (onePercentWidth * leftPercent);
-        int top = (int) (onePercentWidth * topPercent);
-        int right = (int) (onePercentWidth * rightPercent);
-        int bottom = (int) (onePercentWidth * bottomPercent);
+    public static void setMarginLeft(View v, double marginPercent) { setMargins(v, marginPercent, 0, 0, 0); }
+    public static void setMarginTop(View v, double marginPercent) { setMargins(v, 0, marginPercent, 0, 0); }
+    public static void setMarginRight(View v, double marginPercent) { setMargins(v, 0, 0, marginPercent, 0); }
+    public static void setMarginBottom(View v, double marginPercent) { setMargins(v, 0, 0, 0, marginPercent); }
+    public static void setMarginTopAndBottom(View v, double marginTop, double marginBottom) { setMargins(v, 0, marginTop, 0, marginBottom); }
+    public static void setMarginTopAndBottom(View v, double marginPercent) { setMargins(v, 0, marginPercent, 0, marginPercent); }
+    public static void setMarginLeftAndRight(View v, double marginPercent) { setMargins(v, marginPercent, 0, marginPercent, 0); }
+    public static void setMargins(@NotNull View v, double leftPercent, double topPercent, double rightPercent, double bottomPercent) {
+        int left = leftPercent == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).leftMargin : (int) (onePercentWidth * leftPercent);
+        int top = topPercent == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).topMargin : (int) (onePercentHeight * topPercent);
+        int right = rightPercent == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).rightMargin : (int) (onePercentWidth * rightPercent);
+        int bottom = bottomPercent == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).bottomMargin : (int) (onePercentHeight * bottomPercent);
         ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).setMargins(left, top, right, bottom);
+    }
+
+    public static void matchAttributes(@NotNull View start, @NotNull View toMatch) {
+        start.setX(toMatch.getX());
+        start.setY(toMatch.getY());
+        matchMargins(start, toMatch);
+        start.setPadding(toMatch.getPaddingLeft(), toMatch.getPaddingTop(), toMatch.getPaddingRight(), toMatch.getPaddingLeft());
+    }
+
+    public static void matchMargins(@NotNull View start, @NotNull View toMatch) {
+        int left =  ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).leftMargin;
+        int top = ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).topMargin;
+        int right = ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).rightMargin;
+        int bottom = ((ViewGroup.MarginLayoutParams) toMatch.getLayoutParams()).bottomMargin;
+        ((ViewGroup.MarginLayoutParams) start.getLayoutParams()).setMargins(left, top, right, bottom);
+    }
+
+    public static void matchWidthAndHeight(View start, View toMatch) {
+        // TODO
     }
 
     public static void centerHorizontally(@NotNull View v) { setHorizontalBias(v, 0.5); }
@@ -126,14 +144,10 @@ public class ViewHelper {
         return color + text + FONT;
     }
 
-    public static void setGetBiggerTouchListener(View v) {
-        setGetBiggerTouchListener(v, 1.25);
-    }
-    public static void setGetBiggerTouchListener(View v, double scale) {
-        v.setOnTouchListener(getBiggerTouchListener(scale));
-    }
+    public static void setGetBiggerTouchListener(View v) { setGetBiggerTouchListener(v, 1.25); }
+    public static void setGetBiggerTouchListener(View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
 
-    public static void setDisplayMetricsAndContext(DisplayMetrics dm, Context c) {
+    public static void setDisplayMetrics(DisplayMetrics dm) {
         displayMetrics = dm;
         onePercentWidth = displayMetrics.widthPixels / 100.0;
         onePercentHeight = displayMetrics.heightPixels / 100.0;

@@ -94,14 +94,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 R.id.p_text, R.id.q_text, R.id.r_text, R.id.s_text, R.id.t_text, R.id.u_text, 
                 R.id.v_text, R.id.w_text, R.id.x_text, R.id.y_text, R.id.z_text });
         for (int i = 0; i < 26; i++) {
-            ViewHelper.setPaddingBottomAsPercentOfScreen(letters[i], 0.25);
+            ViewHelper.setPaddingBottom(letters[i], 0.25);
             ViewHelper.setWidthAsPercentOfScreen(letters[i], 10);
             ViewHelper.makeSquareWithWidth(letters[i]);
-            ViewHelper.setMarginRightAsPercentOfScreen(letters[i], 2.5);
-            ViewHelper.setPaddingBottomAsPercentOfScreen(cipherLetters[i], 0.25);
+            ViewHelper.setMarginRight(letters[i], 2.5);
+            ViewHelper.setPaddingBottom(cipherLetters[i], 0.25);
             ViewHelper.setWidthAsPercentOfScreen(cipherLetters[i], 10);
             ViewHelper.makeSquareWithWidth(cipherLetters[i]);
-            ViewHelper.setMarginRightAsPercentOfScreen(cipherLetters[i], 2.5);
+            ViewHelper.setMarginRight(cipherLetters[i], 2.5);
         }
         TextView[] smallTexts = app.getTextViews(new int[] { R.id.a_small_text, R.id.b_small_text,
                 R.id.c_small_text, R.id.d_small_text, R.id.e_small_text, R.id.f_small_text, R.id.g_small_text,
@@ -112,13 +112,13 @@ public class InLevelState extends GameState implements View.OnClickListener {
         for (int i = 0; i < 26; i++) {
             ViewHelper.setWidthAsPercentOfScreen(smallTexts[i], 10);
             ViewHelper.makeSquareWithWidth(smallTexts[i]);
-            ViewHelper.setMarginRightAsPercentOfScreen(smallTexts[i], 2.5);
+            ViewHelper.setMarginRight(smallTexts[i], 2.5);
             String text = "" + (char) (i + Cipher.LOWER_CASE_START);
             smallTexts[i].setText(text);
         }
-        ViewHelper.setMarginLeftAndRightAsPercentOfScreen(letters[0], 2.5);
-        ViewHelper.setMarginLeftAndRightAsPercentOfScreen(cipherLetters[0], 2.5);
-        ViewHelper.setMarginLeftAndRightAsPercentOfScreen(getView(R.id.a_small_text), 2.5);
+        ViewHelper.setMarginLeftAndRight(letters[0], 2.5);
+        ViewHelper.setMarginLeftAndRight(cipherLetters[0], 2.5);
+        ViewHelper.setMarginLeftAndRight(getView(R.id.a_small_text), 2.5);
         resetCipherLetters();
 
         resetText();
