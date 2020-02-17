@@ -6,7 +6,7 @@ import android.widget.Button;
 import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.Views.Title;
-import com.example.ciphergame.Views.ViewHelper;
+import com.example.ciphergame.ViewHelper;
 import com.example.ciphergame.R;
 
 public class TextPackState extends GameState {

@@ -8,7 +8,7 @@ import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.R;
 import com.example.ciphergame.Views.Title;
-import com.example.ciphergame.Views.ViewHelper;
+import com.example.ciphergame.ViewHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -17,9 +17,13 @@ public class LevelState extends GameState {
     private Button[] buttons;
     private TextView pageText;
 
-    private static final int NUM_PAGES = 5;
-    private static final int BUTTONS_PER_PAGE = 20;
+    public static final int NUM_PAGES = 5;
+    public static final int BUTTONS_PER_PAGE = 20;
     private int page = 1;
+
+    /*
+        Add levels completed
+     */
 
     public LevelState(MainActivity app) {
         super(app);
@@ -29,8 +33,7 @@ public class LevelState extends GameState {
         setContentView(R.layout.level_state);
 
         ((AdView) getView(R.id.level_state_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
-        ((BackButton) getView(R.id.back_button)).init(app);
-        ((Title) getView(R.id.title)).init(R.string.levelTitle);
+//        ((BackButton) getView(R.id.back_button)).init(app);
 
         buttons = app.getButtons(new int[] { R.id.level1, R.id.level2, R.id.level3, R.id.level4,
                 R.id.level5, R.id.level6, R.id.level7, R.id.level8, R.id.level9, R.id.level10,
@@ -44,25 +47,24 @@ public class LevelState extends GameState {
                 @Override
                 public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
             });
-            ViewHelper.setGetBiggerTouchListener(buttons[i]);
             ViewHelper.setWidthAsPercentOfScreen(buttons[i], 20);
+            ViewHelper.setMarginLeftAndRight(buttons[i], 2.5);
             ViewHelper.makeSquareWithWidth(buttons[i]);
         }
 
-        String text = "1 / " + NUM_PAGES;
-        pageText = getView(R.id.level_page_number);
-        pageText.setText(text);
-
-        for (Button button : app.getButtons(new int[] { R.id.level_left_button, R.id.level_right_button })) {
+//        String text = "1 / " + NUM_PAGES;
+//        pageText = getView(R.id.level_page_number);
+//        pageText.setText(text);
+//
+        for (Button button : app.getButtons(new int[] { R.id.up_button, R.id.down_button })) {
             ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 80 / 9.0);
             ViewHelper.makeSquareWithWidth(button);
-            ViewHelper.setGetBiggerTouchListener(button);
         }
-        getView(R.id.level_left_button).setOnClickListener(new View.OnClickListener() {
+        getView(R.id.up_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { subtractPage(); }
         });
-        getView(R.id.level_right_button).setOnClickListener(new View.OnClickListener() {
+        getView(R.id.down_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { addPage(); }
         });

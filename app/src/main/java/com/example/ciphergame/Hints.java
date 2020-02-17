@@ -25,17 +25,9 @@ public class Hints {
 
     public void buyHint(int index) {
         // assumes the user has enough money to buy the hint
-        switch (index) {
-            case 0:
-                inLevelState.peek();
-                break;
-            case 1:
-                inLevelState.choose();
-                break;
-            case 2:
-                inLevelState.reveal();
-                break;
-        }
+        if (index == 0) inLevelState.peek();
+        else if (index == 1) inLevelState.choose();
+        else inLevelState.reveal();
         MainActivity.getCurrencies().loseCoins(costs[index]);
     }
 }

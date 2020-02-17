@@ -10,9 +10,10 @@ import android.os.Handler;
 
 import com.example.ciphergame.Hints;
 import com.example.ciphergame.MainActivity;
-import com.example.ciphergame.Views.*;
+import com.example.ciphergame.ViewHelper;
 import com.example.ciphergame.Cipher;
 import com.example.ciphergame.R;
+import com.example.ciphergame.VolumeButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -170,7 +171,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
             app.levelReset();
             level++;
-            if (level == 100) app.setState(MainActivity.LEVELSTATE);
+            if (level == LevelState.BUTTONS_PER_PAGE * LevelState.NUM_PAGES) app.setState(MainActivity.LEVELSTATE);
             else {
                 removeButtonListeners();
                 for (int i = 0; i < 26; i++) {

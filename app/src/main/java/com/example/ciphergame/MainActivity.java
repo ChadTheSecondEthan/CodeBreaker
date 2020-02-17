@@ -1,19 +1,16 @@
 package com.example.ciphergame;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ciphergame.GameState.*;
-import com.example.ciphergame.Views.ViewHelper;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -34,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private int prevState = 0;
     public static final int MENU = 0;
     public static final int TEXTPACKSTATE = 1;
-    public static final int CREDITS = 2;
-    public static final int LEVELSTATE = 3;
-    public static final int INLEVELSTATE = 4;
-    public static final int PURCHASE = 5;
+    public static final int LEVELSTATE = 2;
+    public static final int INLEVELSTATE = 3;
+    public static final int PURCHASE = 4;
 //    public static final int HINTSTATE = 5;
 //    public static final int CURRENCYSTATE = 6;
 
@@ -57,11 +53,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
         });
-        ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
 
         final ImageView logo = findViewById(R.id.logo);
-        logo.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(60), (int) ViewHelper.percentHeight(266 / 4.0 * 0.6)));
-        ViewHelper.center(logo);
         final long animationTime = 1400;
         logo.startAnimation(ViewHelper.fadeInAnimation(animationTime));
         new Handler().postDelayed(new Runnable() {
@@ -98,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         gameStates = new ArrayList<>();
         gameStates.add(new Menu(this));
         gameStates.add(new TextPackState(this));
-        gameStates.add(new Credits(this));
         gameStates.add(new LevelState(this));
         gameStates.add(inLevelState);
         gameStates.add(new Purchase(this));
@@ -128,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
             case PURCHASE:
                 prevState = currentState;
                 break;
-            case CREDITS:
             case LEVELSTATE:
                 prevState = TEXTPACKSTATE;
                 break;
@@ -174,11 +165,19 @@ public class MainActivity extends AppCompatActivity {
             views[i] = findViewById(ids[i]);
         return views;
     }
-    public View[] getViews(int[] ids) {
-        View[] views = new View[ids.length];
-        for (int i = 0; i < ids.length; i++)
-            views[i] = findViewById(ids[i]);
-        return views;
+//    public View[] getViews(int[] ids) {
+//        View[] views = new View[ids.length];
+//        for (int i = 0; i < ids.length; i++)
+//            views[i] = findViewById(ids[i]);
+//        return views;
+//    }
+    
+    public void volumeClick() {
+        if (mediaPlayer != null) {
+            if (volumeOn) mediaPlayer.pause();
+            else mediaPlayer.start();
+        }
+        setVolumeOn(!volumeOn);
     }
 
     public boolean isVolumeOn() { return volumeOn; }

@@ -10,7 +10,7 @@ import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.R;
 import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.Views.ImageNumberView;
-import com.example.ciphergame.Views.ViewHelper;
+import com.example.ciphergame.ViewHelper;
 
 public class Purchase extends GameState {
 
