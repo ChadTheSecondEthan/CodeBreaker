@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
         });
+        ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
 
         final ImageView logo = findViewById(R.id.logo);
         final long animationTime = 1400;

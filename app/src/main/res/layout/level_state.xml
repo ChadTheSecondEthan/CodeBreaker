@@ -69,8 +69,8 @@
 <!-- TODO use app:layout_heightPercent -->
             <Button
                 android:id="@+id/level1"
-                android:layout_width="58dp"
-                app:layout_heightPercent="12%" />
+                app:layout_widthPercent="12%"
+                app:layout_heightPercent="1dp" />
 
             <Button
                 android:id="@+id/level2"

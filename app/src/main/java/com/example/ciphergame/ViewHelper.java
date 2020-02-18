@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
     Author: Ethan Fisher
  */
 
-@SuppressWarnings({"SameParameterValue", "unused"})
+@SuppressWarnings({"SameParameterValue", "unused", "SuspiciousNameCombination"})
 public class ViewHelper {
 
     public static final String RED = "<font color=#FF0000>";
@@ -26,27 +26,42 @@ public class ViewHelper {
     public static final int BOTTOM_LEFT = 2;
 
     private static void setScales(View v, double scale) { setScales(v, scale, scale); }
-    private static void setScales(View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y); }
+    private static void setScales(@NotNull View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y); }
 
     private static double onePercentWidth;
     private static double onePercentHeight;
 
-    // TODO
     public static void setMarginLeft(View v, double percent) { setMargins(v, percent, 0, 0, 0); }
-    public static void setMarginTop(View v, double percent) {}
-    public static void setMarginRight(View v, double percent) {}
-    public static void setMarginBottom(View v, double percent) {}
-    public static void setMargins(View v, double left, double top, double right, double bottom) {
-        int left;
-        int top;
-        int right;
-        int bottom;
-        ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).setMargins(left, top, right, bottom);
+    public static void setMarginTop(View v, double percent) { setMargins(v, 0, percent, 0, 0); }
+    public static void setMarginRight(View v, double percent) { setMargins(v, 0, 0, percent, 0); }
+    public static void setMarginBottom(View v, double percent) { setMargins(v, 0, 0, 0, percent); }
+    public static void setMarginLeftAndRight(View v, double left, double right) {
+        setMargins(v, left, 0, right, 0);
+    }
+    public static void setMarginTopAndBottom(View v, double top, double bottom) {
+        setMargins(v, 0, top, 0, bottom);
+    }
+    public static void setMarginLeftAndRight(View v, double margin) {
+        setMargins(v, margin, 0, margin, 0);
+    }
+    public static void setMarginTopAndBottom(View v, double margin) {
+        setMargins(v, 0, margin, 0, margin);
+    }
+    private static void setMargins(@NotNull View v, double left, double top, double right, double bottom) {
+        ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).setMargins(
+                left == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).leftMargin : (int) (left * onePercentWidth),
+                top == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).topMargin: (int) (top * onePercentHeight),
+                right == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).rightMargin : (int) (right * onePercentWidth),
+                bottom == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).bottomMargin : (int) (bottom * onePercentHeight));
     }
     
-    public static void setWidth(View v, double percent) {}
-    public static void setHeight(View v, double percent) {}
+    public static void setWidth(@NotNull View v, double percent) { v.getLayoutParams().width = (int) (percent * onePercentWidth); }
+    public static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentHeight); }
+    public static void squareWidth(@NotNull View v) { v.getLayoutParams().height = v.getLayoutParams().width; }
+    public static void squareHeight(@NotNull View v) { v.getLayoutParams().width = v.getLayoutParams().height; }
 
+    @NotNull
+    @Contract(value = "_ -> new", pure = true)
     @SuppressLint("ClickableViewAccessibility")
     private static View.OnTouchListener getBiggerTouchListener(final double scale) {
         return new View.OnTouchListener() {
@@ -86,7 +101,7 @@ public class ViewHelper {
     public static void setGetBiggerTouchListener(View v) { setGetBiggerTouchListener(v, 1.25); }
     public static void setGetBiggerTouchListener(@NotNull View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
 
-    public static void setDisplayMetrics(@NotNull DisplayMetrics dm) {
+    static void setDisplayMetrics(@NotNull DisplayMetrics dm) {
         onePercentHeight = dm.heightPixels / 100.0;
         onePercentWidth = dm.widthPixels / 100.0;
     }

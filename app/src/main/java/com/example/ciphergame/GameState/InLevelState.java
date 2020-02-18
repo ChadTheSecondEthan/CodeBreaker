@@ -34,8 +34,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private String cipherText; // contains the original ciphered text
     private String curCipherText; // contains the current text
 
-    private boolean instructionsOpen;
-
     public InLevelState(MainActivity app) { super(app); }
 
     public void init() {
@@ -91,6 +89,15 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 R.id.r_small_text, R.id.s_small_text, R.id.t_small_text, R.id.u_small_text, R.id.v_small_text,
                 R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text });
         for (int i = 0; i < 26; i++) {
+            ViewHelper.setWidth(letters[i], 6);
+            ViewHelper.squareWidth(letters[i]);
+            ViewHelper.setMarginLeftAndRight(letters[i], 1);
+            ViewHelper.setWidth(cipherLetters[i], 6);
+            ViewHelper.squareWidth(cipherLetters[i]);
+            ViewHelper.setMarginLeftAndRight(cipherLetters[i], 1);
+            ViewHelper.setWidth(smallTexts[i], 6);
+            ViewHelper.squareWidth(smallTexts[i]);
+            ViewHelper.setMarginLeftAndRight(smallTexts[i], 1);
             String text = "" + (char) (i + Cipher.LOWER_CASE_START);
             smallTexts[i].setText(text);
         }
