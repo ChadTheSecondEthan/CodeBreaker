@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 /*
     This class is used to make it easier to work with views
     Author: Ethan Fisher
@@ -59,17 +62,21 @@ public class ViewHelper {
         return animation;
     }
 
+    @NotNull
+    @Contract(pure = true)
     public static String coloredText(String text, String color) { return color + text + FONT; }
 
     public static void setGetBiggerTouchListener(View v) { setGetBiggerTouchListener(v, 1.25); }
-    public static void setGetBiggerTouchListener(View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
+    public static void setGetBiggerTouchListener(@NotNull View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
 
-    public static void setDisplayMetrics(DisplayMetrics dm) {
+    public static void setDisplayMetrics(@NotNull DisplayMetrics dm) {
         onePercentHeight = dm.heightPixels / 100.0;
         onePercentWidth = dm.widthPixels / 100.0;
     }
 
+    @Contract(pure = true)
     public static double percentWidth(double percent) { return onePercentWidth * percent; }
+    @Contract(pure = true)
     public static double percentHeight(double percent) { return onePercentHeight * percent; }
 
 }

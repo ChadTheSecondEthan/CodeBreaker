@@ -15,7 +15,7 @@ public class LevelState extends GameState {
     private TextView pageText;
 
     static final int NUM_PAGES = 5;
-    static final int BUTTONS_PER_PAGE = 20;
+    static final int BUTTONS_PER_PAGE = 16;
     private int page = 1;
 
     /*
@@ -33,8 +33,7 @@ public class LevelState extends GameState {
 
         buttons = app.getButtons(new int[] { R.id.level1, R.id.level2, R.id.level3, R.id.level4,
                 R.id.level5, R.id.level6, R.id.level7, R.id.level8, R.id.level9, R.id.level10,
-                R.id.level11, R.id.level12, R.id.level13, R.id.level14, R.id.level15, R.id.level16,
-                R.id.level17, R.id.level18, R.id.level19, R.id.level20 });
+                R.id.level11, R.id.level12, R.id.level13, R.id.level14, R.id.level15, R.id.level16 });
         for (int i = 0; i < buttons.length; i++) {
             final int num = i;
             String text = "" + (i + 1);
