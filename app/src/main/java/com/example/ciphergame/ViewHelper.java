@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
@@ -29,6 +30,22 @@ public class ViewHelper {
 
     private static double onePercentWidth;
     private static double onePercentHeight;
+
+    // TODO
+    public static void setMarginLeft(View v, double percent) { setMargins(v, percent, 0, 0, 0); }
+    public static void setMarginTop(View v, double percent) {}
+    public static void setMarginRight(View v, double percent) {}
+    public static void setMarginBottom(View v, double percent) {}
+    public static void setMargins(View v, double left, double top, double right, double bottom) {
+        int left;
+        int top;
+        int right;
+        int bottom;
+        ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).setMargins(left, top, right, bottom);
+    }
+    
+    public static void setWidth(View v, double percent) {}
+    public static void setHeight(View v, double percent) {}
 
     @SuppressLint("ClickableViewAccessibility")
     private static View.OnTouchListener getBiggerTouchListener(final double scale) {
