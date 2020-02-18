@@ -5,10 +5,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ciphergame.MainActivity;
-import com.example.ciphergame.Views.BackButton;
 import com.example.ciphergame.R;
-import com.example.ciphergame.Views.Title;
-import com.example.ciphergame.ViewHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -17,8 +14,8 @@ public class LevelState extends GameState {
     private Button[] buttons;
     private TextView pageText;
 
-    public static final int NUM_PAGES = 5;
-    public static final int BUTTONS_PER_PAGE = 20;
+    static final int NUM_PAGES = 5;
+    static final int BUTTONS_PER_PAGE = 20;
     private int page = 1;
 
     /*
@@ -33,7 +30,6 @@ public class LevelState extends GameState {
         setContentView(R.layout.level_state);
 
         ((AdView) getView(R.id.level_state_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
-//        ((BackButton) getView(R.id.back_button)).init(app);
 
         buttons = app.getButtons(new int[] { R.id.level1, R.id.level2, R.id.level3, R.id.level4,
                 R.id.level5, R.id.level6, R.id.level7, R.id.level8, R.id.level9, R.id.level10,
@@ -47,19 +43,8 @@ public class LevelState extends GameState {
                 @Override
                 public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
             });
-            ViewHelper.setWidthAsPercentOfScreen(buttons[i], 20);
-            ViewHelper.setMarginLeftAndRight(buttons[i], 2.5);
-            ViewHelper.makeSquareWithWidth(buttons[i]);
         }
 
-//        String text = "1 / " + NUM_PAGES;
-//        pageText = getView(R.id.level_page_number);
-//        pageText.setText(text);
-//
-        for (Button button : app.getButtons(new int[] { R.id.up_button, R.id.down_button })) {
-            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 80 / 9.0);
-            ViewHelper.makeSquareWithWidth(button);
-        }
         getView(R.id.up_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { subtractPage(); }

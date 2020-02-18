@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_state);
-        findViewById(R.id.background).setBackgroundColor(getResources().getColor(R.color.loadingScreen, null));
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -165,13 +164,7 @@ public class MainActivity extends AppCompatActivity {
             views[i] = findViewById(ids[i]);
         return views;
     }
-//    public View[] getViews(int[] ids) {
-//        View[] views = new View[ids.length];
-//        for (int i = 0; i < ids.length; i++)
-//            views[i] = findViewById(ids[i]);
-//        return views;
-//    }
-    
+
     public void volumeClick() {
         if (mediaPlayer != null) {
             if (volumeOn) mediaPlayer.pause();

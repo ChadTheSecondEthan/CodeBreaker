@@ -13,7 +13,6 @@ import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.ViewHelper;
 import com.example.ciphergame.Cipher;
 import com.example.ciphergame.R;
-import com.example.ciphergame.VolumeButton;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -43,8 +42,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         setContentView(R.layout.in_level_state);
 
         ((AdView) getView(R.id.in_level_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
-        ((BackButton) getView(R.id.back_button)).init(app);
-        ((VolumeButton) getView(R.id.volume_button)).init(app, ViewHelper.TOP_RIGHT);
 
         Button reset = getView(R.id.reset_answer);
         Button hint = getView(R.id.hint_button);
@@ -63,10 +60,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             @Override
             public void onClick(View view) { app.setState(MainActivity.PURCHASE); }
         });
-        for (Button button : new Button[] { reset, hint, lives }) {
-            button.setBackgroundColor(Color.TRANSPARENT);
-            ViewHelper.setWidthAndHeightAsPercentOfScreen(button, 30, 7);
-        }
+        for (Button button : new Button[] { reset, hint, lives }) button.setBackgroundColor(Color.TRANSPARENT);
         Button checkAnswer = getView(R.id.checkAnswer);
         checkAnswer.setBackgroundColor(Color.TRANSPARENT);
         checkAnswer.setOnClickListener(new View.OnClickListener() {
@@ -75,16 +69,12 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 checkAnswer();
             }
         });
-        ViewHelper.setWidthAndHeightAsPercentOfScreen(checkAnswer, 90, 7);
 
         cipher = MainActivity.getCipher();
         cipherText = withoutHtml(app.getData().getString("cipherText", cipher.getText(textPack, level)));
         app.getDataEditor().putString("cipherText", cipherText).apply();
         hintCipherText = app.getData().getString("hintCipherText", cipherText);
         curCipherText = app.getData().getString("curCipherText", cipherText);
-
-        ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewTop), 94);
-        ViewHelper.setWidthAsPercentOfScreen(getView(R.id.scrollViewBottom), 94);
 
         letters = app.getButtons(new int[] { R.id.a, R.id.b, R.id.c, R.id.d, R.id.e, R.id.f, R.id.g,
                 R.id.h, R.id.i, R.id.j, R.id.k, R.id.l, R.id.m, R.id.n, R.id.o, R.id.p, R.id.q, R.id.r,
@@ -94,16 +84,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 R.id.j_text, R.id.k_text, R.id.l_text, R.id.m_text, R.id.n_text, R.id.o_text, 
                 R.id.p_text, R.id.q_text, R.id.r_text, R.id.s_text, R.id.t_text, R.id.u_text, 
                 R.id.v_text, R.id.w_text, R.id.x_text, R.id.y_text, R.id.z_text });
-        for (int i = 0; i < 26; i++) {
-            ViewHelper.setPaddingBottom(letters[i], 0.25);
-            ViewHelper.setWidthAsPercentOfScreen(letters[i], 10);
-            ViewHelper.makeSquareWithWidth(letters[i]);
-            ViewHelper.setMarginRight(letters[i], 2.5);
-            ViewHelper.setPaddingBottom(cipherLetters[i], 0.25);
-            ViewHelper.setWidthAsPercentOfScreen(cipherLetters[i], 10);
-            ViewHelper.makeSquareWithWidth(cipherLetters[i]);
-            ViewHelper.setMarginRight(cipherLetters[i], 2.5);
-        }
         TextView[] smallTexts = app.getTextViews(new int[] { R.id.a_small_text, R.id.b_small_text,
                 R.id.c_small_text, R.id.d_small_text, R.id.e_small_text, R.id.f_small_text, R.id.g_small_text,
                 R.id.h_small_text, R.id.i_small_text, R.id.j_small_text, R.id.k_small_text, R.id.l_small_text,
@@ -111,15 +91,9 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 R.id.r_small_text, R.id.s_small_text, R.id.t_small_text, R.id.u_small_text, R.id.v_small_text,
                 R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text });
         for (int i = 0; i < 26; i++) {
-            ViewHelper.setWidthAsPercentOfScreen(smallTexts[i], 10);
-            ViewHelper.makeSquareWithWidth(smallTexts[i]);
-            ViewHelper.setMarginRight(smallTexts[i], 2.5);
             String text = "" + (char) (i + Cipher.LOWER_CASE_START);
             smallTexts[i].setText(text);
         }
-        ViewHelper.setMarginLeftAndRight(letters[0], 2.5);
-        ViewHelper.setMarginLeftAndRight(cipherLetters[0], 2.5);
-        ViewHelper.setMarginLeftAndRight(getView(R.id.a_small_text), 2.5);
         resetCipherLetters();
 
         resetText();

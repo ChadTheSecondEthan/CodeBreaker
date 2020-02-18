@@ -1,6 +1,7 @@
 package com.example.ciphergame;
 
 import android.annotation.SuppressLint;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -23,6 +24,9 @@ public class ViewHelper {
     private static void setScales(View v, double scale) { setScales(v, scale, scale); }
     private static void setScales(View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y); }
 
+    private static double onePercentWidth;
+    private static double onePercentHeight;
+
     @SuppressLint("ClickableViewAccessibility")
     private static View.OnTouchListener getBiggerTouchListener(final double scale) {
         return new View.OnTouchListener() {
@@ -36,7 +40,7 @@ public class ViewHelper {
     }
 
     public static AlphaAnimation fadeOutAnimation(View v) { return fadeOutAnimation(v, 1500); }
-    public static AlphaAnimation fadeOutAnimation(final View v, long time) {
+    static AlphaAnimation fadeOutAnimation(final View v, long time) {
         AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
         animation.setDuration(time);
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -49,7 +53,7 @@ public class ViewHelper {
         });
         return animation;
     }
-    public static AlphaAnimation fadeInAnimation(long time) {
+    static AlphaAnimation fadeInAnimation(long time) {
         AlphaAnimation animation = new AlphaAnimation(0.0f, 1.0f);
         animation.setDuration(time);
         return animation;
@@ -59,5 +63,13 @@ public class ViewHelper {
 
     public static void setGetBiggerTouchListener(View v) { setGetBiggerTouchListener(v, 1.25); }
     public static void setGetBiggerTouchListener(View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
+
+    public static void setDisplayMetrics(DisplayMetrics dm) {
+        onePercentHeight = dm.heightPixels / 100.0;
+        onePercentWidth = dm.widthPixels / 100.0;
+    }
+
+    public static double percentWidth(double percent) { return onePercentWidth * percent; }
+    public static double percentHeight(double percent) { return onePercentHeight * percent; }
 
 }
