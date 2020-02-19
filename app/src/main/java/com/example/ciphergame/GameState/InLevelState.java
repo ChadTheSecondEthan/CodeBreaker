@@ -88,13 +88,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 R.id.m_small_text, R.id.n_small_text, R.id.o_small_text, R.id.p_small_text, R.id.q_small_text,
                 R.id.r_small_text, R.id.s_small_text, R.id.t_small_text, R.id.u_small_text, R.id.v_small_text,
                 R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text });
+        final double WIDTH = 5.5, MARGIN = 1;
         for (int i = 0; i < 26; i++) {
-            ViewHelper.setWidthAndSquare(letters[i], 6);
-            ViewHelper.setMarginLeftAndRight(letters[i], 1);
-            ViewHelper.setWidthAndSquare(cipherLetters[i], 6);
-            ViewHelper.setMarginLeftAndRight(cipherLetters[i], 1);
-            ViewHelper.setWidthAndSquare(smallTexts[i], 6);
-            ViewHelper.setMarginLeftAndRight(smallTexts[i], 1);
+            ViewHelper.setWidthAndSquare(letters[i], WIDTH);
+            ViewHelper.setMarginLeftAndRight(letters[i], MARGIN);
+            ViewHelper.setWidthAndSquare(cipherLetters[i], WIDTH);
+            ViewHelper.setMarginLeftAndRight(cipherLetters[i], MARGIN);
+            ViewHelper.setWidthAndSquare(smallTexts[i], WIDTH);
+            ViewHelper.setMarginLeftAndRight(smallTexts[i], MARGIN);
             String text = "" + (char) (i + Cipher.LOWER_CASE_START);
             smallTexts[i].setText(text);
         }

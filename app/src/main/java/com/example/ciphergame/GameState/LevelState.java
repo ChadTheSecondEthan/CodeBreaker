@@ -19,7 +19,7 @@ public class LevelState extends GameState {
     private int page = 1;
 
     /*
-        Add levels completed
+        TODO Add levels completed
      */
 
     public LevelState(MainActivity app) {
@@ -34,6 +34,7 @@ public class LevelState extends GameState {
         buttons = app.getButtons(new int[] { R.id.level1, R.id.level2, R.id.level3, R.id.level4,
                 R.id.level5, R.id.level6, R.id.level7, R.id.level8, R.id.level9, R.id.level10,
                 R.id.level11, R.id.level12, R.id.level13, R.id.level14, R.id.level15, R.id.level16 });
+        final double WIDTH = 18, MARGIN = 1.75;
         for (int i = 0; i < buttons.length; i++) {
             final int num = i;
             String text = "" + (i + 1);
@@ -42,8 +43,8 @@ public class LevelState extends GameState {
                 @Override
                 public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
             });
-            ViewHelper.setWidthAndHeight(buttons[i], 20);
-            ViewHelper.setMargins(buttons[i], 1.75);
+            ViewHelper.setWidthAndHeight(buttons[i], WIDTH);
+            ViewHelper.setMargins(buttons[i], MARGIN);
         }
 
         getView(R.id.up_button).setOnClickListener(new View.OnClickListener() {
