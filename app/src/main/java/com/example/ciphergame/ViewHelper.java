@@ -28,6 +28,7 @@ public class ViewHelper {
     private static void setScales(View v, double scale) { setScales(v, scale, scale); }
     private static void setScales(@NotNull View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y); }
 
+    // one percent width is used for measuring with views to make it easier to make squares
     private static double onePercentWidth;
     private static double onePercentHeight;
 
@@ -50,15 +51,24 @@ public class ViewHelper {
     private static void setMargins(@NotNull View v, double left, double top, double right, double bottom) {
         ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).setMargins(
                 left == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).leftMargin : (int) (left * onePercentWidth),
-                top == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).topMargin: (int) (top * onePercentHeight),
+                top == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).topMargin: (int) (top * onePercentWidth),
                 right == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).rightMargin : (int) (right * onePercentWidth),
-                bottom == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).bottomMargin : (int) (bottom * onePercentHeight));
+                bottom == 0 ? ((ViewGroup.MarginLayoutParams) v.getLayoutParams()).bottomMargin : (int) (bottom * onePercentWidth));
     }
+    public static void setMargins(@NotNull View v, double margin) { setMargins(v, margin, margin, margin, margin); }
     
-    public static void setWidth(@NotNull View v, double percent) { v.getLayoutParams().width = (int) (percent * onePercentWidth); }
-    public static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentHeight); }
-    public static void squareWidth(@NotNull View v) { v.getLayoutParams().height = v.getLayoutParams().width; }
-    public static void squareHeight(@NotNull View v) { v.getLayoutParams().width = v.getLayoutParams().height; }
+    private static void setWidth(@NotNull View v, double percent) { v.getLayoutParams().width = (int) (percent * onePercentWidth); }
+    private static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentWidth); }
+    public static void setWidthAndHeight(@NotNull View v, double percent) { setWidth(v, percent); setHeight(v, percent); }
+    public static void setWidthAndHeight(@NotNull View v, double width, double height) { setWidth(v, width); setHeight(v, height); }
+    public static void setWidthAndSquare(@NotNull View v, double percent) {
+        v.getLayoutParams().width = (int) (percent * onePercentWidth);
+        v.getLayoutParams().height = v.getLayoutParams().width;
+    }
+    public static void setHeightAndSquare(@NotNull View v, double percent) {
+        v.getLayoutParams().height = (int) (percent * onePercentHeight);
+        v.getLayoutParams().width = v.getLayoutParams().height;
+    }
 
     @NotNull
     @Contract(value = "_ -> new", pure = true)

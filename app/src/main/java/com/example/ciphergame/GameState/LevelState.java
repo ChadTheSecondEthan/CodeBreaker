@@ -6,13 +6,13 @@ import android.widget.TextView;
 
 import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.R;
+import com.example.ciphergame.ViewHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 public class LevelState extends GameState {
 
     private Button[] buttons;
-    private TextView pageText;
 
     static final int NUM_PAGES = 5;
     static final int BUTTONS_PER_PAGE = 16;
@@ -42,6 +42,8 @@ public class LevelState extends GameState {
                 @Override
                 public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
             });
+            ViewHelper.setWidthAndHeight(buttons[i], 20);
+            ViewHelper.setMargins(buttons[i], 1.75);
         }
 
         getView(R.id.up_button).setOnClickListener(new View.OnClickListener() {
@@ -76,7 +78,5 @@ public class LevelState extends GameState {
             String text = "" + (i + ((page - 1) * BUTTONS_PER_PAGE) + 1);
             buttons[i].setText(text);
         }
-        String text = "" + page + " / " + NUM_PAGES;
-        pageText.setText(text);
     }
 }
