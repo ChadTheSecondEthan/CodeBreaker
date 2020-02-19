@@ -12,7 +12,7 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ads:layout_constraintVertical_bias="0.75"
+        ads:layout_constraintVertical_bias="0.775"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -127,11 +127,10 @@
 
     <Button
         android:id="@+id/up_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="12dp"
-        android:background="@color/opaqueBlack"
-        ads:layout_constraintVertical_bias="0.39"
+        android:layout_width="@dimen/upDownButtonSize"
+        android:layout_height="@dimen/upDownButtonSize"
+        android:alpha="0.7"
+        ads:layout_constraintVertical_bias="0.37"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,10 +138,10 @@
 
     <Button
         android:id="@+id/down_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@color/opaqueBlack"
-        ads:layout_constraintVertical_bias="0.89"
+        android:layout_width="@dimen/upDownButtonSize"
+        android:layout_height="@dimen/upDownButtonSize"
+        android:alpha="0.7"
+        ads:layout_constraintVertical_bias="0.925"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,10 +149,10 @@
 
     <Button
         android:id="@+id/homeButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:background="@color/opaqueBlack"
-        ads:layout_constraintHorizontal_bias="0.07"
+        android:layout_width="@dimen/homeVolumeButtonSize"
+        android:layout_height="@dimen/homeVolumeButtonSize"
+        android:alpha="0.7"
+        ads:layout_constraintHorizontal_bias="0.05"
         ads:layout_constraintVertical_bias="0.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -162,10 +161,10 @@
 
     <Button
         android:id="@+id/volumeButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:background="@color/opaqueBlack"
-        ads:layout_constraintHorizontal_bias="0.93"
+        android:layout_width="@dimen/homeVolumeButtonSize"
+        android:layout_height="@dimen/homeVolumeButtonSize"
+        android:alpha="0.7"
+        ads:layout_constraintHorizontal_bias="0.95"
         ads:layout_constraintVertical_bias="0.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -194,6 +193,18 @@
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent"
-        ads:layout_constraintVertical_bias="0.44" />
+        ads:layout_constraintVertical_bias="0.445" />
+
+    <TextView
+        android:id="@+id/curPack"
+        android:layout_width="224dp"
+        android:layout_height="52dp"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        ads:layout_constraintBottom_toTopOf="@+id/up_button"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        ads:layout_constraintVertical_bias="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

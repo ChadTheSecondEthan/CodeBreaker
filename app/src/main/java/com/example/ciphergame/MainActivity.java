@@ -17,6 +17,12 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 
 import java.util.ArrayList;
 
+/*
+    Codebreaker made by Ethan Fisher
+    This is a game in which the user will decipher messages encipher through a monoalphabetic cipher
+    Version: v1.0
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences data;
@@ -27,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private static Cipher cipher;
     private boolean volumeOn;
 
+    public static final String[] TEXT_PACKS =
+            new String[] { "Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6" };
+
     private int currentState;
     private int prevState = 0;
     public static final int MENU = 0;
@@ -34,14 +43,10 @@ public class MainActivity extends AppCompatActivity {
     public static final int LEVELSTATE = 2;
     public static final int INLEVELSTATE = 3;
     public static final int PURCHASE = 4;
-//    public static final int HINTSTATE = 5;
-//    public static final int CURRENCYSTATE = 6;
 
-//    private CurrencyState currencyState;
     private Purchase purchase;
     private InLevelState inLevelState;
     private ArrayList<GameState> gameStates;
-//    int[] musicFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,14 +99,11 @@ public class MainActivity extends AppCompatActivity {
         gameStates.add(new LevelState(this));
         gameStates.add(inLevelState);
         gameStates.add(new Purchase(this));
-//        gameStates.add(new HintState(this));
-//        gameStates.add(currencyState);
+
 //        TODO add music
-//        musicFiles = new int[] {};
 
         currentState = MENU;
         gameStates.get(currentState).init();
-//        addMusic();
     }
 
     @Override

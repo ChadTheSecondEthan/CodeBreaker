@@ -436,8 +436,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
     private void updateText() { text.setText(Html.fromHtml(curCipherText, 0)); }
 
-    void setLevelNumber(int number) { level = number; }
-    void setTextPack(int textPack) { this.textPack = textPack; }
+    void setLevelNumber(int number) {
+        level = number;
+        app.getDataEditor().putInt("level", level).apply();
+    }
+    void setTextPack(int textPack) {
+        this.textPack = textPack;
+        app.getDataEditor().putString("textPack", MainActivity.TEXT_PACKS[textPack]);
+    }
 
     private char[] getCurAlphabet() {
         char[] alphabet = new char[26];

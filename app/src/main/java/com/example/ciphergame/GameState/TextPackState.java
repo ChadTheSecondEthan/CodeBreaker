@@ -11,8 +11,6 @@ public class TextPackState extends GameState {
 
     // TODO add the names of quote packs, both free and paid for ones
 
-    private final String[] textPacks = new String[] { "Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6" };
-
     public TextPackState(MainActivity app) { super(app); }
 
     public void init() {
@@ -20,6 +18,7 @@ public class TextPackState extends GameState {
 
         Button[] textPackButtons = app.getButtons(new int[] { R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6 });
         ViewHelper.setMarginTop(textPackButtons[0], 8);
+        String[] textPacks = MainActivity.TEXT_PACKS;
         for (int i = 0; i < textPackButtons.length; i++) {
             textPackButtons[i].setText(textPacks[i]);
             ViewHelper.setWidthAndHeight(textPackButtons[i], 70, 30);

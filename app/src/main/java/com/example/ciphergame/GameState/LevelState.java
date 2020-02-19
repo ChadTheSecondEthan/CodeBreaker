@@ -10,7 +10,7 @@ import com.example.ciphergame.ViewHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-public class LevelState extends GameState {
+public class LevelState extends GameState implements View.OnClickListener {
 
     private Button[] buttons;
 
@@ -22,9 +22,7 @@ public class LevelState extends GameState {
         TODO Add levels completed
      */
 
-    public LevelState(MainActivity app) {
-        super(app);
-    }
+    public LevelState(MainActivity app) { super(app); }
 
     public void init() {
         setContentView(R.layout.level_state);
@@ -36,48 +34,58 @@ public class LevelState extends GameState {
                 R.id.level11, R.id.level12, R.id.level13, R.id.level14, R.id.level15, R.id.level16 });
         final double WIDTH = 18, MARGIN = 1.75;
         for (int i = 0; i < buttons.length; i++) {
-            final int num = i;
             String text = "" + (i + 1);
             buttons[i].setText(text);
-            buttons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { selectLevel(num + ((page - 1) * BUTTONS_PER_PAGE)); }
-            });
+            buttons[i].setOnClickListener(this);
             ViewHelper.setWidthAndHeight(buttons[i], WIDTH);
             ViewHelper.setMargins(buttons[i], MARGIN);
         }
 
         getView(R.id.up_button).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { subtractPage(); }
+            public void onClick(View view) {
+                if (page != 1) {
+                    page--;
+                    updatePages();
+                }
+            }
         });
         getView(R.id.down_button).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { addPage(); }
+            public void onClick(View view) {
+                if (page != NUM_PAGES) {
+                    page++;
+                    updatePages();
+                }
+            }
         });
+        getView(R.id.homeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { app.setState(MainActivity.MENU); }
+        });
+        getView(R.id.volumeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { app.volumeClick(); }
+        });
+
+        String levelsComplete = app.getData().getInt("levelsComplete", 0) + " / " + (NUM_PAGES * BUTTONS_PER_PAGE);
+        ((TextView) getView(R.id.levelsComplete)).setText(levelsComplete);
+        ((TextView) getView(R.id.curPack)).setText(app.getData().getString("textPack", "unknown"));
     }
 
-    private void selectLevel(int level) {
-        app.getInLevelState().setLevelNumber(level);
-        app.setState(MainActivity.INLEVELSTATE);
-    }
-
-    private void subtractPage() {
-        if (page != 1) {
-            page--;
-            updatePages();
-        }
-    }
-    private void addPage() {
-        if (page != NUM_PAGES) {
-            page++;
-            updatePages();
-        }
-    }
     private void updatePages() {
         for (int i = 0; i < buttons.length; i++) {
-            String text = "" + (i + ((page - 1) * BUTTONS_PER_PAGE) + 1);
+            String text = "" + ((page - 1) * BUTTONS_PER_PAGE + i + 1);
             buttons[i].setText(text);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        for (int i = 0; i < buttons.length; i++)
+            if (view.getId() == buttons[i].getId()) {
+                app.getInLevelState().setLevelNumber(i);
+                app.setState(MainActivity.INLEVELSTATE);
+            }
     }
 }
