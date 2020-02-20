@@ -442,7 +442,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
     void setTextPack(int textPack) {
         this.textPack = textPack;
-        app.getDataEditor().putString("textPack", MainActivity.TEXT_PACKS[textPack]);
+        app.getDataEditor().putString("textPack", MainActivity.TEXT_PACKS[textPack]).apply();
     }
 
     private char[] getCurAlphabet() {

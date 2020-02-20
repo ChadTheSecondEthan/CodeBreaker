@@ -10,17 +10,6 @@
     tools:context=".GameState.InLevelState"
     tools:ignore="Overdraw">
 
-    <Button
-        android:id="@+id/checkAnswer"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        ads:layout_constraintHorizontal_bias="0.5"
-        ads:layout_constraintVertical_bias="0.905"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <HorizontalScrollView
         android:id="@+id/scrollViewTop"
         android:layout_width="1dp"
@@ -501,6 +490,7 @@
     </HorizontalScrollView>
 
     <TableRow
+        android:id="@+id/threeButtonTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:layout_constraintHorizontal_bias="0.5"
@@ -512,19 +502,29 @@
 
         <Button
             android:id="@+id/reset_answer"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
+            android:layout_width="@dimen/threeButtonWidth"
+            android:layout_height="@dimen/threeButtonHeight" />
 
         <Button
             android:id="@+id/lives_button"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
+            android:layout_width="@dimen/threeButtonWidth"
+            android:layout_height="@dimen/threeButtonHeight" />
 
         <Button
             android:id="@+id/hint_button"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
+            android:layout_width="@dimen/threeButtonWidth"
+            android:layout_height="@dimen/threeButtonHeight" />
     </TableRow>
+
+    <Button
+        android:id="@+id/checkAnswer"
+        android:layout_width="@dimen/checkAnswerWidth"
+        android:layout_height="@dimen/threeButtonHeight"
+        ads:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/threeButtonTable" />
 
     <TextView
         android:id="@+id/in_level_text"

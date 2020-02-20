@@ -10,6 +10,8 @@ import com.example.ciphergame.ViewHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 public class LevelState extends GameState implements View.OnClickListener {
 
     private Button[] buttons;
@@ -71,6 +73,9 @@ public class LevelState extends GameState implements View.OnClickListener {
         String levelsComplete = app.getData().getInt("levelsComplete", 0) + " / " + (NUM_PAGES * BUTTONS_PER_PAGE);
         ((TextView) getView(R.id.levelsComplete)).setText(levelsComplete);
         ((TextView) getView(R.id.curPack)).setText(app.getData().getString("textPack", "unknown"));
+
+        Button button = new Button(app);
+        button.setLayoutParams(new ConstraintLayout.LayoutParams((int) ViewHelper.percentWidth(100), (int) ViewHelper.percentHeight(100)));
     }
 
     private void updatePages() {

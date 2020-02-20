@@ -5,6 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="dark_green">#32CD32</color>
     <color name="opaqueBlack">#8000</color>
-    <color name="loadingScreen">#141414</color>
-    <color name="purchaseScreen">#424242</color>
+    <color name="darkGrey">#0E0E0E</color>
+    <color name="lighterGrey">#2a2a2a</color>
 </resources>
