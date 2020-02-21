@@ -5,4 +5,5 @@
     <dimen name="threeButtonWidth">128dp</dimen>
     <dimen name="threeButtonHeight">54dp</dimen>
     <dimen name="checkAnswerWidth">384dp</dimen>
+    <dimen name="textButtonMargin">12dp</dimen>
 </resources>

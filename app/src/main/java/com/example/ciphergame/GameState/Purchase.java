@@ -50,6 +50,9 @@ public class Purchase extends GameState {
 
         TextView[] hintTexts = app.getTextViews(new int[] { R.id.hint1_text, R.id.hint2_text, R.id.hint3_text });
         for (int i = 0; i < hintTexts.length; i++) hintTexts[i].setText(hints.getName(i));
+
+        addHomeButton();
+        addVolumeButton();
     }
 
     public void startNoMoneyAnimation() {

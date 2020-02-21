@@ -28,7 +28,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private int selectedLetter = -1;
 
     private int level;
-    private int textPack;
     private Cipher cipher;
     private String hintCipherText; // contains the hints only
     private String cipherText; // contains the original ciphered text
@@ -69,7 +68,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
         });
 
         cipher = MainActivity.getCipher();
-        cipherText = withoutHtml(app.getData().getString("cipherText", cipher.getText(textPack, level)));
+        cipherText = withoutHtml(app.getData().getString("cipherText", cipher.getText(app.getData().getInt("textPack", -1), level)));
         app.getDataEditor().putString("cipherText", cipherText).apply();
         hintCipherText = app.getData().getString("hintCipherText", cipherText);
         curCipherText = app.getData().getString("curCipherText", cipherText);
@@ -105,6 +104,9 @@ public class InLevelState extends GameState implements View.OnClickListener {
         text = getView(R.id.in_level_text);
         updateText();
         text.setTextSize(cipherText.length() >= 250 ? (float) (20 - ((cipherText.length() - 250) / 50.0)) : 20);
+
+        addHomeButton();
+        addVolumeButton();
     }
 
     private void resetAnswer() {
@@ -119,14 +121,14 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void resetCipherLetters() {
-        String regularText = cipher.getRegularText(textPack, level).toUpperCase();
+        String regularText = cipher.getRegularText(app.getData().getInt("textPack", -1), level).toUpperCase();
         char[] alphabet = cipher.getCipherAlphabet();
         for (int i = 0; i < 26; i++)
             cipherLetters[i].setText(regularText.contains("" + (alphabet[i])) ? app.getData().getString("cipherLetter" + i, "") : "-");
     }
 
     private void resetText() {
-        String regularText = cipher.getRegularText(textPack, level).toUpperCase();
+        String regularText = cipher.getRegularText(app.getData().getInt("textPack", -1), level).toUpperCase();
         int color = app.getApplicationContext().getColor(R.color.opaqueBlack);
         char[] alphabet = cipher.getCipherAlphabet();
         addButtonListeners();
@@ -146,7 +148,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private void checkAnswer() {
         selectedLetter = -1;
         for (Button button : letters) button.setBackgroundResource(R.drawable.circle);
-        if (withoutHtml(curCipherText).equals(cipher.getRegularText(textPack, level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
+        if (withoutHtml(curCipherText).equals(cipher.getRegularText(app.getData().getInt("textPack", -1), level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
             app.levelReset();
             level++;
@@ -435,15 +437,6 @@ public class InLevelState extends GameState implements View.OnClickListener {
         return true;
     }
     private void updateText() { text.setText(Html.fromHtml(curCipherText, 0)); }
-
-    void setLevelNumber(int number) {
-        level = number;
-        app.getDataEditor().putInt("level", level).apply();
-    }
-    void setTextPack(int textPack) {
-        this.textPack = textPack;
-        app.getDataEditor().putString("textPack", MainActivity.TEXT_PACKS[textPack]).apply();
-    }
 
     private char[] getCurAlphabet() {
         char[] alphabet = new char[26];

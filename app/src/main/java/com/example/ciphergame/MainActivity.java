@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean volumeOn;
 
     public static final String[] TEXT_PACKS =
-            new String[] { "Pack 1", "Pack 2", "Pack 3", "Pack 4", "Pack 5", "Pack 6" };
+            new String[] { "Pack 1", "Hi", "Pack 3", "Pack 4", "Pack 5", "Pack 6" };
 
     private int currentState;
     private int prevState = 0;
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public MainActivity setState(int state) {
+    public void setState(int state) {
         switch (state) {
             case MENU:
             case PURCHASE:
@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
         }
         currentState = state;
         gameStates.get(currentState).init();
-        return this;
     }
 
     public void levelReset() {
@@ -166,14 +165,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < ids.length; i++)
             views[i] = findViewById(ids[i]);
         return views;
-    }
-
-    public void volumeClick() {
-        if (mediaPlayer != null) {
-            if (volumeOn) mediaPlayer.pause();
-            else mediaPlayer.start();
-        }
-        setVolumeOn(!volumeOn);
     }
 
     public boolean isVolumeOn() { return volumeOn; }

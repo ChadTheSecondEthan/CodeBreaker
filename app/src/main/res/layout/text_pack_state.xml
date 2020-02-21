@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context=".GameState.TextPackState">
 
-    <View
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/textpack_background" />
-
     <ScrollView
         android:id="@+id/textPackView"
         android:layout_width="wrap_content"
@@ -21,6 +15,8 @@
         android:fillViewport="true"
         android:orientation="vertical"
         android:scrollbars="none"
+        android:paddingTop="68dp"
+        android:paddingBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -36,27 +32,32 @@
             <Button
                 android:id="@+id/button1"
                 android:layout_width="1dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/textButtonMargin" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="1dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/textButtonMargin" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="1dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/textButtonMargin" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="1dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/textButtonMargin" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="1dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/textButtonMargin" />
 
             <Button
                 android:id="@+id/button6"
@@ -65,5 +66,35 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/textpack_screen" />
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="@dimen/homeVolumeButtonSize"
+        android:layout_height="@dimen/homeVolumeButtonSize"
+        android:alpha="0.7"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/volumeButton"
+        android:layout_width="@dimen/homeVolumeButtonSize"
+        android:layout_height="@dimen/homeVolumeButtonSize"
+        android:alpha="0.7"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

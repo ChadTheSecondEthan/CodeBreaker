@@ -11,6 +11,8 @@ import android.view.animation.Animation;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 /*
     This class is used to make it easier to work with views
     Author: Ethan Fisher
@@ -69,6 +71,9 @@ public class ViewHelper {
         v.getLayoutParams().height = (int) (percent * onePercentHeight);
         v.getLayoutParams().width = v.getLayoutParams().height;
     }
+
+    public static void setHorizontalBias(View v, double bias) { ((ConstraintLayout.LayoutParams) v.getLayoutParams()).horizontalBias = (float) bias; }
+    public static void setVerticalBias(View v, double bias) { ((ConstraintLayout.LayoutParams) v.getLayoutParams()).verticalBias = (float) bias; }
 
     @NotNull
     @Contract(value = "_ -> new", pure = true)
