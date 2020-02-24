@@ -8,6 +8,14 @@
     android:background="@color/lighterGrey"
     tools:context=".GameState.LevelState">
 
+<!--    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:autoSizeTextType="uniform"
+    android:autoSizeMinTextSize="12sp"
+    android:autoSizeMaxTextSize="100sp"
+    android:autoSizeStepGranularity="2sp" /> -->
+
     <ScrollView
         android:id="@+id/levelScroll"
         android:layout_width="wrap_content"
@@ -76,6 +84,8 @@
         android:layout_height="52dp"
         android:textAlignment="center"
         android:textSize="32sp"
+        android:textColor="#FFF"
+        android:fontFamily="@font/carrois_gothic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +98,8 @@
         android:layout_height="52dp"
         android:textAlignment="center"
         android:textSize="32sp"
+        android:textColor="#FFF"
+        android:fontFamily="@font/carrois_gothic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
