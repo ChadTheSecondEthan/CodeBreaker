@@ -1,10 +1,14 @@
 package com.example.ciphergame.GameState;
 
+import android.content.ClipData;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.os.Handler;
 
@@ -72,32 +76,59 @@ public class InLevelState extends GameState implements View.OnClickListener {
         app.getDataEditor().putString("cipherText", cipherText).apply();
         hintCipherText = app.getData().getString("hintCipherText", cipherText);
         curCipherText = app.getData().getString("curCipherText", cipherText);
+        System.out.println(", " + cipher.getText(app.getData().getInt("textPack", -1), level));
 
-        letters = app.getButtons(new int[] { R.id.a, R.id.b, R.id.c, R.id.d, R.id.e, R.id.f, R.id.g,
-                R.id.h, R.id.i, R.id.j, R.id.k, R.id.l, R.id.m, R.id.n, R.id.o, R.id.p, R.id.q, R.id.r,
-                R.id.s, R.id.t, R.id.u, R.id.v, R.id.w, R.id.x, R.id.y, R.id.z });
-        cipherLetters = app.getButtons(new int[] { R.id.a_text, R.id.b_text, R.id.c_text, 
-                R.id.d_text, R.id.e_text, R.id.f_text, R.id.g_text, R.id.h_text, R.id.i_text, 
-                R.id.j_text, R.id.k_text, R.id.l_text, R.id.m_text, R.id.n_text, R.id.o_text, 
-                R.id.p_text, R.id.q_text, R.id.r_text, R.id.s_text, R.id.t_text, R.id.u_text, 
-                R.id.v_text, R.id.w_text, R.id.x_text, R.id.y_text, R.id.z_text });
-        TextView[] smallTexts = app.getTextViews(new int[] { R.id.a_small_text, R.id.b_small_text,
-                R.id.c_small_text, R.id.d_small_text, R.id.e_small_text, R.id.f_small_text, R.id.g_small_text,
-                R.id.h_small_text, R.id.i_small_text, R.id.j_small_text, R.id.k_small_text, R.id.l_small_text,
-                R.id.m_small_text, R.id.n_small_text, R.id.o_small_text, R.id.p_small_text, R.id.q_small_text,
-                R.id.r_small_text, R.id.s_small_text, R.id.t_small_text, R.id.u_small_text, R.id.v_small_text,
-                R.id.w_small_text, R.id.x_small_text, R.id.y_small_text, R.id.z_small_text });
-        final double WIDTH = 5.5, MARGIN = 1;
+        final double WIDTH = 92;
+        ViewHelper.setWidth(getView(R.id.scrollViewTop), WIDTH);
+        ViewHelper.setWidth(getView(R.id.scrollViewBottom), WIDTH);
+
+        LinearLayout letterLayout = getView(R.id.topLine);
+        TableRow rowTop = getView(R.id.bottomLineButtons);
+        TableRow rowBottom = getView(R.id.bottomLineTexts);
+
+        final double SIZE = 10;
+        final double MARGIN = 1.5;
+        final double PADDING = 0.05;
+        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams((int) (ViewHelper.percentWidth(SIZE)), (int) ViewHelper.percentWidth(SIZE));
+        linearLayoutParams.setMargins((int) ViewHelper.percentWidth(MARGIN), 0, (int) ViewHelper.percentWidth(MARGIN), 0);
+        
+        TableRow.LayoutParams tableRowParams = new TableRow.LayoutParams((int) (ViewHelper.percentWidth(SIZE)), (int) ViewHelper.percentWidth(SIZE));
+        tableRowParams.setMargins((int) ViewHelper.percentWidth(MARGIN), 0, (int) ViewHelper.percentWidth(MARGIN), 0);
+
+        letters = new Button[26];
         for (int i = 0; i < 26; i++) {
-            ViewHelper.setWidthAndSquare(letters[i], WIDTH);
-            ViewHelper.setMarginLeftAndRight(letters[i], MARGIN);
-            ViewHelper.setWidthAndSquare(cipherLetters[i], WIDTH);
-            ViewHelper.setMarginLeftAndRight(cipherLetters[i], MARGIN);
-            ViewHelper.setWidthAndSquare(smallTexts[i], WIDTH);
-            ViewHelper.setMarginLeftAndRight(smallTexts[i], MARGIN);
-            String text = "" + (char) (i + Cipher.LOWER_CASE_START);
-            smallTexts[i].setText(text);
+            letters[i] = new Button(app);
+            letters[i].setId(View.generateViewId());
+            letters[i].setOnClickListener(this);
+            String text = "" + (char) (i + Cipher.UPPER_CASE_START);
+            letters[i].setText(text);
+            letters[i].setBackgroundResource(R.drawable.circle);
+            letters[i].setLayoutParams(linearLayoutParams);
+            letters[i].setPadding(0, 0, 0, (int) ViewHelper.percentWidth(PADDING));
+            letterLayout.addView(letters[i]);
         }
+
+        cipherLetters = new Button[26];
+        for (int i = 0; i < 26; i++) {
+            cipherLetters[i] = new Button(app);
+            cipherLetters[i].setId(View.generateViewId());
+            cipherLetters[i].setOnClickListener(this);
+            cipherLetters[i].setBackgroundResource(R.drawable.circle);
+            cipherLetters[i].setLayoutParams(tableRowParams);
+            cipherLetters[i].setPadding(0, 0, 0, (int) ViewHelper.percentWidth(PADDING));
+            rowTop.addView(cipherLetters[i]);
+        }
+        
+        TextView[] texts = new TextView[26];
+        for (int i = 0; i < 26; i++) {
+            texts[i] = new TextView(app);
+            texts[i].setLayoutParams(tableRowParams);
+            String text = "" + (char) (i + Cipher.LOWER_CASE_START);
+            texts[i].setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            texts[i].setText(text);
+            rowBottom.addView(texts[i]);
+        }
+
         resetCipherLetters();
 
         resetText();
@@ -152,7 +183,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
             app.levelReset();
             level++;
-            if (level == LevelState.BUTTONS_PER_PAGE * LevelState.NUM_PAGES) app.setState(MainActivity.LEVELSTATE);
+            if (level == LevelState.NUM_BUTTONS) app.setState(MainActivity.LEVELSTATE);
             else {
                 removeButtonListeners();
                 for (int i = 0; i < 26; i++) {

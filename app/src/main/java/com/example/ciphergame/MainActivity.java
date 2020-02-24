@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.ciphergame.GameState.*;
 import com.google.android.gms.ads.MobileAds;
@@ -59,21 +61,23 @@ public class MainActivity extends AppCompatActivity {
         });
         ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
 
-        final ImageView logo = findViewById(R.id.logo);
-        final long animationTime = 1400;
-        logo.startAnimation(ViewHelper.fadeInAnimation(animationTime));
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                logo.startAnimation(ViewHelper.fadeOutAnimation(logo, animationTime));
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        init();
-                    }
-                }, animationTime);
-            }
-        }, animationTime + 1000);
+//        TODO
+//        final VideoView logo = findViewById(R.id.logo);
+//        final long animationTime = 1400;
+//        logo.startAnimation(ViewHelper.fadeInAnimation(animationTime));
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                logo.startAnimation(ViewHelper.fadeOutAnimation(logo, animationTime));
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        init();
+//                    }
+//                }, animationTime);
+//            }
+//        }, animationTime + 1000);
+        init();
 
         cipher = new Cipher(getApplicationContext());
     }

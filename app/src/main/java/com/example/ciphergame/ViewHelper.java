@@ -59,8 +59,8 @@ public class ViewHelper {
     }
     public static void setMargins(@NotNull View v, double margin) { setMargins(v, margin, margin, margin, margin); }
     
-    private static void setWidth(@NotNull View v, double percent) { v.getLayoutParams().width = (int) (percent * onePercentWidth); }
-    private static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentWidth); }
+    public static void setWidth(@NotNull View v, double percent) { v.getLayoutParams().width = (int) (percent * onePercentWidth); }
+    public static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentWidth); }
     public static void setWidthAndHeight(@NotNull View v, double percent) { setWidth(v, percent); setHeight(v, percent); }
     public static void setWidthAndHeight(@NotNull View v, double width, double height) { setWidth(v, width); setHeight(v, height); }
     public static void setWidthAndSquare(@NotNull View v, double percent) {
@@ -122,8 +122,8 @@ public class ViewHelper {
     }
 
     @Contract(pure = true)
-    public static double percentWidth(double percent) { return onePercentWidth * percent; }
+    public static float percentWidth(double percent) { return (float) (onePercentWidth * percent); }
     @Contract(pure = true)
-    public static double percentHeight(double percent) { return onePercentHeight * percent; }
+    public static float percentHeight(double percent) { return (float) (onePercentHeight * percent); }
 
 }
