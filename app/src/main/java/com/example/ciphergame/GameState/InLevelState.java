@@ -267,8 +267,9 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        int id = view.getId();
         for (int i = 0; i < 26; i++)
-            if (view.getId() == letters[i].getId() && !letters[i].getText().equals("-")) {
+            if (id == letters[i].getId() && !letters[i].getText().equals("-")) {
                 if (selectedLetter == i) letters[selectedLetter].setBackgroundResource(R.drawable.circle);
                 else {
                     if (letterSelected()) {
@@ -281,7 +282,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 changeTextColor(selectedLetter);
             }
         for (int i = 0; i < 26; i++)
-            if (view.getId() == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-"))
+            if (id == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-"))
                 if (letterSelected() && !hintsContainedIn(i) && isNotHint(selectedLetter)) {
                     if (isDifferentThanNormal(i))
                         removeLetter(i);

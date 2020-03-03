@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <Button
         android:id="@+id/homeButton"
@@ -29,62 +28,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scrollbars="none"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintVertical_bias="1.0"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" >-->
+    <ScrollView
+        android:id="@+id/currencyScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:scrollbars="none"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical" >-->
+        <LinearLayout
+            android:id="@+id/currencyLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
 
-<!--            <Button-->
-<!--                android:id="@+id/currency_button1"-->
-<!--                android:background="@drawable/black_background"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textSize="24sp"-->
-<!--                android:textColor="#000"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:layout_height="1dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/currency_button2"-->
-<!--                android:background="@drawable/black_background"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:layout_height="1dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/currency_button3"-->
-<!--                android:background="@drawable/black_background"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:layout_height="1dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/currency_button4"-->
-<!--                android:background="@drawable/black_background"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:layout_height="1dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/currency_button5"-->
-<!--                android:background="@drawable/black_background"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:layout_height="1dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/currency_button6"-->
-<!--                android:background="@drawable/black_background"-->
-<!--                android:layout_width="1dp"-->
-<!--                android:layout_height="1dp" />-->
-<!--        </LinearLayout>-->
-<!--    </ScrollView>-->
+    <TableRow
+        android:id="@+id/hintButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.125"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+    </TableRow>
 
     <TextView
         android:id="@+id/no_money"
@@ -100,111 +74,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <Button
-            android:id="@+id/answer1"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:textAlignment="textStart"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-
-        <Button
-            android:id="@+id/answer2"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:textAlignment="textStart"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-
-        <Button
-            android:id="@+id/answer3"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:textAlignment="textStart"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <ImageView
-            android:id="@+id/hint_image1"
-            android:background="@drawable/coin"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/hint_image2"
-            android:background="@drawable/coin"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/hint_image3"
-            android:background="@drawable/coin"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            tools:ignore="ContentDescription" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <TextView
-            android:id="@+id/hint1_text"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:textSize="24sp"
-            android:textColor="#000"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/hint2_text"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:textSize="24sp"
-            android:textColor="#000"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/hint3_text"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:textSize="24sp"
-            android:textColor="#000"
-            android:textAlignment="center" />
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

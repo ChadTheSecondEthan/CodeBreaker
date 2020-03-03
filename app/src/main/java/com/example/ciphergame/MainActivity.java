@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.example.ciphergame.GameState.*;
 import com.google.android.gms.ads.MobileAds;
@@ -61,22 +58,21 @@ public class MainActivity extends AppCompatActivity {
         });
         ViewHelper.setDisplayMetrics(getResources().getDisplayMetrics());
 
-//        TODO
 //        final VideoView logo = findViewById(R.id.logo);
-//        final long animationTime = 1400;
-//        logo.startAnimation(ViewHelper.fadeInAnimation(animationTime));
+//        final int time = logo.getDuration();
+//        logo.startAnimation(ViewHelper.fadeInAnimation(1000));
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
-//                logo.startAnimation(ViewHelper.fadeOutAnimation(logo, animationTime));
 //                new Handler().postDelayed(new Runnable() {
 //                    @Override
 //                    public void run() {
+//                        logo.stopPlayback();
 //                        init();
 //                    }
-//                }, animationTime);
+//                }, time);
 //            }
-//        }, animationTime + 1000);
+//        }, 1000);
         init();
 
         cipher = new Cipher(getApplicationContext());
@@ -93,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         currencies = new Currencies(this);
         volumeOn = data.getBoolean("volume", true);
 
-//        currencyState = new CurrencyState(this);
         purchase = new Purchase(this);
         inLevelState = new InLevelState(this);
 

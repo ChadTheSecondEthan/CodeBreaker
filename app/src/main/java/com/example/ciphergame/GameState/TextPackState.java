@@ -2,6 +2,7 @@ package com.example.ciphergame.GameState;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.ciphergame.MainActivity;
 import com.example.ciphergame.R;
@@ -18,13 +19,17 @@ public class TextPackState extends GameState implements View.OnClickListener {
     public void init() {
         setContentView(R.layout.text_pack_state);
 
-        buttons = app.getButtons(new int[] { R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6 });
+        LinearLayout layout = getView(R.id.textpackLayout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) ViewHelper.percentWidth(70), (int) ViewHelper.percentWidth(30));
+        params.bottomMargin = (int) ViewHelper.percentWidth(8);
+
+        buttons = new Button[6];
         String[] textPacks = MainActivity.TEXT_PACKS;
         for (int i = 0; i < buttons.length; i++) {
+            buttons[i] = new Button(app);
             buttons[i].setText(textPacks[i]);
-            ViewHelper.setWidthAndHeight(buttons[i], 70, 30);
-            ViewHelper.setMarginBottom(buttons[i], 8);
             buttons[i].setOnClickListener(this);
+            layout.addView(buttons[i], params);
         }
 
         addHomeButton();
@@ -33,8 +38,9 @@ public class TextPackState extends GameState implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        int id = view.getId();
         for (int i = 0; i < buttons.length; i++)
-            if (view.getId() == buttons[i].getId()) {
+            if (id == buttons[i].getId()) {
                 app.getDataEditor().putInt("textPack", i).apply();
                 app.setState(MainActivity.LEVELSTATE);
             }

@@ -8,6 +8,7 @@ public class Currencies {
 
     private int coins;
     private static final int STARTING_COINS = 1000;
+    public static final int NUM_PURCHASES = 6;
 
     Currencies(@NotNull MainActivity app) {
         this.app = app;

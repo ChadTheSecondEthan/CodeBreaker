@@ -60,7 +60,7 @@ public class ViewHelper {
     public static void setMargins(@NotNull View v, double margin) { setMargins(v, margin, margin, margin, margin); }
     
     public static void setWidth(@NotNull View v, double percent) { v.getLayoutParams().width = (int) (percent * onePercentWidth); }
-    public static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentWidth); }
+    public static void setHeight(@NotNull View v, double percent) { v.getLayoutParams().height = (int) (percent * onePercentHeight); }
     public static void setWidthAndHeight(@NotNull View v, double percent) { setWidth(v, percent); setHeight(v, percent); }
     public static void setWidthAndHeight(@NotNull View v, double width, double height) { setWidth(v, width); setHeight(v, height); }
     public static void setWidthAndSquare(@NotNull View v, double percent) {

@@ -11,12 +11,8 @@ import com.example.ciphergame.ViewHelper;
 public abstract class GameState {
 
     final MainActivity app;
-    static Currencies currencies;
 
-    GameState(MainActivity app) {
-        this.app = app;
-        currencies = MainActivity.getCurrencies();
-    }
+    GameState(MainActivity app) { this.app = app; }
 
     public abstract void init();
 
