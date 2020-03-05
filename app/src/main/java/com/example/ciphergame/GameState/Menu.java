@@ -16,15 +16,11 @@ public class Menu extends GameState {
         getView(R.id.logo).setVisibility(View.INVISIBLE);
         getView(R.id.background).setBackgroundResource(R.drawable.menu_screen);
 
-        Button play = getView(R.id.playButton);
-        play.setAlpha(0.0f);
-        play.setOnClickListener(new View.OnClickListener() {
+        getView(R.id.playButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { app.setState(MainActivity.TEXTPACKSTATE); }
         });
-        Button buy = getView(R.id.buyButton);
-        buy.setAlpha(0.0f);
-        buy.setOnClickListener(new View.OnClickListener() {
+        getView(R.id.buyButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { app.setState(MainActivity.PURCHASE); }
         });

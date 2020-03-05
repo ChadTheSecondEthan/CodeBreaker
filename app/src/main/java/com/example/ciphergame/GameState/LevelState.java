@@ -22,6 +22,8 @@ public class LevelState extends GameState implements View.OnClickListener {
 
     /*
         TODO Add levels completed
+
+        TODO add padding top and bottom to scroll view with buttons
      */
 
     public LevelState(MainActivity app) { super(app); }
