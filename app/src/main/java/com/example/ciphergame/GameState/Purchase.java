@@ -53,11 +53,14 @@ public class Purchase extends GameState implements View.OnClickListener {
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams((int) ViewHelper.percentWidth(WIDTH), (int) ViewHelper.percentWidth(HEIGHT));
         linearParams.setMargins(0, (int) ViewHelper.percentWidth(MARGIN), 0, (int) ViewHelper.percentWidth(MARGIN));
         currencyButtons = new Button[Currencies.NUM_PURCHASES];
+
+        // create array of buttons
+        String text = "hi";
         for (int i = 0; i < currencyButtons.length; i++) {
             currencyButtons[i] = new Button(app);
             currencyButtons[i].setId(View.generateViewId());
             currencyButtons[i].setOnClickListener(this);
-            currencyButtons[i].setText("hi");
+            currencyButtons[i].setText(text);
             currencyLayout.addView(currencyButtons[i], linearParams);
         }
 
@@ -69,7 +72,7 @@ public class Purchase extends GameState implements View.OnClickListener {
         addVolumeButton();
     }
 
-    public void startNoMoneyAnimation() {
+    private void startNoMoneyAnimation() {
         final TextView textView = getView(R.id.no_money);
         textView.setVisibility(View.VISIBLE);
         textView.startAnimation(ViewHelper.fadeOutAnimation(textView));
@@ -86,6 +89,7 @@ public class Purchase extends GameState implements View.OnClickListener {
 //        TODO
 //        for (int i = 0; i < currencyButtons.length; i++)
 //            if (id == currencyButtons[i].getId()) {
+//
 //            }
     }
 }

@@ -1,9 +1,8 @@
 package com.example.ciphergame.GameState;
 
-import android.content.ClipData;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -20,15 +19,14 @@ import com.example.ciphergame.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-public class InLevelState extends GameState implements View.OnClickListener {
+public class InLevelState extends GameState {
 
     private static final String WHITE = "<font color=#FFFFFF>";
     private static final String RED = "<font color=#FF0000>";
     private static final String FONT = "</font>";
 
     private TextView text;
-    private Button[] letters; // the bottom letters
-    private Button[] cipherLetters; // the top letters
+    private Button[] topLetters, bottomLetters;
     private int selectedLetter = -1;
 
     private int level;
@@ -36,47 +34,45 @@ public class InLevelState extends GameState implements View.OnClickListener {
     private String hintCipherText; // contains the hints only
     private String cipherText; // contains the original ciphered text
     private String curCipherText; // contains the current text
+    private String regularText;
 
     public InLevelState(MainActivity app) { super(app); }
 
     public void init() {
         setContentView(R.layout.in_level_state);
 
+        // load ad on adview
         ((AdView) getView(R.id.in_level_ad)).loadAd(new AdRequest.Builder().addTestDevice("F7C1A666D29DEF8F4F05EED1EAC2E8E0").build());
 
+        // reset and hint buttons
         Button reset = getView(R.id.reset_answer);
         Button hint = getView(R.id.hint_button);
-        Button lives = getView(R.id.lives_button);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                resetAnswer();
-            }
+            public void onClick(View view) { resetAnswer(); }
         });
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { app.setState(MainActivity.PURCHASE); }
         });
-        lives.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { app.setState(MainActivity.PURCHASE); }
-        });
-        for (Button button : new Button[] { reset, hint, lives }) button.setBackgroundColor(Color.TRANSPARENT);
+        reset.setBackgroundColor(Color.TRANSPARENT);
+        hint.setBackgroundColor(Color.TRANSPARENT);
+
         Button checkAnswer = getView(R.id.checkAnswer);
         checkAnswer.setBackgroundColor(Color.TRANSPARENT);
         checkAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                checkAnswer();
-            }
+            public void onClick(View view) { checkAnswer(); }
         });
 
         cipher = MainActivity.getCipher();
+
         cipherText = withoutHtml(app.getData().getString("cipherText", cipher.getText(app.getData().getInt("textPack", -1), level)));
         app.getDataEditor().putString("cipherText", cipherText).apply();
+
         hintCipherText = app.getData().getString("hintCipherText", cipherText);
         curCipherText = app.getData().getString("curCipherText", cipherText);
-        System.out.println(", " + cipher.getText(app.getData().getInt("textPack", -1), level));
+        regularText = cipher.getRegularText(app.getData().getInt("textPack", -1), level).toUpperCase();
 
         final double WIDTH = 92;
         ViewHelper.setWidth(getView(R.id.scrollViewTop), WIDTH);
@@ -89,47 +85,47 @@ public class InLevelState extends GameState implements View.OnClickListener {
         final double SIZE = 10;
         final double MARGIN = 1.5;
         final double PADDING = 0.05;
-        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams((int) (ViewHelper.percentWidth(SIZE)), (int) ViewHelper.percentWidth(SIZE));
+        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams((int) ViewHelper.percentWidth(SIZE), (int) ViewHelper.percentWidth(SIZE));
         linearLayoutParams.setMargins((int) ViewHelper.percentWidth(MARGIN), 0, (int) ViewHelper.percentWidth(MARGIN), 0);
         
-        TableRow.LayoutParams tableRowParams = new TableRow.LayoutParams((int) (ViewHelper.percentWidth(SIZE)), (int) ViewHelper.percentWidth(SIZE));
+        TableRow.LayoutParams tableRowParams = new TableRow.LayoutParams((int) ViewHelper.percentWidth(SIZE), (int) ViewHelper.percentWidth(SIZE));
         tableRowParams.setMargins((int) ViewHelper.percentWidth(MARGIN), 0, (int) ViewHelper.percentWidth(MARGIN), 0);
 
-        letters = new Button[26];
+        topLetters = new Button[26];
         for (int i = 0; i < 26; i++) {
-            letters[i] = new Button(app);
-            letters[i].setId(View.generateViewId());
-            letters[i].setOnClickListener(this);
+            topLetters[i] = new Button(app);
+            topLetters[i].setId(View.generateViewId());
+            topLetters[i].setOnClickListener(topClick);
             String text = "" + (char) (i + Cipher.UPPER_CASE_START);
-            letters[i].setText(text);
-            letters[i].setBackgroundResource(R.drawable.circle);
-            letters[i].setLayoutParams(linearLayoutParams);
-            letters[i].setPadding(0, 0, 0, (int) ViewHelper.percentWidth(PADDING));
-            letterLayout.addView(letters[i]);
+            topLetters[i].setText(text);
+            topLetters[i].setBackgroundResource(R.drawable.circle);
+            topLetters[i].setLayoutParams(linearLayoutParams);
+            topLetters[i].setPadding(0, 0, 0, (int) ViewHelper.percentWidth(PADDING));
+            letterLayout.addView(topLetters[i]);
         }
 
-        cipherLetters = new Button[26];
+        bottomLetters = new Button[26];
         for (int i = 0; i < 26; i++) {
-            cipherLetters[i] = new Button(app);
-            cipherLetters[i].setId(View.generateViewId());
-            cipherLetters[i].setOnClickListener(this);
-            cipherLetters[i].setBackgroundResource(R.drawable.circle);
-            cipherLetters[i].setLayoutParams(tableRowParams);
-            cipherLetters[i].setPadding(0, 0, 0, (int) ViewHelper.percentWidth(PADDING));
-            rowTop.addView(cipherLetters[i]);
+            bottomLetters[i] = new Button(app);
+            bottomLetters[i].setId(View.generateViewId());
+            bottomLetters[i].setOnClickListener(bottomClick);
+            bottomLetters[i].setBackgroundResource(R.drawable.circle);
+            bottomLetters[i].setLayoutParams(tableRowParams);
+            bottomLetters[i].setPadding(0, 0, 0, (int) ViewHelper.percentWidth(PADDING));
+            rowTop.addView(bottomLetters[i]);
         }
         
-        TextView[] texts = new TextView[26];
         for (int i = 0; i < 26; i++) {
-            texts[i] = new TextView(app);
-            texts[i].setLayoutParams(tableRowParams);
+            TextView textView = new TextView(app);
+            textView.setLayoutParams(tableRowParams);
+            textView.setTextColor(Color.WHITE);
             String text = "" + (char) (i + Cipher.LOWER_CASE_START);
-            texts[i].setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            texts[i].setText(text);
-            rowBottom.addView(texts[i]);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setText(text);
+            rowBottom.addView(textView);
         }
 
-        resetCipherLetters();
+        resetBottomLetters();
 
         resetText();
         text = getView(R.id.in_level_text);
@@ -141,45 +137,67 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     private void resetAnswer() {
-        if (letterSelected()) {
-            letters[selectedLetter].setBackgroundResource(R.drawable.circle);
+
+        // reset background of current selected letter
+        if (topLetterSelected()) {
+            topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
             selectedLetter = -1;
         }
+
+        // reset the cipher text to leave only the hints
         curCipherText = hintCipherText;
         app.getDataEditor().putString("curCipherText", curCipherText).apply();
-        resetCipherLetters();
+
+        // reset curBottomLetters
+        for (int i = 0; i < 26; i++)
+            app.getDataEditor().putString("curBottomLetter" + i, "");
+        app.getDataEditor().apply();
+
+        // reset bottom letters and update the text
+        resetBottomLetters();
         updateText();
     }
 
-    private void resetCipherLetters() {
-        String regularText = cipher.getRegularText(app.getData().getInt("textPack", -1), level).toUpperCase();
-        char[] alphabet = cipher.getCipherAlphabet();
+    private void resetBottomLetters() {
+
+        // resets bottom letters so that they are blank unless filled in with a hint
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         for (int i = 0; i < 26; i++)
-            cipherLetters[i].setText(regularText.contains("" + (alphabet[i])) ? app.getData().getString("cipherLetter" + i, "") : "-");
+            // if the regular text doesn't contain a letter, it gets a dash, otherwise blank/hint
+            if (!regularText.contains("" + alphabet[i]))
+                bottomLetters[i].setText("-");
+            else
+                bottomLetters[i].setText(app.getData().getString("cipherLetter" + i, app.getData().getString("curBottomLetter" + i, "")));
     }
 
     private void resetText() {
-        String regularText = cipher.getRegularText(app.getData().getInt("textPack", -1), level).toUpperCase();
         int color = app.getApplicationContext().getColor(R.color.opaqueBlack);
-        char[] alphabet = cipher.getCipherAlphabet();
+        char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         addButtonListeners();
+
         // reset letters
         for (int i = 0; i < 26; i++) {
-            letters[i].setBackgroundResource(R.drawable.circle);
-            letters[i].setText(cipherText.contains("" + (char) (i + Cipher.UPPER_CASE_START)) ? "" + (char) (i + Cipher.UPPER_CASE_START) : "-");
+            topLetters[i].setBackgroundResource(R.drawable.circle);
+            topLetters[i].setText(cipherText.contains("" + (char) (i + Cipher.UPPER_CASE_START)) ? "" + (char) (i + Cipher.UPPER_CASE_START) : "-");
         }
-        // reset cipherLetters
+
+        // reset bottomLetters
         for (int i = 0; i < 26; i++) {
-            cipherLetters[i].setBackgroundResource(R.drawable.circle);
-            cipherLetters[i].setTextColor(color);
-            if (!(regularText.contains("" + alphabet[i]) && hintCipherText.contains("" + alphabet[i]))) cipherLetters[i].setText("-");
+            bottomLetters[i].setBackgroundResource(R.drawable.circle);
+            bottomLetters[i].setTextColor(color);
+//            if (!regularText.contains("" + alphabet[i]) && !hintCipherText.contains("" + alphabet[i])) bottomLetters[i].setText("-");
+            if (!regularText.contains("" + alphabet[i]))
+                bottomLetters[i].setText("-");
+            else
+                bottomLetters[i].setText(app.getData().getString("cipherLetter" + i, app.getData().getString("curBottomLetter" + i, "")));
         }
+        resetBottomLetters();
     }
 
     private void checkAnswer() {
         selectedLetter = -1;
-        for (Button button : letters) button.setBackgroundResource(R.drawable.circle);
-        if (withoutHtml(curCipherText).equals(cipher.getRegularText(app.getData().getInt("textPack", -1), level).toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
+        for (Button button : topLetters) button.setBackgroundResource(R.drawable.circle);
+        if (withoutHtml(curCipherText).equals(regularText.toLowerCase()) || withoutHtml(text.getText().toString()).equals("You won")) {
             text.setText(Html.fromHtml(WHITE + "You won" + FONT, 1));
             app.levelReset();
             level++;
@@ -187,8 +205,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
             else {
                 removeButtonListeners();
                 for (int i = 0; i < 26; i++) {
-                    letters[i].setBackgroundResource(R.drawable.green_circle);
-                    cipherLetters[i].setBackgroundResource(R.drawable.green_circle);
+                    topLetters[i].setBackgroundResource(R.drawable.green_circle);
+                    bottomLetters[i].setBackgroundResource(R.drawable.green_circle);
                 }
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -200,16 +218,16 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private void wrongAnswerAnimation() {
         for (int i = 0; i < 26; i++) {
-            letters[i].setBackgroundResource(R.drawable.red_circle);
-            cipherLetters[i].setBackgroundResource(R.drawable.red_circle);
+            topLetters[i].setBackgroundResource(R.drawable.red_circle);
+            bottomLetters[i].setBackgroundResource(R.drawable.red_circle);
         }
         removeButtonListeners();
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 26; i++) {
-                    letters[i].setBackgroundResource(R.drawable.circle);
-                    cipherLetters[i].setBackgroundResource(R.drawable.circle);
+                    topLetters[i].setBackgroundResource(R.drawable.circle);
+                    bottomLetters[i].setBackgroundResource(R.drawable.circle);
                 }
             }
         }, 500);
@@ -240,6 +258,7 @@ public class InLevelState extends GameState implements View.OnClickListener {
                 letter = withoutHtml(curCipherText).charAt(i);
                 break;
             }
+
         curCipherText = curCipherText.replace(WHITE, "*").replace(FONT, "@")
                 .replace("*" + letter + "@", "" + letter).replace("" + letter,
                         WHITE + (char) (newLetter + Cipher.LOWER_CASE_START) + FONT)
@@ -259,77 +278,166 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private void removeLetter(int index) {
         if (isNotHint(index)) {
-            curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, cipherLetters[index].getText());
+            curCipherText = curCipherText.replace(WHITE + (char) (index + Cipher.LOWER_CASE_START) + FONT, bottomLetters[index].getText());
             app.getDataEditor().putString("curCipherText", curCipherText).apply();
             updateText();
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        for (int i = 0; i < 26; i++)
-            if (id == letters[i].getId() && !letters[i].getText().equals("-")) {
-                if (selectedLetter == i) letters[selectedLetter].setBackgroundResource(R.drawable.circle);
-                else {
-                    if (letterSelected()) {
-                        letters[selectedLetter].setBackgroundResource(R.drawable.circle);
-                        changeTextColor(-1);
-                    }
-                    letters[i].setBackgroundResource(R.drawable.green_circle);
-                }
-                selectedLetter = (selectedLetter == i) ? -1 : i;
-                changeTextColor(selectedLetter);
-            }
-        for (int i = 0; i < 26; i++)
-            if (id == cipherLetters[i].getId() && !cipherLetters[i].getText().equals("-"))
-                if (letterSelected() && !hintsContainedIn(i) && isNotHint(selectedLetter)) {
-                    if (isDifferentThanNormal(i))
-                        removeLetter(i);
-                    changeText(selectedLetter, i);
-                    letters[selectedLetter].setBackgroundResource(R.drawable.circle);
-                    String text = "" + (char) (selectedLetter + Cipher.UPPER_CASE_START);
-                    cipherLetters[i].setText(text);
-                    for (int j = 0; j < cipherLetters.length; j++)
-                        if (cipherLetters[j].getText().equals("" + (char) (selectedLetter + Cipher.UPPER_CASE_START)) && j != i) {
-                            cipherLetters[j].setText("");
-                            break;
+    private View.OnClickListener topClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+
+            for (int i = 0; i < 26; i++)
+                if (id == topLetters[i].getId() && !topLetters[i].getText().equals("-")) {
+
+                    if (selectedLetter == i)
+                        topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
+                    else {
+                        if (topLetterSelected()) {
+                            topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
+                            changeTextColor(-1);
                         }
-                    selectedLetter = -1;
-                } else if (firstLetterOf(cipherLetters[i]) != '!' && app.getData().getString("cipherLetter" + i, "").equals("")) {
-                    removeLetter(i);
-                    cipherLetters[i].setText("");
+                        topLetters[i].setBackgroundResource(R.drawable.green_circle);
+                    }
+                    selectedLetter = (selectedLetter == i) ? -1 : i;
+                    changeTextColor(selectedLetter);
                 }
-    }
+        }
+    };
+
+    private View.OnClickListener bottomClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+
+            // check for bottom letters
+            for (int i = 0; i < 26; i++)
+                if (id == bottomLetters[i].getId() && !bottomLetters[i].getText().equals("-"))
+
+                    if (topLetterSelected() && !hintsContainedIn(i) && isNotHint(selectedLetter)) {
+                        app.getDataEditor().putString("curBottomLetter" + i, (char) i + "").apply();
+                        if (isDifferentThanNormal(i))
+                            removeLetter(i);
+                        changeText(selectedLetter, i);
+                        topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
+                        String text = "" + (char) (selectedLetter + Cipher.UPPER_CASE_START);
+                        bottomLetters[i].setText(text);
+                        for (int j = 0; j < bottomLetters.length; j++)
+                            if (bottomLetters[j].getText().equals("" + (char) (selectedLetter + Cipher.UPPER_CASE_START)) && j != i) {
+                                bottomLetters[j].setText("");
+                                break;
+                            }
+                        selectedLetter = -1;
+                    } else if (firstLetterOf(bottomLetters[i]) != '!' && app.getData().getString("cipherLetter" + i, "").equals("")) {
+                        removeLetter(i);
+                        bottomLetters[i].setText("");
+                    }
+        }
+    };
+
+//    @Override
+//    public void onClick(View view) {
+//        int id = view.getId();
+//
+//        for (int i = 0; i < 26; i++)
+//            if (id == topLetters[i].getId() && !topLetters[i].getText().equals("-")) {
+//
+//                if (selectedLetter == i)
+//                    topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
+//                else {
+//                    if (topLetterSelected()) {
+//                        topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
+//                        changeTextColor(-1);
+//                    }
+//                    topLetters[i].setBackgroundResource(R.drawable.green_circle);
+//                }
+//                selectedLetter = (selectedLetter == i) ? -1 : i;
+//                changeTextColor(selectedLetter);
+//            }
+//
+//        // check for bottom letters
+//        for (int i = 0; i < 26; i++)
+//            if (id == bottomLetters[i].getId() && !bottomLetters[i].getText().equals("-"))
+//
+//                if (topLetterSelected() && !hintsContainedIn(i) && isNotHint(selectedLetter)) {
+//                    app.getDataEditor().putString("curBottomLetter" + i, (char) i + "").apply();
+//                    if (isDifferentThanNormal(i))
+//                        removeLetter(i);
+//                    changeText(selectedLetter, i);
+//                    topLetters[selectedLetter].setBackgroundResource(R.drawable.circle);
+//                    String text = "" + (char) (selectedLetter + Cipher.UPPER_CASE_START);
+//                    bottomLetters[i].setText(text);
+//                    for (int j = 0; j < bottomLetters.length; j++)
+//                        if (bottomLetters[j].getText().equals("" + (char) (selectedLetter + Cipher.UPPER_CASE_START)) && j != i) {
+//                            bottomLetters[j].setText("");
+//                            break;
+//                        }
+//                    selectedLetter = -1;
+//                } else if (firstLetterOf(bottomLetters[i]) != '!' && app.getData().getString("cipherLetter" + i, "").equals("")) {
+//                    removeLetter(i);
+//                    bottomLetters[i].setText("");
+//                }
+//    }
 
     public void peek() {
+
+        // create variables used to check letters and bottomLetters
         char[] cipherAlphabet = cipher.getCipherAlphabet();
         char[] curCipherAlphabet = getCurAlphabet();
-        int randChoice;
+        int randChoice = (int) Math.round(Math.random() * 25);
         boolean[] canCorrect = new boolean[26];
 
+        Log.d("Bottom Letters", String.copyValueOf(cipherAlphabet));
+        Log.d("Current Bottom Letters", String.copyValueOf(curCipherAlphabet));
+
+        // make sure a hint is available
         if (!canUseHint()) {
             MainActivity.getCurrencies().addCoins(Hints.PEEK_COST);
             return;
         }
 
-        for (int i = 0; i < 26; i++)
-            canCorrect[i] = cipherAlphabet[i] != curCipherAlphabet[i] && firstLetterOf(cipherLetters[i]) != '-' && lettersContain(i);
+        // checks which letters can be used as hints
+        boolean req1, req2, req3;
+        for (int i = 0; i < 26; i++) {
+            req1 = cipherAlphabet[i] != curCipherAlphabet[i];
+            req2 = firstLetterOf(bottomLetters[i]) != '-';
+            req3 = topLettersContain(i);
+
+            canCorrect[i] = req1 && req2 && req3;
+        }
 
         // pick a random letter to switch
-        do randChoice = (int) (Math.random() * 25);
-        while (!canCorrect[randChoice]);
+        do {
+            randChoice++;
+            if (randChoice == 25)
+                randChoice = 0;
+        } while (!canCorrect[randChoice]);
 
+        Log.d("First Letter of Top Letter", firstLetterOf(topLetters[randChoice]) + "");
+
+        // change the text of the changed cipherLetter
         String text = "" + cipherAlphabet[randChoice];
-        cipherLetters[randChoice].setText(text);
+        bottomLetters[randChoice].setText(text);
+
+        // change the text in the form of a hint
         changeHint(cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START, randChoice);
         app.getDataEditor().putString("cipherLetter" + randChoice, "" + cipherAlphabet[randChoice]).apply();
-        app.setState(MainActivity.INLEVELSTATE);
-        resetCipherLetters();
 
+        Log.d("OldLetter", cipherAlphabet[randChoice] + "");
+        Log.d("NewLetter", randChoice + "");
+
+        // bring game back to the inlevelstate and reset the bottom letters
+        app.setState(MainActivity.INLEVELSTATE);
+        resetBottomLetters();
+
+        // variables used in scrolling to the letters changed during peek
         final double SCROLL_END = 232.75;
         final int choice = randChoice;
         final int letter = cipherAlphabet[randChoice] - Cipher.UPPER_CASE_START;
+
+        // both scroll views scroll to the letters that were changed
 
         // top goes to cipheralphabet[randchoice]
         final HorizontalScrollView top = getView(R.id.scrollViewTop), bottom = getView(R.id.scrollViewBottom);
@@ -353,13 +461,13 @@ public class InLevelState extends GameState implements View.OnClickListener {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                letters[letter].setBackgroundResource(R.drawable.green_circle);
-                cipherLetters[choice].setBackgroundResource(R.drawable.green_circle);
+                topLetters[letter].setBackgroundResource(R.drawable.green_circle);
+                bottomLetters[choice].setBackgroundResource(R.drawable.green_circle);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        letters[letter].setBackgroundResource(R.drawable.circle);
-                        cipherLetters[choice].setBackgroundResource(R.drawable.circle);
+                        topLetters[letter].setBackgroundResource(R.drawable.circle);
+                        bottomLetters[choice].setBackgroundResource(R.drawable.circle);
                     }
                 }, 375);
             }
@@ -367,30 +475,41 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
 
     public void choose() {
-        app.setState(MainActivity.INLEVELSTATE);
-        resetCipherLetters();
 
+        // check if the hint can be used
         if (!canUseHint()) {
             MainActivity.getCurrencies().addCoins(Hints.CHOOSE_COST);
             return;
         }
 
+        // change to inlevelstate and reset bottom letters
+        app.setState(MainActivity.INLEVELSTATE);
+        resetBottomLetters();
+
+        // make a text view prompting user to select a letter to be solved
         TextView chooseLetter = getView(R.id.chooseLetterText);
         chooseLetter.setText(R.string.pickLetter);
         chooseLetter.setVisibility(View.VISIBLE);
-        for (int i = 0; i < 26; i++) {
-            final int num = i;
-            letters[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (letters[num].getText().equals("-") || !isNotHint(num)) return;
+
+        // on click listener for when they're click on to be solved
+        for (Button letter : topLetters)
+            letter.setOnClickListener(hintClick);
+    }
+    
+    private View.OnClickListener hintClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            for (int i = 0; i < 26; i++)
+                if (id == topLetters[i].getId()) {
+                    if (topLetters[i].getText().equals("-") || !isNotHint(i)) return;
                     char[] alphabet = cipher.getCipherAlphabet();
-                    for (int i = 0; i < 26; i++)
-                        if (alphabet[i] == (char) (num + Cipher.UPPER_CASE_START)) {
-                            String text = alphabet[i] + "";
-                            cipherLetters[i].setText(text);
-                            changeHint(num, i);
-                            app.getDataEditor().putString("cipherLetter" + i, (char) (num + Cipher.LOWER_CASE_START) + "").apply();
+                    for (int j = 0; j < 26; j++)
+                        if (alphabet[j] == (char) (i + Cipher.UPPER_CASE_START)) {
+                            String text = alphabet[j] + "";
+                            bottomLetters[j].setText(text);
+                            changeHint(i, j);
+                            app.getDataEditor().putString("cipherLetter" + j, (char) (i + Cipher.LOWER_CASE_START) + "").apply();
                         }
                     addButtonListeners();
                     getView(R.id.chooseLetterText).startAnimation(ViewHelper.fadeOutAnimation(getView(R.id.chooseLetterText)));
@@ -402,9 +521,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
                         }
                     });
                 }
-            });
         }
-    }
+    };
 
     public void reveal() {
         if (!canUseHint()) {
@@ -418,26 +536,29 @@ public class InLevelState extends GameState implements View.OnClickListener {
             changeHint(alphabet[i] - Cipher.UPPER_CASE_START, i);
             app.getDataEditor().putString("cipherLetter" + i, "" + alphabet[i]).apply();
         }
-        resetCipherLetters();
+        resetBottomLetters();
     }
 
+    // removes the onclicklisteners from buttons
     private void removeButtonListeners() {
         for (int i = 0; i < 26; i++) {
-            cipherLetters[i].setOnClickListener(null);
-            letters[i].setOnClickListener(null);
+            bottomLetters[i].setOnClickListener(null);
+            topLetters[i].setOnClickListener(null);
         }
     }
+    // adds onclicklisteners back
     private void addButtonListeners() {
         for (int i = 0; i < 26; i++) {
-            cipherLetters[i].setOnClickListener(this);
-            letters[i].setOnClickListener(this);
+            bottomLetters[i].setOnClickListener(bottomClick);
+            topLetters[i].setOnClickListener(topClick);
         }
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canUseHint() {
-        for (Button letter : cipherLetters)
-            if (letter.getText().toString().equals(""))
+        // checks bottom letters
+        for (Button letter : bottomLetters)
+            if (firstLetterOf(letter) == '!')
                 return true;
 
         app.setState(MainActivity.INLEVELSTATE);
@@ -454,9 +575,10 @@ public class InLevelState extends GameState implements View.OnClickListener {
         return false;
     }
 
-    private boolean letterSelected() { return selectedLetter != -1; }
-    private boolean isDifferentThanNormal(int index) { return !cipherLetters[index].getText().equals(""); }
-    private char firstLetterOf(Button button) { return button.getText().length() > 0 ? button.getText().charAt(0) : '!'; }
+    private boolean topLetterSelected() { return selectedLetter != -1; }
+    private boolean isDifferentThanNormal(int index) { return !bottomLetters[index].getText().equals(""); }
+    private char firstLetterOf(Button button) {
+        return button.getText().length() > 0 ? button.getText().charAt(0) : '!'; }
 
     private String withoutHtml(String s) { return s.replace(FONT, "").replace(RED, "").replace(WHITE, ""); }
     private boolean hintsContainedIn(int index) {
@@ -464,7 +586,8 @@ public class InLevelState extends GameState implements View.OnClickListener {
     }
     private boolean isNotHint(int letter) {
         for (int i = 0; i < 26; i++)
-            if (app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.LOWER_CASE_START)) || app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
+            if (app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.LOWER_CASE_START)) ||
+                    app.getData().getString("cipherLetter" + i, "").equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
                 return false;
         return true;
     }
@@ -472,13 +595,13 @@ public class InLevelState extends GameState implements View.OnClickListener {
 
     private char[] getCurAlphabet() {
         char[] alphabet = new char[26];
-        for (int i = 0; i < cipherLetters.length; i++)
-            alphabet[i] = Character.toUpperCase(firstLetterOf(cipherLetters[i]));
+        for (int i = 0; i < bottomLetters.length; i++)
+            alphabet[i] = Character.toUpperCase(firstLetterOf(bottomLetters[i]));
         return alphabet;
     }
-    private boolean lettersContain(int letter) {
+    private boolean topLettersContain(int letter) {
         for (int i = 0; i < 26; i++)
-            if (letters[i].getText().equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
+            if (topLetters[i].getText().equals("" + (char) (letter + Cipher.UPPER_CASE_START)))
                 return true;
         return false;
     }

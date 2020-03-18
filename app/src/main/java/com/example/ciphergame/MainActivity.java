@@ -143,31 +143,11 @@ public class MainActivity extends AppCompatActivity {
     public SharedPreferences.Editor getDataEditor() { return dataEditor; }
     public MediaPlayer getMediaPlayer() { return mediaPlayer; }
     public static Currencies getCurrencies() { return currencies; }
-    public int getPrevState() { return prevState; }
+//    public int getPrevState() { return prevState; }
     public InLevelState getInLevelState() { return inLevelState; }
     public static Cipher getCipher() { return cipher; }
-
-    public Button[] getButtons(int[] ids) {
-        Button[] views = new Button[ids.length];
-        for (int i = 0; i < ids.length; i++)
-            views[i] = findViewById(ids[i]);
-        return views;
-    }
-    public ImageView[] getImageViews(int[] ids) {
-        ImageView[] views = new ImageView[ids.length];
-        for (int i = 0; i < ids.length; i++)
-            views[i] = findViewById(ids[i]);
-        return views;
-    }
-    public TextView[] getTextViews(int[] ids) {
-        TextView[] views = new TextView[ids.length];
-        for (int i = 0; i < ids.length; i++)
-            views[i] = findViewById(ids[i]);
-        return views;
-    }
 
     public boolean isVolumeOn() { return volumeOn; }
     public void setVolumeOn(boolean b) { volumeOn = b; }
 
-    public void startNoMoneyAnimation() { if (currentState == PURCHASE) purchase.startNoMoneyAnimation(); }
 }

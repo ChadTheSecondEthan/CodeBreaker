@@ -33,6 +33,7 @@ public class LevelState extends GameState implements View.OnClickListener {
 
         ViewHelper.setHeight(getView(R.id.levelScroll), 75);
         TableLayout table = getView(R.id.levelTable);
+        table.setPadding(0, (int) ViewHelper.percentHeight(23), 0, (int) ViewHelper.percentHeight(7));
 
         TableRow[] rows = new TableRow[ROWS];
         TableLayout.LayoutParams tableParams = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

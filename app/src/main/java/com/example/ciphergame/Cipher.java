@@ -28,7 +28,7 @@ public class Cipher {
     }
 
     private char[] randomAlphabet() {
-        char[] newAlphabet = getAlphabet();
+        char[] newAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         for (int i = 0; i < 625; i++)
             if ((int) (Math.random() * 2) == 1) {
                 char temp = newAlphabet[i % 25];
@@ -38,8 +38,7 @@ public class Cipher {
         return newAlphabet;
     }
 
-    private char[] getAlphabet() { return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray(); }
     public String getText(int textPack, int level) { return encipher(getRegularText(textPack, level)); }
-    public String getRegularText(int textPack, int level) { return fileHelper.getText(textPack, level); }
+    public String getRegularText(int textPack, int level) { return fileHelper.getText(textPack, level).replace("\"", ""); }
     public char[] getCipherAlphabet() { return cipherAlphabet; }
 }
