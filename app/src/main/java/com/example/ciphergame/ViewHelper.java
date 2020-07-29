@@ -27,12 +27,12 @@ public class ViewHelper {
     public static final int TOP_RIGHT = 0;
     public static final int BOTTOM_LEFT = 2;
 
-    private static void setScales(View v, double scale) { setScales(v, scale, scale); }
-    private static void setScales(@NotNull View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y); }
-
     // one percent width is used for measuring with views to make it easier to make squares
     private static double onePercentWidth;
     private static double onePercentHeight;
+
+    private static void setScales(View v, double scale) { setScales(v, scale, scale); }
+    private static void setScales(@NotNull View v, double x, double y) { v.setScaleX((float) x); v.setScaleY((float) y); }
 
     public static void setMarginLeft(View v, double percent) { setMargins(v, percent, 0, 0, 0); }
     public static void setMarginTop(View v, double percent) { setMargins(v, 0, percent, 0, 0); }
@@ -114,7 +114,7 @@ public class ViewHelper {
     public static String coloredText(String text, String color) { return color + text + FONT; }
 
     public static void setGetBiggerTouchListener(View v) { setGetBiggerTouchListener(v, 1.25); }
-    public static void setGetBiggerTouchListener(@NotNull View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
+    private static void setGetBiggerTouchListener(@NotNull View v, double scale) { v.setOnTouchListener(getBiggerTouchListener(scale)); }
 
     static void setDisplayMetrics(@NotNull DisplayMetrics dm) {
         onePercentHeight = dm.heightPixels / 100.0;

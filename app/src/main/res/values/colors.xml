@@ -7,4 +7,6 @@
     <color name="opaqueBlack">#8000</color>
     <color name="darkGrey">#0E0E0E</color>
     <color name="lighterGrey">#2a2a2a</color>
+    <color name="nearWhite">#F0F0F0</color>
+    <color name="bluish">#00a4a4</color>
 </resources>

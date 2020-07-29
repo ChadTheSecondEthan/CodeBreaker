@@ -13,8 +13,9 @@ class FileHelper {
     FileHelper(Context context) { this.context = context; }
 
     String getText(int textPack, int level) {
-        InputStream inputStream = context.getResources().openRawResource(new int[] {
-                R.raw.texts1, R.raw.texts2, R.raw.texts3, R.raw.texts4, R.raw.texts5, R.raw.texts6}[textPack]);
+        // TODO add more text packs
+        InputStream inputStream = context.getResources().openRawResource(
+                new int[] { R.raw.texts1, R.raw.texts2 }[textPack]);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         try {
             for (int i = 0; i < level; i++) bufferedReader.readLine();

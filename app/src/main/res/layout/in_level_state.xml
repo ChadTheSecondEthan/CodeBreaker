@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +9,7 @@
     android:layout_gravity="bottom"
     android:background="@color/lighterGrey"
     tools:context=".GameState.InLevelState"
-    tools:ignore="Overdraw">
+    tools:ignore="Overdraw" >
 
     <View
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58">
+        app:layout_constraintVertical_bias="0.59">
 
         <LinearLayout
             android:id="@+id/topLine"
@@ -78,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:layout_constraintHorizontal_bias="0.5"
-        ads:layout_constraintVertical_bias="0.8325"
+        ads:layout_constraintVertical_bias="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,14 +123,14 @@
         android:text="@string/pickLetter"
         android:textAlignment="center"
         android:textColor="#FF0000"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/in_level_ad"

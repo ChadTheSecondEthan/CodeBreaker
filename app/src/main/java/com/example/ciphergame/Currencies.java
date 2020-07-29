@@ -8,14 +8,14 @@ public class Currencies {
 
     private int coins;
     private static final int STARTING_COINS = 1000;
-    public static final int NUM_PURCHASES = 6;
+    public static final int NUM_PURCHASES = 3;
 
     Currencies(@NotNull MainActivity app) {
         this.app = app;
         coins = app.getData().getInt("coins", STARTING_COINS);
     }
 
-    public void addCoins(int num) {
+    void addCoins(int num) {
         coins += num;
         app.getDataEditor().putInt("coins", coins).apply();
     }

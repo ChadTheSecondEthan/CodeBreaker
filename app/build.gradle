@@ -28,4 +28,6 @@ dependencies {
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'com.google.android.gms:play-services-ads:18.3.0'
     implementation 'com.android.billingclient:billing:2.1.0'
+    implementation 'com.felipecsl:gifimageview:2.1.0'
+    implementation 'commons-io:commons-io:2.4'
 }

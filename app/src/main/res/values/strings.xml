@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Codebreaker</string>
-    <string name="version">V 1.0.0</string>
     <string name="credits">Credits</string>
     <string name="levelTitle">Choose Level</string>
     <string name="textPackTitle">Select Text Pack</string>
@@ -8,4 +7,10 @@
     <string name="pickLetter">Pick a letter on top to be solved</string>
     <string name="play">Play</string>
     <string name="buy">Buy</string>
+    <string name="instructions">In each level, you will be given an enciphered message.
+    Your job to find what the message says by replacing letters in the message
+    with letters you think are supposed to be there. Reset a swapped letter by
+    clicking on it, or reset the whole thing with the reset button. Press the hint button
+    to buy a hint, and press check when you have finished.</string>
+    <string name="won">You Won!!! Congrats!</string>
 </resources>

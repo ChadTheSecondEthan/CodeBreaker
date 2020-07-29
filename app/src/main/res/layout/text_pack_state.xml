@@ -7,22 +7,20 @@
     android:background="@color/lighterGrey"
     android:orientation="vertical"
     tools:context=".GameState.TextPackState">
-
     <ScrollView
         android:id="@+id/textPackView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true"
         android:orientation="vertical"
         android:scrollbars="none"
-        android:paddingTop="68dp"
-        android:paddingBottom="68dp"
+        android:paddingTop="38dp"
+        android:paddingBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintTop_toTopOf="parent" >
 
         <LinearLayout
             android:id="@+id/textpackLayout"
